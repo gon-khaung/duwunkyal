@@ -8,10 +8,8 @@
         
         <title>Duwun Kyal</title>
 
-         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    
         <link rel="stylesheet" href="{{ asset('/build/css/app.css') }}">
+
         <script>
         window.baseUrl = "{{ url('/') }}";
         </script>

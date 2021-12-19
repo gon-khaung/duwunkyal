@@ -1,15 +1,16 @@
 const mix = require("laravel-mix");
 
-mix.js("resources/js/app.js", "public/build/js")
-    .vue()
-    .sass("resources/sass/app.scss", "public/build/css");
+mix.js("resources/js/app.js", "public/build/js").sass(
+    "resources/sass/app.scss",
+    "public/build/css"
+);
 
 mix.webpackConfig({
     resolve: {
         extensions: [".js", ".vue"],
         alias: {
-            "@": __dirname + "/resources/js"
-        }
+            "@": __dirname + "/resources/js",
+        },
     },
     module: {
         rules: [
@@ -19,9 +20,9 @@ mix.webpackConfig({
                 loader: "eslint-loader",
                 test: /\.(js|vue)?$/,
                 options: {
-                    fix: true
-                }
-            }
-        ]
-    }
+                    fix: true,
+                },
+            },
+        ],
+    },
 });
