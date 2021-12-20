@@ -20,6 +20,10 @@ class CreateUsersTable extends Migration
                 ->string("phone")
                 ->unique()
                 ->nullable();
+            $table
+                ->string("email")
+                ->unique()
+                ->nullable();
             $table->enum("roles", ["admin", "user"])->default("user");
             $table->string("password")->nullable();
             $table->timestamp("email_verified_at")->nullable();

@@ -76,12 +76,14 @@ class AuthController extends Controller
         request()->validate([
             "name" => "required",
             "phone" => "required",
+            "email" => "required",
             "password" => "required",
             "confirmPassword" => "required",
         ]);
         try {
             $name = $request->name;
             $phone = $request->phone;
+            $email = $request->email;
             $password = $request->password;
             $confirm_password = $request->confirmPassword;
             if ($password !== $confirm_password) {
@@ -90,6 +92,7 @@ class AuthController extends Controller
             $user = User::create([
                 "name" => $name,
                 "phone" => $phone,
+                "email" => $email,
                 "password" => bcrypt($password),
             ]);
             if ($token = $this->guard()->login($user)) {
@@ -128,7 +131,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only("phone", "password");
+        $credentials = $request->only("email", "phone", "password");
 
         if ($token = $this->guard()->attempt($credentials)) {
             return response()

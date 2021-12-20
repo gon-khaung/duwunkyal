@@ -1,7 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+
+// use App\Http\Controllers\UserController;
 
 Route::prefix("auth")->group(function () {
     Route::post("register", [AuthController::class, "register"]);
@@ -13,6 +15,6 @@ Route::prefix("auth")->group(function () {
         Route::post("logout", [AuthController::class, "logout"]);
     });
 });
-Route::get("/admin/user/{user}", [UserController::class, "show"]);
-Route::put("/admin/user/{user}", [UserController::class, "update"]);
-Route::delete("/admin/user/{user}", [UserController::class, "destroy"]);
+
+// ==== account ====
+Route::resource("categories", CategoryController::class);

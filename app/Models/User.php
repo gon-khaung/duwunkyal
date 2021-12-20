@@ -11,7 +11,7 @@ use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable;
 
     protected $guarded = [];
 
