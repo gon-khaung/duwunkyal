@@ -1,206 +1,111 @@
 <template>
     <div>
-        <!-- Page content -->
-        <div class="container my-5">
-            <!-- Table -->
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-7">
-                    <div class="card auth-card border-0">
-                        <div class="card-body px-lg-5 py-lg-5">
-                            <div class="text-center text-muted mb-4">
-                                <b>{{
-                                    $store.state.language === "en"
-                                        ? "Register with credentials"
-                                        : "ဒါမှမဟုတ် phone နှင့် password ဖြင့် အကောင့်အသစ်ဖွင့်မည်။"
-                                }}</b>
-                                <div class="error" v-if="error">
-                                    {{
-                                        $store.state.language === "en"
-                                            ? "Fail to Register! Please Try Again"
-                                            : "အကောင့်အသစ်ဖွင့်ခြင်း ကျဆုံးပါသည်။ တဖန်ပြန်လည်ကြိုးစားကြည့်ပါ။"
-                                    }}
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 col-lg-5">
+                        <div class="wrap">
+                            <div class="login-wrap p-4 p-md-5">
+                                <div class="d-flex">
+                                    <div class="w-100">
+                                        <h3 class="mb-4">Register</h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <form role="form">
-                                <small class="text-danger">{{
-                                    errors.name
-                                }}</small>
-                                <div class="form-group">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                            mb-3
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i class="ni ni-hat-3"></i
-                                            ></span>
-                                        </div>
+                                <form action="#" class="signin-form">
+                                    <div class="form-group mt-3">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Name"
                                             type="text"
-                                            v-model="name"
-                                            @keyup.enter="focusOnPhoneInputBox"
+                                            class="form-control"
+                                            required
                                         />
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="username"
+                                            >Username</label
+                                        >
                                     </div>
-                                </div>
-                                <small class="text-danger">{{
-                                    errors.phone
-                                }}</small>
-                                <div class="form-group">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                            mb-3
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i class="fas fa-phone"></i
-                                            ></span>
-                                        </div>
+                                    <div class="form-group mt-3">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Phone"
-                                            type="phone"
-                                            v-model="phone"
-                                            ref="phone"
-                                            @keyup.enter="
-                                                focusOnPasswordInputBox
-                                            "
+                                            type="text"
+                                            class="form-control"
+                                            required
                                         />
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="username"
+                                            >Email</label
+                                        >
                                     </div>
-                                </div>
-                                <small class="text-danger">{{
-                                    errors.password
-                                }}</small>
-                                <div class="form-group">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i
-                                                    class="
-                                                        ni ni-lock-circle-open
-                                                    "
-                                                ></i
-                                            ></span>
-                                        </div>
+                                    <div class="form-group">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Password"
+                                            id="password-field"
                                             type="password"
-                                            ref="password"
-                                            v-model="password"
-                                            @keyup.enter="
-                                                focusOnConfirmPasswordInputBox
-                                            "
+                                            class="form-control"
+                                            required
                                         />
-                                        <i
-                                            class="far fa-eye showable-password"
-                                            v-if="isShowPassword"
-                                            @click="showablePassword"
-                                        ></i>
-                                        <i
-                                            v-if="!isShowPassword"
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="password"
+                                            >Password</label
+                                        >
+                                        <span
+                                            toggle="#password-field"
                                             class="
-                                                fas
-                                                fa-eye-slash
-                                                showable-password
+                                                fa fa-fw fa-eye
+                                                field-icon
+                                                toggle-password
                                             "
-                                            @click="showablePassword"
-                                        ></i>
+                                        ></span>
                                     </div>
-                                </div>
-                                <small class="text-danger">{{
-                                    errors.confirm_password
-                                }}</small>
-                                <div class="form-group">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i
-                                                    class="
-                                                        ni ni-lock-circle-open
-                                                    "
-                                                ></i
-                                            ></span>
-                                        </div>
+                                    <div class="form-group">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Confirm Password"
+                                            id="password-field"
                                             type="password"
-                                            ref="confirm_password"
-                                            v-model="confirm_password"
-                                            @keyup.enter="registerWithPhone"
+                                            class="form-control"
+                                            required
                                         />
-                                        <i
-                                            class="far fa-eye showable-password"
-                                            v-if="isShowConfirmPassword"
-                                            @click="showableConfirmPassword"
-                                        ></i>
-                                        <i
-                                            v-if="!isShowConfirmPassword"
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="password"
+                                            >Confirm Password</label
+                                        >
+                                        <span
+                                            toggle="#password-field"
                                             class="
-                                                fas
-                                                fa-eye-slash
-                                                showable-password
+                                                fa fa-fw fa-eye
+                                                field-icon
+                                                toggle-password
                                             "
-                                            @click="showableConfirmPassword"
-                                        ></i>
+                                        ></span>
                                     </div>
-                                </div>
-                                <div class="text-center">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary mt-4"
-                                        @click="registerWithPhone"
-                                    >
-                                        <b v-if="!isSignUp">{{
-                                            $store.state.language === "en"
-                                                ? "Create account"
-                                                : "အကောင့် ဖွင့်မည်။"
-                                        }}</b>
-
-                                        <Loading
-                                            color="#ffffff"
-                                            v-if="isSignUp"
-                                            size="24"
-                                            class="px-4 py-0"
-                                        />
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <button
+                                            type="submit"
+                                            class="
+                                                form-control
+                                                btn btn-primary
+                                                rounded
+                                                submit
+                                                px-3
+                                            "
+                                        >
+                                            Sign In
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
 <script>
-import { Toast, Loading } from 'vant';
+import { Toast } from 'vant';
 
 export default {
-  components: { Loading },
   data() {
     return {
       isSignUp: false,
@@ -247,37 +152,27 @@ export default {
       this.isSignUp = true;
       this.errors = {};
       if (!this.name) {
-        this.errors.name = this.$store.state.language === 'en'
-          ? 'Required Name'
-          : 'နာမည် လိုအပ်ပါသည်။';
+        this.errors.name = 'Required Name';
         this.isSignUp = false;
         return false;
       }
       if (!this.phone) {
-        this.errors.phone = this.$store.state.language === 'en'
-          ? 'Required Phone'
-          : 'Phone လိုအပ်ပါသည်။';
+        this.errors.phone = 'Required Phone';
         this.isSignUp = false;
         return false;
       }
       if (!this.password) {
-        this.errors.password = this.$store.state.language === 'en'
-          ? 'Required Password'
-          : 'Password လိုအပ်ပါသည်။';
+        this.errors.password = 'Required Password';
         this.isSignUp = false;
         return false;
       }
       if (!this.confirm_password) {
-        this.errors.confirm_password = this.$store.state.language === 'en'
-          ? 'Required Confirm Password'
-          : 'Confirm Password လိုအပ်ပါသည်။';
+        this.errors.confirm_password = 'Required Confirm Password';
         this.isSignUp = false;
         return false;
       }
       if (this.password !== this.confirm_password) {
-        this.errors.confirm_password = this.$store.state.language === 'en'
-          ? 'Password Not Match'
-          : 'လျှို့ဝှက်နံပါတ် မတူညီပါ';
+        this.errors.confirm_password = 'Password Not Match';
         this.isSignUp = false;
         return false;
       }
@@ -295,11 +190,7 @@ export default {
             redirect: '/faq',
           })
           .then((res) => {
-            Toast.success(
-              this.$store.state.language === 'en'
-                ? 'Logged In!'
-                : 'အကောင့်ဝင်ပြီးပါပြီ။',
-            );
+            Toast.success('Logged In!');
             if (res.data.data.roles === 'normal') this.$router.push('/user/2d');
             else this.$router.push('/comissioner/2d');
           });
@@ -316,28 +207,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.showable-password {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    cursor: pointer;
-    z-index: 1000;
-}
-.error {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    padding: 5px 15px;
-    display: flex;
-    align-items: center;
-    color: red;
-    border: 1px solid red;
-    border-radius: 8px;
-    background: #ff000014;
-    font-weight: bold;
-}
-.auth-card {
-    background: #f7fafc;
-}
-</style>

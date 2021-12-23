@@ -14,7 +14,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
-        <link rel="stylesheet" href="/build/assets/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="/build/assets/css/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="/build/assets/css/elegant-icons.css" type="text/css">
         <link rel="stylesheet" href="/build/assets/css/nice-select.css" type="text/css">
@@ -22,6 +21,7 @@
         <link rel="stylesheet" href="/build/assets/css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="/build/assets/css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="/build/assets/css/style.css" type="text/css">
+        <link rel="stylesheet" href="/build/assets/css/login.css" type="text/css">
 
         <script>
         window.baseUrl = "{{ url('/') }}";
@@ -33,7 +33,6 @@
         <script src="{{ asset('/build/js/app.js') }}"></script>
         <!-- Js Plugins -->
         <script src="/build/assets/js/jquery-3.3.1.min.js"></script>
-        <script src="/build/assets/js/bootstrap.min.js"></script>
         <script src="/build/assets/js/jquery.nice-select.min.js"></script>
         <script src="/build/assets/js/jquery-ui.min.js"></script>
         <script src="/build/assets/js/jquery.slicknav.js"></script>

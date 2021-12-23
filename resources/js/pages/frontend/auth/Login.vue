@@ -1,213 +1,104 @@
 <template>
     <div>
-        <div class="container my-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-7">
-                    <div class="card border-0 mb-0 auth-card">
-                        <div class="card-body px-lg-5 py-lg-5">
-                            <div class="text-center text-muted mb-4">
-                                <b>{{
-                                    $store.state.language === "en"
-                                        ? "Log in with credentials"
-                                        : "phone နှင့် password ဖြင့် အကောင့်ဝင်မည်။"
-                                }}</b>
-                                <div class="error" v-if="error">
-                                    {{
-                                        $store.state.language === "en"
-                                            ? "Fail to Login! Please Try Again"
-                                            : "အကောင့်ဝင်ခြင်း ကျဆုံးပါသည်။ တဖန်ပြန်လည် ကြိုးစားကြည့်ပါ။"
-                                    }}
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 col-lg-5">
+                        <div class="wrap">
+                            <div class="login-wrap p-4 p-md-5">
+                                <div class="d-flex">
+                                    <div class="w-100">
+                                        <h3 class="mb-4">Log In</h3>
+                                    </div>
                                 </div>
-                            </div>
-                            <form role="form">
-                                <small class="text-danger">{{
-                                    errors.phone
-                                }}</small>
-                                <div class="form-group mb-3">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i class="fas fa-phone"></i
-                                            ></span>
-                                        </div>
+                                <form action="#" class="signin-form">
+                                    <div class="form-group mt-3">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Phone"
                                             type="text"
-                                            v-model="phone"
-                                            @keyup.enter="
-                                                focusOnPasswordInputBox
-                                            "
+                                            class="form-control"
+                                            required
                                         />
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="username"
+                                            >Username</label
+                                        >
                                     </div>
-                                </div>
-                                <small class="text-danger">{{
-                                    errors.password
-                                }}</small>
-                                <div class="form-group">
-                                    <div
-                                        class="
-                                            input-group
-                                            input-group-merge
-                                            input-group-alternative
-                                        "
-                                    >
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i
-                                                    class="
-                                                        ni ni-lock-circle-open
-                                                    "
-                                                ></i
-                                            ></span>
-                                        </div>
+                                    <div class="form-group">
                                         <input
-                                            class="form-control pl-2"
-                                            placeholder="Password"
+                                            id="password-field"
                                             type="password"
-                                            ref="password"
-                                            v-model="password"
-                                            @keyup.enter="loginWithPhone"
+                                            class="form-control"
+                                            required
                                         />
-                                        <i
-                                            class="far fa-eye showable-password"
-                                            v-if="isShow"
-                                            @click="showablePassword"
-                                        ></i>
-                                        <i
-                                            v-if="!isShow"
+                                        <label
+                                            class="form-control-placeholder"
+                                            for="password"
+                                            >Password</label
+                                        >
+                                        <span
+                                            toggle="#password-field"
                                             class="
-                                                fas
-                                                fa-eye-slash
-                                                showable-password
+                                                fa fa-fw fa-eye
+                                                field-icon
+                                                toggle-password
                                             "
-                                            @click="showablePassword"
-                                        ></i>
+                                        ></span>
                                     </div>
-                                </div>
-                                <div
-                                    class="
-                                        custom-control
-                                        custom-control-alternative
-                                        custom-checkbox
-                                    "
-                                >
-                                    <input
-                                        class="custom-control-input"
-                                        id=" customCheckLogin"
-                                        type="checkbox"
-                                    />
-                                    <label
-                                        class="custom-control-label"
-                                        for=" customCheckLogin"
-                                    >
-                                        <b class="text-muted">{{
-                                            $store.state.language === "en"
-                                                ? "Remember me"
-                                                : "ဒီအကောင့်ကို မှတ်ထားပေးပါ။"
-                                        }}</b>
-                                    </label>
-                                </div>
-                                <div class="text-center">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary my-4"
-                                        @click="loginWithPhone"
-                                    >
-                                        <div v-if="!isSignin">
-                                            {{
-                                                $store.state.language === "en"
-                                                    ? "Sign in"
-                                                    : "အကောင့် ဝင်မည်။"
-                                            }}
+                                    <div class="form-group">
+                                        <button
+                                            type="submit"
+                                            class="
+                                                form-control
+                                                btn btn-primary
+                                                rounded
+                                                submit
+                                                px-3
+                                            "
+                                        >
+                                            Sign In
+                                        </button>
+                                    </div>
+                                    <div class="form-group d-md-flex">
+                                        <div class="w-50 text-left">
+                                            <label
+                                                class="
+                                                    checkbox-wrap
+                                                    checkbox-primary
+                                                    mb-0
+                                                "
+                                                >Remember Me
+                                                <input
+                                                    type="checkbox"
+                                                    checked
+                                                />
+                                                <span class="checkmark"></span>
+                                            </label>
                                         </div>
-
-                                        <Loading
-                                            color="#ffffff"
-                                            v-if="isSignin"
-                                            size="24"
-                                            class="px-4 py-0"
-                                        />
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-6 text-center">
-                            <a
-                                @click="$router.push('/auth/register')"
-                                class="new-account-text"
-                                ><b>{{
-                                    $store.state.language === "en"
-                                        ? "Create new account"
-                                        : "အကောင့်အသစ်ဖွင့်မည်။"
-                                }}</b></a
-                            >
-                        </div>
-
-                        <div class="col-6 text-center">
-                            <a
-                                data-toggle="modal"
-                                data-target="#forgetPassword"
-                                class="new-account-text"
-                                ><b>{{
-                                    $store.state.language === "en"
-                                        ? "Forgot Password?"
-                                        : "လျို့ဝှက်နံပါတ် မေ့နေပါသလား?"
-                                }}</b></a
-                            >
-                        </div>
-                        <!-- === only amount === -->
-                        <div class="col-4">
-                            <div
-                                class="modal fade"
-                                id="forgetPassword"
-                                tabindex="-1"
-                                role="dialog"
-                                aria-labelledby="modal-form"
-                                aria-hidden="true"
-                            >
-                                <div
-                                    class="
-                                        modal-dialog
-                                        modal-
-                                        modal-dialog-centered
-                                    "
-                                    role="document"
-                                >
-                                    <div class="modal-content">
-                                        <div class="modal-body p-5">
-                                            <b>
-                                                Please direct contact to
-                                                customer service -
-                                                <span class="text-danger"
-                                                    >09788837668</span
-                                                >
-                                            </b>
+                                        <div class="w-50 text-md-right">
+                                            <a href="#">Forgot Password</a>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
+                                <p class="text-center">
+                                    Not a member?
+                                    <a data-toggle="tab" href="#signup"
+                                        >Register</a
+                                    >
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
 <script>
-import { Toast, Loading } from 'vant';
+import { Toast } from 'vant';
 
 export default {
-  components: { Loading },
   data() {
     return {
       phone: null,
@@ -237,16 +128,12 @@ export default {
       this.isSignin = true;
       this.errors = {};
       if (!this.phone) {
-        this.errors.phone = this.$store.state.language === 'en'
-          ? 'Required Phone'
-          : 'Phone လိုအပ်ပါသည်။';
+        this.errors.phone = 'Required Phone';
         this.isSignin = false;
         return false;
       }
       if (!this.password) {
-        this.errors.password = this.$store.state.language === 'en'
-          ? 'Required Password'
-          : 'Password လိုအပ်ပါသည်။';
+        this.errors.password = 'Required Password';
         this.isSignin = false;
         return false;
       }
@@ -262,11 +149,7 @@ export default {
             redirect: '/faq',
           })
           .then((res) => {
-            Toast.success(
-              this.$store.state.language === 'en'
-                ? 'Logged In!'
-                : 'အကောင့်ဝင်ပြီးပါပြီ။',
-            );
+            Toast.success('Logged In!');
             if (res.data.data.roles === 'normal') this.$router.push('/user/2d');
             else this.$router.push('/comissioner/2d');
           });
@@ -282,31 +165,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.showable-password {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    cursor: pointer;
-    z-index: 1000;
-}
-.new-account-text {
-    cursor: pointer;
-}
-.error {
-    margin-bottom: 13px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    color: red;
-    border: 1px solid red;
-    border-radius: 8px;
-    padding: 0px 15px;
-    background: #ff000014;
-    font-weight: bold;
-}
-.auth-card {
-    background: #f7fafc;
-}
-</style>
