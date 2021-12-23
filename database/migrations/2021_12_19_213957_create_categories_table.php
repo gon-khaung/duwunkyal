@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string("name")->nullable();
             $table->boolean("is_popular")->default(false);
+            $table->string("image")->nullable();
             $table->timestamps();
         });
     }

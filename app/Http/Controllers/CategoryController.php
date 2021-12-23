@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Traits\Base64;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    use Base64;
     public function __construct()
     {
         $this->middleware("auth:api")->only("store", "update");
@@ -37,9 +39,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
+            $image = $this->uploadBase64($request->image, "add", null);
+
             $category = new Category();
             $category->name = $request->name;
             $category->is_popular = $request->is_popular;
+            $category->image = $image;
             $category->save();
             return response()->json([
                 "success" => true,
@@ -73,6 +78,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         try {
+            $exitedImage = Category::findOrFail($request->id)->image;
+            if ($exitedImage) {
+                $image = $this->uploadBase64(
+                    $request->image,
+                    "update",
+                    $exitedImage
+                );
+                $category->image = $image;
+            }
+
             $category->name = $request->name;
             $category->is_popular = $request->is_popular;
             $category->update();

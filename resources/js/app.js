@@ -11,7 +11,6 @@ import './plugins/global-components';
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import * as $ from 'jquery';
 import App from './App.vue';
 
 import { routes } from './routes';
@@ -19,7 +18,6 @@ import { routes } from './routes';
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 window.axios = axios;
-window.$ = $;
 
 axios.defaults.baseURL = `${window.baseUrl}/api/`;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
