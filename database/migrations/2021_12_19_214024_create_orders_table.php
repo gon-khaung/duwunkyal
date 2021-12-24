@@ -15,15 +15,20 @@ class CreateOrdersTable extends Migration
     {
         Schema::create("orders", function (Blueprint $table) {
             $table->id();
-            $table->text("order_id")->nullable();
             $table
                 ->foreignId("user_id")
                 ->constrained()
                 ->onDelete("cascade");
+            $table->string("address")->nullable();
+            $table->text("note")->nullable();
+            $table
+                ->string("phone")
+                ->nullable()
+                ->unique();
             $table->decimal("total", 30, 0)->nullable();
             $table
-                ->enum("status", ["pending", "fail", "success"])
-                ->default("pending");
+                ->enum("status", ["Pending", "Delivered", "Rejected"])
+                ->default("Pending");
             $table->timestamps();
         });
     }

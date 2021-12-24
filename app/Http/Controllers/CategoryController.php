@@ -43,7 +43,6 @@ class CategoryController extends Controller
 
             $category = new Category();
             $category->name = $request->name;
-            $category->is_popular = $request->is_popular;
             $category->image = $image;
             $category->save();
             return response()->json([
@@ -89,7 +88,6 @@ class CategoryController extends Controller
             }
 
             $category->name = $request->name;
-            $category->is_popular = $request->is_popular;
             $category->update();
             return response()->json([
                 "success" => true,
