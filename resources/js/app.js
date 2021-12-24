@@ -11,6 +11,7 @@ import './plugins/global-components';
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import store from './plugins/store';
 import App from './App.vue';
 
 import { routes } from './routes';
@@ -60,5 +61,6 @@ Vue.use(auth, {
 const app = new Vue({
   el: '#app',
   router,
+  store,
   render: (h) => h(App),
 });

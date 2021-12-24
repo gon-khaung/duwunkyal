@@ -19,6 +19,10 @@ export const routes = [
         component: render('frontend/Home'),
       },
       {
+        path: 'contact',
+        component: render('frontend/Contact'),
+      },
+      {
         path: 'auth/login',
         component: render('frontend/auth/Login'),
       },

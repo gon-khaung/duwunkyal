@@ -13,8 +13,12 @@ class CreateSiteContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_contacts', function (Blueprint $table) {
+        Schema::create("sitecontacts", function (Blueprint $table) {
             $table->id();
+            $table->string("phone")->nullable();
+            $table->string("address")->nullable();
+            $table->string("email")->nullable();
+            $table->string("open_time")->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateSiteContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_contacts');
+        Schema::dropIfExists("site_contacts");
     }
 }
