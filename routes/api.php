@@ -1,8 +1,9 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SitecontactController;
 
 // use App\Http\Controllers\UserController;
@@ -26,3 +27,6 @@ Route::resource("contacts", ContactController::class);
 
 // ==== site contact ====
 Route::resource("sitecontacts", SitecontactController::class);
+
+// ==== products ====
+Route::resource("products", ProductController::class);

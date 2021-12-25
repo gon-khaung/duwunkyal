@@ -23,6 +23,19 @@ export const routes = [
         component: render('frontend/Contact'),
       },
       {
+        path: 'checkout',
+        component: render('frontend/Checkout'),
+      },
+      {
+        path: 'product/:id',
+        props: true,
+        component: render('frontend/Detail'),
+      },
+      {
+        path: 'cart',
+        component: render('frontend/Cart'),
+      },
+      {
         path: 'auth/login',
         component: render('frontend/auth/Login'),
       },
