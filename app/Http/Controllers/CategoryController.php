@@ -6,23 +6,32 @@ use Exception;
 use App\Traits\Base64;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\FeaturedCategoryResource;
 
 class CategoryController extends Controller
 {
     use Base64;
     public function __construct()
     {
-        $this->middleware("auth:api")->only("store", "update");
+        // $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
      *  GET api/categories
      *  to get all categories
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $categories = Category::all();
+            if ($request->is_featured) {
+                $categories = FeaturedCategoryResource::collection(
+                    Category::where("is_featured", true)
+                        ->with("products")
+                        ->get()
+                );
+            } else {
+                $categories = Category::all();
+            }
             return response()->json([
                 "success" => true,
                 "data" => $categories,
@@ -39,11 +48,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
-            $image = $this->uploadBase64($request->image, "add", null);
+            // $image = $this->uploadBase64($request->image, "add", null);
 
             $category = new Category();
             $category->name = $request->name;
-            $category->image = $image;
+            // $category->image = $image;
             $category->save();
             return response()->json([
                 "success" => true,
@@ -88,6 +97,7 @@ class CategoryController extends Controller
             }
 
             $category->name = $request->name;
+            $category->is_featured = $request->is_featured;
             $category->update();
             return response()->json([
                 "success" => true,

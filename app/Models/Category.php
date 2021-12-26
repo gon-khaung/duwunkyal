@@ -12,6 +12,11 @@ class Category extends Model
     protected $guarded = [];
 
     protected $casts = [
-        "is_popular" => "boolean",
+        "is_featured" => "boolean",
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class)->orderBy("created_at", "desc");
+    }
 }

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Traits\Base64;
-use App\Models\Product;
+use App\Models\Subproduct;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class SubproductController extends Controller
 {
     use Base64;
     public function __construct()
@@ -16,16 +16,16 @@ class ProductController extends Controller
     }
 
     /**
-     *  GET api/products
-     *  to get all products
+     *  GET api/subproducts
+     *  to get all subproducts
      */
     public function index()
     {
         try {
-            $products = Product::all();
+            $subproducts = Subproduct::all();
             return response()->json([
                 "success" => true,
-                "data" => $products,
+                "data" => $subproducts,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -33,24 +33,22 @@ class ProductController extends Controller
     }
 
     /**
-     *  POST api/products
-     *  to create a new product
+     *  POST api/subproducts
+     *  to create a new subproduct
      */
     public function store(Request $request)
     {
         try {
             // $image = $this->uploadBase64($request->image, "add", null);
 
-            $product = new Product();
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->price = $request->price;
-            // $product->image = $image;
-            $product->category_id = $request->category_id;
-            $product->save();
+            $subproduct = new Subproduct();
+            $subproduct->size = $request->size;
+            $subproduct->product_id = $request->product_id;
+            // $subproduct->image = $image;
+            $subproduct->save();
             return response()->json([
                 "success" => true,
-                "data" => $product,
+                "data" => $subproduct,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -58,15 +56,15 @@ class ProductController extends Controller
     }
 
     /**
-     *  GET api/products/{product}
-     *  to show a product
+     *  GET api/subproducts/{subproduct}
+     *  to show a subproduct
      */
-    public function show(Product $product, Request $request)
+    public function show(Subproduct $subproduct, Request $request)
     {
         try {
             return response()->json([
                 "success" => true,
-                "data" => $product,
+                "data" => $subproduct,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -74,27 +72,27 @@ class ProductController extends Controller
     }
 
     /**
-     *  PUT/PATCH api/products/{product}
-     *  to update a product
+     *  PUT/PATCH api/subproducts/{subproduct}
+     *  to update a subproduct
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Subproduct $subproduct)
     {
         try {
-            $exitedImage = Product::findOrFail($request->id)->image;
+            $exitedImage = Subproduct::findOrFail($request->id)->image;
             if ($exitedImage) {
                 $image = $this->uploadBase64(
                     $request->image,
                     "update",
                     $exitedImage
                 );
-                $product->image = $image;
+                $subproduct->image = $image;
             }
 
-            $product->name = $request->name;
-            $product->update();
+            $subproduct->name = $request->name;
+            $subproduct->update();
             return response()->json([
                 "success" => true,
-                "data" => $product,
+                "data" => $subproduct,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -102,13 +100,13 @@ class ProductController extends Controller
     }
 
     /**
-     * DELETE api/products/{product}
-     * to delete a product
+     * DELETE api/subproducts/{subproduct}
+     * to delete a subproduct
      */
-    public function destroy(Product $product)
+    public function destroy(Subproduct $subproduct)
     {
         try {
-            $product->delete();
+            $subproduct->delete();
             return response()->json([
                 "success" => true,
             ]);

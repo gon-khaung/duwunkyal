@@ -13,10 +13,10 @@ class CreateSubProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create("sub_products", function (Blueprint $table) {
+        Schema::create("subproducts", function (Blueprint $table) {
             $table->id();
             $table->string("size")->nullable();
-            $table->string("color")->nullable();
+            $table->string("image")->nullable();
             $table
                 ->foreignId("product_id")
                 ->constrained()
@@ -32,6 +32,6 @@ class CreateSubProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("sub_products");
+        Schema::dropIfExists("subproducts");
     }
 }

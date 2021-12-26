@@ -35,11 +35,15 @@
                         </div>
                         <div class="featured__controls">
                             <ul>
-                                <li class="active" data-filter="*">All</li>
-                                <li data-filter=".oranges">Oranges</li>
-                                <li data-filter=".fresh-meat">Fresh Meat</li>
-                                <li data-filter=".vegetables">Vegetables</li>
-                                <li data-filter=".fastfood">Fastfood</li>
+                                <li
+                                    :class="index == 0 ? 'active' : ''"
+                                    data-filter="*"
+                                    v-for="(cat, index) in featuredCategories"
+                                    :key="index"
+                                    @click="changeCategoryProducts(index)"
+                                >
+                                    {{ cat.name }}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -58,7 +62,7 @@
                         <div class="featured__item">
                             <div
                                 class="featured__item__pic set-bg"
-                                data-setbg="img/featured/feature-1.jpg"
+                                :data-setbg="product.image"
                             >
                                 <ul class="featured__item__pic__hover">
                                     <li>
@@ -69,8 +73,10 @@
                                 </ul>
                             </div>
                             <div class="featured__item__text">
-                                <h6><a href="#">Crab Pool Security</a></h6>
-                                <h5>$30.00</h5>
+                                <h6>
+                                    <a href="#">{{ product.name }}</a>
+                                </h6>
+                                <h5>${{ product.price }}</h5>
                             </div>
                         </div>
                     </div>
@@ -103,23 +109,12 @@
 export default {
   data() {
     return {
-      products: [
-        {
-          test: 'test',
-        },
-      ],
+      products: [],
       categories: [],
+      featuredCategories: [],
     };
   },
   methods: {
-    async fetchProducts() {
-      try {
-        const res = await axios.get('/products');
-        this.products = res.data.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');
@@ -128,10 +123,26 @@ export default {
         console.log(error);
       }
     },
+    async fetchFeaturedCategories() {
+      try {
+        const res = await axios.get('/categories', {
+          params: {
+            is_featured: true,
+          },
+        });
+        this.featuredCategories = res.data.data;
+        this.products = this.featuredCategories[0].products;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    changeCategoryProducts(id) {
+      this.products = this.featuredCategories[id].products;
+    },
   },
   mounted() {
-    this.fetchProducts();
     this.fetchCategories();
+    this.fetchFeaturedCategories();
   },
 };
 </script>

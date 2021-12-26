@@ -36,6 +36,10 @@ export const routes = [
         component: render('frontend/Cart'),
       },
       {
+        path: 'shop',
+        component: render('frontend/Shop'),
+      },
+      {
         path: 'auth/login',
         component: render('frontend/auth/Login'),
       },

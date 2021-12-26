@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SitecontactController;
+use App\Http\Controllers\SubproductController;
 
 // use App\Http\Controllers\UserController;
 
@@ -30,3 +31,6 @@ Route::resource("sitecontacts", SitecontactController::class);
 
 // ==== products ====
 Route::resource("products", ProductController::class);
+
+// ==== subproducts ====
+Route::resource("subproducts", SubproductController::class);
