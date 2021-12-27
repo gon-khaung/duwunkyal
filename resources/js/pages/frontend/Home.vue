@@ -12,7 +12,7 @@
                         >
                             <div
                                 class="categories__item set-bg"
-                                :data-setbg="category.image"
+                                :style="`background-image: url(${category.image})`"
                             >
                                 <h5>
                                     <a href="#">{{ category.name }}</a>
@@ -62,11 +62,13 @@
                         <div class="featured__item">
                             <div
                                 class="featured__item__pic set-bg"
-                                :data-setbg="product.image"
+                                :style="`background-image: url(https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg)`"
                             >
                                 <ul class="featured__item__pic__hover">
                                     <li>
-                                        <a href="#"
+                                        <a
+                                            href="#"
+                                            @click="addToCart(product.id)"
                                             ><i class="fa fa-shopping-cart"></i
                                         ></a>
                                     </li>
@@ -106,6 +108,8 @@
     </div>
 </template>
 <script>
+import { Toast } from 'vant';
+
 export default {
   data() {
     return {
@@ -115,6 +119,21 @@ export default {
     };
   },
   methods: {
+    addToCart(id) {
+      let products = this.products.filter((product) => product.id === id);
+      const filterProducts = this.$store.state.cart.filter(
+        (cart) => cart.id === id,
+      );
+      if (filterProducts.length > 0) return;
+
+      products = [...this.$store.state.cart, ...products];
+
+      this.$store.commit('setCart', products);
+
+      Toast.success('Added To Cart');
+
+      console.log(this.$store.state.cart);
+    },
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');
