@@ -1,10 +1,5 @@
 <template>
     <div>
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
-
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
         <div class="humberger__menu__wrapper">
@@ -13,7 +8,21 @@
             </div>
             <div class="humberger__menu__widget">
                 <div class="header__top__right__auth">
-                    <a href="#"><i class="fa fa-user"></i> Login</a>
+                    <a
+                        href=""
+                        @click="$router.push('/auth/login')"
+                        v-if="!$auth.check()"
+                        ><i class="fa fa-user"></i> Login
+                    </a>
+                    <a
+                        href=""
+                        @click="$router.push('/auth/register')"
+                        v-if="!$auth.check()"
+                        ><i class="fa fa-user"></i> Register
+                    </a>
+                    <a href="" @click="logout()" v-if="$auth.check()"
+                        ><i class="fa fa-user"></i> Log Out
+                    </a>
                 </div>
             </div>
             <nav class="humberger__menu__nav mobile-menu">
@@ -81,10 +90,34 @@
                                         ><i class="fa fa-pinterest-p"></i
                                     ></a>
                                 </div>
-                                <div class="header__top__right__auth">
-                                    <a href="#"
-                                        ><i class="fa fa-user"></i> Login</a
-                                    >
+                                <div
+                                    class="header__top__right__auth"
+                                    v-if="!$auth.check()"
+                                >
+                                    <a
+                                        href=""
+                                        @click="$router.push('/auth/login')"
+                                        ><i class="fa fa-user"></i> Login
+                                    </a>
+                                </div>
+
+                                <div
+                                    class="header__top__right__auth"
+                                    v-if="!$auth.check()"
+                                >
+                                    <a
+                                        href=""
+                                        @click="$router.push('/auth/register')"
+                                        ><i class="fa fa-user"></i> Register
+                                    </a>
+                                </div>
+                                <div
+                                    class="header__top__right__auth"
+                                    v-if="$auth.check()"
+                                >
+                                    <a href="" @click.prevent="logout()"
+                                        ><i class="fa fa-user"></i> Log Out
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +251,8 @@
     </div>
 </template>
 <script>
+import { Toast, Dialog } from 'vant';
+
 export default {
   data() {
     return {
@@ -232,6 +267,20 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    logout() {
+      Dialog.confirm({
+        title: 'Are you sure to log out?',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Sure',
+      })
+        .then(() => {
+          this.$auth.logout({
+            redirect: '/',
+          });
+          Toast.success('Logged out!');
+        })
+        .catch(() => {});
     },
   },
   mounted() {

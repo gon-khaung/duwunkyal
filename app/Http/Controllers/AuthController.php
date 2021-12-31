@@ -81,7 +81,6 @@ class AuthController extends Controller
         ]);
         try {
             $name = $request->name;
-            $phone = $request->phone;
             $email = $request->email;
             $password = $request->password;
             $confirm_password = $request->confirmPassword;

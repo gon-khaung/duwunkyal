@@ -11,88 +11,103 @@
                                         <h3 class="mb-4">Register</h3>
                                     </div>
                                 </div>
-                                <form action="#" class="signin-form">
-                                    <div class="form-group mt-3">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            required
-                                        />
-                                        <label
-                                            class="form-control-placeholder"
-                                            for="username"
-                                            >Username</label
-                                        >
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            required
-                                        />
-                                        <label
-                                            class="form-control-placeholder"
-                                            for="username"
-                                            >Email</label
-                                        >
-                                    </div>
-                                    <div class="form-group">
-                                        <input
-                                            id="password-field"
-                                            type="password"
-                                            class="form-control"
-                                            required
-                                        />
-                                        <label
-                                            class="form-control-placeholder"
-                                            for="password"
-                                            >Password</label
-                                        >
-                                        <span
-                                            toggle="#password-field"
-                                            class="
-                                                fa fa-fw fa-eye
-                                                field-icon
-                                                toggle-password
-                                            "
-                                        ></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input
-                                            id="password-field"
-                                            type="password"
-                                            class="form-control"
-                                            required
-                                        />
-                                        <label
-                                            class="form-control-placeholder"
-                                            for="password"
-                                            >Confirm Password</label
-                                        >
-                                        <span
-                                            toggle="#password-field"
-                                            class="
-                                                fa fa-fw fa-eye
-                                                field-icon
-                                                toggle-password
-                                            "
-                                        ></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <button
-                                            type="submit"
-                                            class="
-                                                form-control
-                                                btn btn-primary
-                                                rounded
-                                                submit
-                                                px-3
-                                            "
-                                        >
-                                            Sign In
-                                        </button>
-                                    </div>
-                                </form>
+
+                                <div class="form-group mt-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        required
+                                        v-model="name"
+                                    />
+                                    <label
+                                        class="form-control-placeholder"
+                                        for="username"
+                                        >Username</label
+                                    >
+                                    <small class="text-danger">{{
+                                        errors.name
+                                    }}</small>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        required
+                                        v-model="email"
+                                    />
+                                    <label
+                                        class="form-control-placeholder"
+                                        for="username"
+                                        >Email</label
+                                    >
+                                    <small class="text-danger">{{
+                                        errors.email
+                                    }}</small>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        id="password-field"
+                                        type="password"
+                                        class="form-control"
+                                        required
+                                        v-model="password"
+                                    />
+                                    <label
+                                        class="form-control-placeholder"
+                                        for="password"
+                                        >Password</label
+                                    >
+                                    <span
+                                        toggle="#password-field"
+                                        class="
+                                            fa fa-fw fa-eye
+                                            field-icon
+                                            toggle-password
+                                        "
+                                    ></span>
+                                    <small class="text-danger">{{
+                                        errors.password
+                                    }}</small>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        id="password-field"
+                                        type="password"
+                                        class="form-control"
+                                        required
+                                        v-model="confirm_password"
+                                    />
+                                    <label
+                                        class="form-control-placeholder"
+                                        for="password"
+                                        >Confirm Password</label
+                                    >
+                                    <span
+                                        toggle="#password-field"
+                                        class="
+                                            fa fa-fw fa-eye
+                                            field-icon
+                                            toggle-password
+                                        "
+                                    ></span>
+                                    <small class="text-danger">{{
+                                        errors.confirm_password
+                                    }}</small>
+                                </div>
+                                <div class="form-group">
+                                    <button
+                                        type="button"
+                                        class="
+                                            form-control
+                                            btn btn-primary
+                                            rounded
+                                            px-3
+                                        "
+                                        @click="registerWithEmail()"
+                                    >
+                                        Sign In
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,7 +126,7 @@ export default {
       isSignUp: false,
       errors: {},
       name: null,
-      phone: null,
+      email: null,
       error: false,
       password: null,
       confirm_password: null,
@@ -148,7 +163,7 @@ export default {
     /**
          * register with
          */
-    async registerWithPhone() {
+    async registerWithEmail() {
       this.isSignUp = true;
       this.errors = {};
       if (!this.name) {
@@ -156,8 +171,8 @@ export default {
         this.isSignUp = false;
         return false;
       }
-      if (!this.phone) {
-        this.errors.phone = 'Required Phone';
+      if (!this.email) {
+        this.errors.email = 'Required Email';
         this.isSignUp = false;
         return false;
       }
@@ -180,19 +195,19 @@ export default {
         await this.$auth
           .register({
             data: {
-              phone: this.phone,
+              email: this.email,
               password: this.password,
               name: this.name,
               confirmPassword: this.confirm_password,
             },
             staySignedIn: true,
             autoLogin: true,
-            redirect: '/faq',
+            rememberMe: true,
+            redirect: 'asdf',
           })
           .then((res) => {
             Toast.success('Logged In!');
-            if (res.data.data.roles === 'normal') this.$router.push('/user/2d');
-            else this.$router.push('/comissioner/2d');
+            this.$router.go(-2);
           });
       } catch (err) {
         this.error = true;
@@ -207,3 +222,17 @@ export default {
   },
 };
 </script>
+<style scoped>
+.error {
+    margin-bottom: 13px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: red;
+    border: 1px solid red;
+    border-radius: 8px;
+    padding: 0px 15px;
+    background: #ff000014;
+    font-weight: bold;
+}
+</style>
