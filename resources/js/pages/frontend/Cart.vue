@@ -19,16 +19,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr
+                                        v-for="(product, index) in $store.state
+                                            .cart"
+                                        :key="index"
+                                    >
                                         <td class="shoping__cart__item">
                                             <img
                                                 src="img/cart/cart-1.jpg"
                                                 alt=""
                                             />
-                                            <h5>Vegetable’s Package</h5>
+                                            <h5>{{ product.name }}</h5>
                                         </td>
                                         <td class="shoping__cart__price">
-                                            $55.00
+                                            {{ product.price }}
                                         </td>
                                         <td class="shoping__cart__quantity">
                                             <div class="quantity">
@@ -41,66 +45,15 @@
                                             </div>
                                         </td>
                                         <td class="shoping__cart__total">
-                                            $110.00
+                                            {{ product.total }}
                                         </td>
                                         <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="shoping__cart__item">
-                                            <img
-                                                src="img/cart/cart-2.jpg"
-                                                alt=""
-                                            />
-                                            <h5>Fresh Garden Vegetable</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            $39.00
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input
-                                                        type="text"
-                                                        value="1"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            $39.99
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="shoping__cart__item">
-                                            <img
-                                                src="img/cart/cart-3.jpg"
-                                                alt=""
-                                            />
-                                            <h5>Organic Bananas</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            $69.00
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input
-                                                        type="text"
-                                                        value="1"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            $69.99
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <span class="icon_close"></span>
+                                            <span
+                                                class="icon_close"
+                                                @click="
+                                                    removeFromCart(product.id)
+                                                "
+                                            ></span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -131,3 +84,28 @@
         <!-- Shoping Cart Section End -->
     </div>
 </template>
+<script>
+import { Toast } from 'vant';
+
+export default {
+  methods: {
+    removeFromCart(id) {
+      const products = this.getLocalstorage('cartProducts').filter(
+        (cart) => cart.id !== id,
+      );
+
+      this.setLocalstorage('cartProducts', products);
+
+      this.$store.commit('setCart', products);
+
+      Toast.success('Removed Item');
+    },
+    getLocalstorage(name) {
+      return JSON.parse(localStorage.getItem(name));
+    },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
+    },
+  },
+};
+</script>

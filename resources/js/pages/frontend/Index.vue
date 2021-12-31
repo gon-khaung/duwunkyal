@@ -16,9 +16,15 @@ export default {
         console.log(error);
       }
     },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
+    },
   },
   mounted() {
     this.fetchContact();
+    if (!localStorage.getItem('cartProducts')) {
+      this.setLocalstorage('cartProducts', []);
+    }
   },
 };
 </script>

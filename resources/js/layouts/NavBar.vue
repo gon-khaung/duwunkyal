@@ -166,7 +166,9 @@
                                 <li>
                                     <a href="#" @click="$router.push('cart')"
                                         ><i class="fa fa-shopping-bag"></i>
-                                        <span>3</span></a
+                                        <span>{{
+                                            $store.state.cart.length
+                                        }}</span></a
                                     >
                                 </li>
                             </ul>

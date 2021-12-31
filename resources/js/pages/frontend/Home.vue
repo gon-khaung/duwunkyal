@@ -68,7 +68,9 @@
                                     <li>
                                         <a
                                             href="#"
-                                            @click="addToCart(product.id)"
+                                            @click.prevent="
+                                                addToCart(product.id)
+                                            "
                                             ><i class="fa fa-shopping-cart"></i
                                         ></a>
                                     </li>
@@ -121,18 +123,24 @@ export default {
   methods: {
     addToCart(id) {
       let products = this.products.filter((product) => product.id === id);
-      const filterProducts = this.$store.state.cart.filter(
+      const filterProducts = this.getLocalstorage('cartProducts').filter(
         (cart) => cart.id === id,
       );
       if (filterProducts.length > 0) return;
 
-      products = [...this.$store.state.cart, ...products];
+      products = [...this.getLocalstorage('cartProducts'), ...products];
+
+      this.setLocalstorage('cartProducts', products);
 
       this.$store.commit('setCart', products);
 
       Toast.success('Added To Cart');
-
-      console.log(this.$store.state.cart);
+    },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
+    },
+    getLocalstorage(name) {
+      return JSON.parse(localStorage.getItem(name));
     },
     async fetchCategories() {
       try {
