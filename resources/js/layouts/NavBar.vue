@@ -33,7 +33,7 @@
                     <li @click="$router.push('')">
                         <a href="">Shop</a>
                     </li>
-                    <li @click="$router.push('cart')" class="active">
+                    <li @click="$router.push('checkout')" class="active">
                         <a href="">Cart</a>
                     </li>
                     <li @click="$router.push('contact')" class="active">
@@ -97,18 +97,19 @@
                                     <a
                                         href=""
                                         @click="$router.push('/auth/login')"
-                                        ><i class="fa fa-user"></i> Login
+                                        ><i class="fa fa-user"></i>Login
                                     </a>
                                 </div>
 
                                 <div
-                                    class="header__top__right__auth"
+                                    class="header__top__right__auth ml-2"
                                     v-if="!$auth.check()"
                                 >
                                     <a
                                         href=""
                                         @click="$router.push('/auth/register')"
-                                        ><i class="fa fa-user"></i> Register
+                                        ><i class="fas fa-sign-in-alt"></i
+                                        >Register
                                     </a>
                                 </div>
                                 <div
@@ -116,7 +117,8 @@
                                     v-if="$auth.check()"
                                 >
                                     <a href="" @click.prevent="logout()"
-                                        ><i class="fa fa-user"></i> Log Out
+                                        ><i class="fas fa-sign-out-alt"></i>Log
+                                        Out
                                     </a>
                                 </div>
                             </div>
@@ -143,17 +145,23 @@
                         <nav class="header__menu">
                             <ul class="text-center">
                                 <li>
-                                    <a href="" @click="$router.push('/')"
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('/')"
                                         >Home</a
                                     >
                                 </li>
                                 <li>
-                                    <a href="" @click="$router.push('')"
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('shop')"
                                         >Shop</a
                                     >
                                 </li>
                                 <li class="active">
-                                    <a href="" @click="$router.push('contact')"
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('contact')"
                                         >Contact</a
                                     >
                                 </li>
@@ -164,7 +172,11 @@
                         <div class="header__cart">
                             <ul>
                                 <li>
-                                    <a href="#" @click="$router.push('cart')"
+                                    <a
+                                        href="#"
+                                        @click.prevent="
+                                            $router.push('checkout')
+                                        "
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
                                             $store.state.cart.length

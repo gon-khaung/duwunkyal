@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             "name" => $this->name,
             "price" => $this->price,
             "image" => Subproduct::find($this->id)->first()->image,
+            "quantity" => 1,
         ];
     }
 }

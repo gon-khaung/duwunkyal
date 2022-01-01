@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string("name")->nullable();
             $table->text("description")->nullable();
             $table->boolean("is_featured")->default(false);
-            $table->decimal("price", 30, 0)->nullable();
+            $table->decimal("price", 30, 0);
             $table
                 ->foreignId("category_id")
                 ->constrained("categories")

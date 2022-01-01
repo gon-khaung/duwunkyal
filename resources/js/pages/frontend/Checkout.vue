@@ -36,22 +36,31 @@
                                         Products <span>Total</span>
                                     </div>
                                     <ul>
-                                        <li>
-                                            Vegetable’s Package
-                                            <span>$75.99</span>
-                                        </li>
-                                        <li>
-                                            Fresh Vegetable <span>$151.99</span>
-                                        </li>
-                                        <li>
-                                            Organic Bananas <span>$53.99</span>
+                                        <li
+                                            v-for="(product, index) in $store
+                                                .state.cart"
+                                            :key="index"
+                                        >
+                                            {{ product.name }}
+                                            <span
+                                                >{{
+                                                    product.price *
+                                                    product.quantity
+                                                }}
+                                                MMK</span
+                                            >
                                         </li>
                                     </ul>
-                                    <div class="checkout__order__subtotal">
-                                        Subtotal <span>$750.99</span>
-                                    </div>
                                     <div class="checkout__order__total">
-                                        Total <span>$750.99</span>
+                                        Total
+                                        <span
+                                            >{{
+                                                calculateTotal(
+                                                    $store.state.cart
+                                                )
+                                            }}
+                                            MMK</span
+                                        >
                                     </div>
                                     <button type="submit" class="site-btn">
                                         PLACE ORDER
@@ -66,3 +75,16 @@
         <!-- Checkout Section End -->
     </div>
 </template>
+<script>
+export default {
+  methods: {
+    calculateTotal(data) {
+      let total = 0;
+      for (let i = 0; i < data.length; i += 1) {
+        total += parseInt(data[i].price, 10);
+      }
+      return total;
+    },
+  },
+};
+</script>

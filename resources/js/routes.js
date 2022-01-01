@@ -32,10 +32,6 @@ export const routes = [
         component: render('frontend/Detail'),
       },
       {
-        path: 'cart',
-        component: render('frontend/Cart'),
-      },
-      {
         path: 'shop',
         component: render('frontend/Shop'),
       },
