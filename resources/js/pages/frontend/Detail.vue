@@ -67,14 +67,9 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="product__details__text">
                             <h3>Vetgetable’s Package</h3>
-                            <div class="product__details__price">$50.00</div>
+                            <div class="product__details__price">${{product.price}}</div>
                             <p>
-                                Mauris blandit aliquet elit, eget tincidunt nibh
-                                pulvinar a. Vestibulum ac diam sit amet quam
-                                vehicula elementum sed sit amet dui. Sed
-                                porttitor lectus nibh. Vestibulum ac diam sit
-                                amet quam vehicula elementum sed sit amet dui.
-                                Proin eget tortor risus.
+                                {{product.description}}
                             </p>
                             <div class="product__details__quantity">
                                 <div class="quantity">
@@ -86,10 +81,8 @@
                             <a href="#" class="primary-btn">ADD TO CARD</a>
                             <ul>
                                 <li>
-                                    <b>Availability</b> <span>In Stock</span>
+                                    <b>Availability</b> <span v-if="product.is_instock">In Stock</span> <span v-else>Out of Stock</span>
                                 </li>
-
-                                <li><b>Weight</b> <span>0.5 kg</span></li>
                             </ul>
                         </div>
                     </div>
@@ -235,3 +228,27 @@
         <!-- Related Product Section End -->
     </div>
 </template>
+
+<script>
+export default {
+  props: ['id'],
+  data() {
+    return {
+      product: [],
+    };
+  },
+  methods: {
+    async fetchProduct() {
+      try {
+        const res = await axios.get(`products/${this.id}`);
+        this.product = res.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchProduct();
+  },
+};
+</script>

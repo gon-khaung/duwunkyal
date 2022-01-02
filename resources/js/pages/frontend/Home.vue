@@ -68,11 +68,8 @@
                                     <li>
                                         <a
                                             href="#"
-                                            @click.prevent="
-                                                addToCart(product.id)
-                                            "
-                                            ><i class="fa fa-shopping-cart"></i
-                                        ></a>
+                                            @click="$router.push(`product/${product.id}`)"
+                                            ><i class="fas fa-eye"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -121,27 +118,27 @@ export default {
     };
   },
   methods: {
-    addToCart(id) {
-      let products = this.products.filter((product) => product.id === id);
-      const filterProducts = this.getLocalstorage('cartProducts').filter(
-        (cart) => cart.id === id,
-      );
-      if (filterProducts.length > 0) return;
+    // addToCart(id) {
+    //   let products = this.products.filter((product) => product.id === id);
+    //   const filterProducts = this.getLocalstorage('cartProducts').filter(
+    //     (cart) => cart.id === id,
+    //   );
+    //   if (filterProducts.length > 0) return;
 
-      products = [...this.getLocalstorage('cartProducts'), ...products];
+    //   products = [...this.getLocalstorage('cartProducts'), ...products];
 
-      this.setLocalstorage('cartProducts', products);
+    //   this.setLocalstorage('cartProducts', products);
 
-      this.$store.commit('setCart', products);
+    //   this.$store.commit('setCart', products);
 
-      Toast.success('Added To Cart');
-    },
-    setLocalstorage(name, data) {
-      localStorage.setItem(name, JSON.stringify(data));
-    },
-    getLocalstorage(name) {
-      return JSON.parse(localStorage.getItem(name));
-    },
+    //   Toast.success('Added To Cart');
+    // },
+    // setLocalstorage(name, data) {
+    //   localStorage.setItem(name, JSON.stringify(data));
+    // },
+    // getLocalstorage(name) {
+    //   return JSON.parse(localStorage.getItem(name));
+    // },
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');

@@ -42,7 +42,8 @@ class SubproductController extends Controller
             // $image = $this->uploadBase64($request->image, "add", null);
 
             $subproduct = new Subproduct();
-            $subproduct->size = $request->size;
+            $subproduct->size_id = $request->size_id;
+            $subproduct->color_id = $request->color_id;
             $subproduct->product_id = $request->product_id;
             // $subproduct->image = $image;
             $subproduct->save();
@@ -88,7 +89,8 @@ class SubproductController extends Controller
                 $subproduct->image = $image;
             }
 
-            $subproduct->name = $request->name;
+            $subproduct->size_id = $request->size_id;
+            $subproduct->color_id = $request->color_id;
             $subproduct->update();
             return response()->json([
                 "success" => true,

@@ -33,7 +33,7 @@
                     <li @click="$router.push('')">
                         <a href="">Shop</a>
                     </li>
-                    <li @click="$router.push('cart')" class="active">
+                    <li @click="$router.push('checkout')" class="active">
                         <a href="">Cart</a>
                     </li>
                     <li @click="$router.push('contact')" class="active">
@@ -164,7 +164,7 @@
                         <div class="header__cart">
                             <ul>
                                 <li>
-                                    <a href="#" @click="$router.push('cart')"
+                                    <a href="#" @click="$router.push('checkout')"
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
                                             $store.state.cart.length
@@ -187,7 +187,6 @@
             v-if="
                 !$route.path.includes('login') &&
                 !$route.path.includes('register') &&
-                !$route.path.includes('cart') &&
                 !$route.path.includes('checkout')
             "
         >

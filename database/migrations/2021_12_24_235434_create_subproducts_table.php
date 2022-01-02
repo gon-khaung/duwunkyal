@@ -15,11 +15,19 @@ class CreateSubProductsTable extends Migration
     {
         Schema::create("subproducts", function (Blueprint $table) {
             $table->id();
-            $table->string("size")->nullable();
             $table->string("image")->nullable();
+            $table->boolean("is_instock")->default(true);
             $table
                 ->foreignId("product_id")
                 ->constrained()
+                ->onDelete("cascade");
+            $table
+                ->foreignId("color_id")
+                ->constrained('dynamic_names')
+                ->onDelete("cascade");
+            $table
+                ->foreignId("size_id")
+                ->constrained('dynamic_names')
                 ->onDelete("cascade");
             $table->timestamps();
         });

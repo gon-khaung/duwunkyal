@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DynamicNameController;
 use App\Http\Controllers\SitecontactController;
 use App\Http\Controllers\SubproductController;
 
@@ -22,6 +23,9 @@ Route::prefix("auth")->group(function () {
 
 // ==== category ====
 Route::resource("categories", CategoryController::class);
+
+// ==== dynamic ====
+Route::resource("dynamicnames", DynamicNameController::class);
 
 // ==== contact ====
 Route::resource("contacts", ContactController::class);
