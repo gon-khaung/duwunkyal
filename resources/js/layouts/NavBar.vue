@@ -164,7 +164,9 @@
                         <div class="header__cart">
                             <ul>
                                 <li>
-                                    <a href="#" @click="$router.push('checkout')"
+                                    <a
+                                        href="#"
+                                        @click="$router.push('checkout')"
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
                                             $store.state.cart.length
@@ -192,13 +194,13 @@
         >
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" v-if="isDep">
                         <div class="hero__categories">
                             <div class="hero__categories__all">
                                 <i class="fa fa-bars"></i>
                                 <span>All departments</span>
                             </div>
-                            <ul>
+                            <ul :class="isNone ? 'd-none' : ''">
                                 <li>
                                     <a
                                         href="#"
@@ -211,7 +213,7 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="hero__search">
+                        <div class="hero__search" v-if="isSearch">
                             <div class="hero__search__form">
                                 <form action="#">
                                     <input
@@ -235,7 +237,8 @@
                         </div>
                         <div
                             class="hero__item set-bg"
-                            data-setbg="img/hero/banner.jpg"
+                            data-setbg="https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg"
+                            v-if="isSecondHead"
                         >
                             <div class="hero__text">
                                 <span>FRUIT FRESH</span>
@@ -255,6 +258,24 @@
 import { Toast, Dialog } from 'vant';
 
 export default {
+  props: {
+    isSearch: {
+      type: Boolean,
+      default: true,
+    },
+    isSecondHead: {
+      type: Boolean,
+      default: true,
+    },
+    isDep: {
+      type: Boolean,
+      default: true,
+    },
+    isNone: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       categories: [],
