@@ -186,7 +186,7 @@
                                 >
                                     <a
                                         href=""
-                                        @click.prevent="$router.push('shop')"
+                                        @click.prevent="$router.push('/shop')"
                                         >Shop</a
                                     >
                                 </li>
@@ -197,7 +197,9 @@
                                 >
                                     <a
                                         href=""
-                                        @click.prevent="$router.push('contact')"
+                                        @click.prevent="
+                                            $router.push('/contact')
+                                        "
                                         >Contact</a
                                     >
                                 </li>
@@ -211,7 +213,7 @@
                                     <a
                                         href="#"
                                         @click.prevent="
-                                            $router.push('checkout')
+                                            $router.push('/checkout')
                                         "
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
