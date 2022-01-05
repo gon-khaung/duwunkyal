@@ -20,10 +20,15 @@ class ProductController extends Controller
      *  GET api/products
      *  to get all products
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $products = Product::all();
+            if ($request->category_id) {
+                $products = Product::where('category_id', $request->category_id)->limit(5)->get();
+            } else {
+                $products = Product::all();
+            }
+
             return response()->json([
                 "success" => true,
                 "data" => $products,

@@ -49,43 +49,11 @@
                     </div>
                 </div>
                 <div class="row featured__filter">
-                    <div
-                        class="
-                            col-lg-3 col-md-4 col-sm-6
-                            mix
-                            oranges
-                            fresh-meat
-                        "
+                    <Product
+                        :data="product"
                         v-for="(product, index) in products"
                         :key="index"
-                    >
-                        <div class="featured__item">
-                            <div
-                                class="featured__item__pic set-bg"
-                                :style="`background-image: url(https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg)`"
-                            >
-                                <ul class="featured__item__pic__hover">
-                                    <li>
-                                        <a
-                                            href="#"
-                                            @click="
-                                                $router.push(
-                                                    `product/${product.id}`
-                                                )
-                                            "
-                                            ><i class="fas fa-eye"></i
-                                        ></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="featured__item__text">
-                                <h6>
-                                    <a href="#">{{ product.name }}</a>
-                                </h6>
-                                <h5>${{ product.price }}</h5>
-                            </div>
-                        </div>
-                    </div>
+                    />
                 </div>
             </div>
         </section>
@@ -112,7 +80,10 @@
     </div>
 </template>
 <script>
+import Product from './components/Product.vue';
+
 export default {
+  components: { Product },
   data() {
     return {
       products: [],
