@@ -10,17 +10,17 @@
                 <div class="header__top__right__auth">
                     <a
                         href=""
-                        @click="$router.push('/auth/login')"
+                        @click.prevent="$router.push('/auth/login')"
                         v-if="!$auth.check()"
                         ><i class="fa fa-user"></i> Login
                     </a>
                     <a
                         href=""
-                        @click="$router.push('/auth/register')"
+                        @click.prevent="$router.push('/auth/register')"
                         v-if="!$auth.check()"
                         ><i class="fa fa-user"></i> Register
                     </a>
-                    <a href="" @click="logout()" v-if="$auth.check()"
+                    <a href="" @click.prevent="logout()" v-if="$auth.check()"
                         ><i class="fa fa-user"></i> Log Out
                     </a>
                 </div>
@@ -28,16 +28,33 @@
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
                     <li @click="$router.push('/')">
-                        <a href="">Home</a>
+                        <a
+                            href=""
+                            :class="
+                                !linkIsActive('/shop') &&
+                                !linkIsActive('/contact') &&
+                                !linkIsActive('/product') &&
+                                !linkIsActive('/checkout') &&
+                                !linkIsActive('/contact')
+                                    ? 'active'
+                                    : ''
+                            "
+                            >Home</a
+                        >
                     </li>
                     <li @click="$router.push('')">
-                        <a href="">Shop</a>
+                        <a
+                            href=""
+                            :class="linkIsActive('/shop') ? 'active' : ''"
+                            >Shop</a
+                        >
                     </li>
-                    <li @click="$router.push('checkout')" class="active">
-                        <a href="">Cart</a>
-                    </li>
-                    <li @click="$router.push('contact')" class="active">
-                        <a href="">Contact</a>
+                    <li @click.prevent="$router.push('contact')" class="active">
+                        <a
+                            href=""
+                            :class="linkIsActive('/contact') ? 'active' : ''"
+                            >Contact</a
+                        >
                     </li>
                 </ul>
             </nav>
@@ -96,7 +113,9 @@
                                 >
                                     <a
                                         href=""
-                                        @click="$router.push('/auth/login')"
+                                        @click.prevent="
+                                            $router.push('/auth/login')
+                                        "
                                         ><i class="fa fa-user"></i> Login
                                     </a>
                                 </div>
@@ -107,7 +126,9 @@
                                 >
                                     <a
                                         href=""
-                                        @click="$router.push('/auth/register')"
+                                        @click.prevent="
+                                            $router.push('/auth/register')
+                                        "
                                         ><i class="fa fa-user"></i> Register
                                     </a>
                                 </div>
@@ -142,18 +163,41 @@
                     <div class="col-lg-6">
                         <nav class="header__menu">
                             <ul class="text-center">
-                                <li>
-                                    <a href="" @click="$router.push('/')"
+                                <li
+                                    :class="
+                                        !linkIsActive('/shop') &&
+                                        !linkIsActive('/contact') &&
+                                        !linkIsActive('/product') &&
+                                        !linkIsActive('/checkout')
+                                            ? 'active'
+                                            : ''
+                                    "
+                                >
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('/')"
                                         >Home</a
                                     >
                                 </li>
-                                <li>
-                                    <a href="" @click="$router.push('')"
+                                <li
+                                    :class="
+                                        linkIsActive('/shop') ? 'active' : ''
+                                    "
+                                >
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('shop')"
                                         >Shop</a
                                     >
                                 </li>
-                                <li class="active">
-                                    <a href="" @click="$router.push('contact')"
+                                <li
+                                    :class="
+                                        linkIsActive('/contact') ? 'active' : ''
+                                    "
+                                >
+                                    <a
+                                        href=""
+                                        @click.prevent="$router.push('contact')"
                                         >Contact</a
                                     >
                                 </li>
@@ -166,7 +210,9 @@
                                 <li>
                                     <a
                                         href="#"
-                                        @click="$router.push('checkout')"
+                                        @click.prevent="
+                                            $router.push('checkout')
+                                        "
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
                                             $store.state.cart.length
@@ -282,6 +328,17 @@ export default {
     };
   },
   methods: {
+    /* example link = '/settings' */
+    linkIsActive(link) {
+      const paths = Array.isArray(link) ? link : [link];
+      const res = paths.some(
+        (path) => this.$route.path.indexOf(path) === 0,
+      );
+      if (res) {
+        return true;
+      }
+      return false;
+    },
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');

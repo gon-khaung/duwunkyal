@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NavBar />
         <!-- Breadcrumb Section Begin -->
         <section
             class="breadcrumb-section set-bg"

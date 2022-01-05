@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NavBar />
         <!-- Checkout Section Begin -->
         <section class="checkout spad">
             <div class="container">
