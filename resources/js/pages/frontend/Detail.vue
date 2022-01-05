@@ -31,34 +31,7 @@
                             <div class="product__details__pic__item">
                                 <img
                                     class="product__details__pic__item--large"
-                                    src="img/product/details/product-details-1.jpg"
-                                    alt=""
-                                />
-                            </div>
-                            <div
-                                class="
-                                    product__details__pic__slider
-                                    owl-carousel
-                                "
-                            >
-                                <img
-                                    data-imgbigurl="img/product/details/product-details-2.jpg"
-                                    src="img/product/details/thumb-1.jpg"
-                                    alt=""
-                                />
-                                <img
-                                    data-imgbigurl="img/product/details/product-details-3.jpg"
-                                    src="img/product/details/thumb-2.jpg"
-                                    alt=""
-                                />
-                                <img
-                                    data-imgbigurl="img/product/details/product-details-5.jpg"
-                                    src="img/product/details/thumb-3.jpg"
-                                    alt=""
-                                />
-                                <img
-                                    data-imgbigurl="img/product/details/product-details-4.jpg"
-                                    src="img/product/details/thumb-4.jpg"
+                                    src="https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg"
                                     alt=""
                                 />
                             </div>
@@ -67,21 +40,91 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="product__details__text">
                             <h3>Vetgetable’s Package</h3>
-                            <div class="product__details__price">${{product.price}}</div>
+                            <div class="product__details__price">
+                                ${{ product.price }}
+                            </div>
                             <p>
-                                {{product.description}}
+                                {{ product.description }}
                             </p>
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1" />
+                            <div class="theme-light preload">
+                                <div class="row">
+                                    <div
+                                        class="
+                                            input input--radio input--primary
+                                        "
+                                        style="margin-right: 20px"
+                                        v-for="(color, index) in product.colors"
+                                        :key="index"
+                                    >
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="radio--light-primary"
+                                                checked
+                                            />
+                                            <span class="input__box"></span>
+                                            <span>{{ color }}</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="primary-btn">ADD TO CARD</a>
+                            <div class="theme-light preload">
+                                <div class="row">
+                                    <div
+                                        class="
+                                            input input--radio input--secondary
+                                        "
+                                        style="margin-right: 20px"
+                                        v-for="(size, index) in product.sizes"
+                                        :key="index"
+                                    >
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="radio--light-secondary"
+                                                checked
+                                            />
+                                            <span class="input__box"></span>
+                                            <span>{{ size }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="product__details__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <a
+                                    href="#"
+                                    @click.prevent="addToCart(product.id)"
+                                    class="primary-btn"
+                                    v-if="!isCart"
+                                    >ADD TO CART</a
+                                >
+                                <a
+                                    href="#"
+                                    @click.prevent="removeFromCart(product.id)"
+                                    class="primary-btn"
+                                    v-else
+                                    >REMOVE FROM CART</a
+                                >
+                            </div>
+
                             <ul>
                                 <li>
-                                    <b>Availability</b> <span v-if="product.is_instock">In Stock</span> <span v-else>Out of Stock</span>
+                                    <b>Availability</b>
+                                    <span
+                                        v-if="product.is_instock"
+                                        class="text-success"
+                                        >In Stock</span
+                                    >
+                                    <span v-else class="text-danger"
+                                        >Out of Stock</span
+                                    >
                                 </li>
                             </ul>
                         </div>
@@ -230,14 +273,64 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
+
 export default {
   props: ['id'],
   data() {
     return {
       product: [],
+      isCart: false,
+      size: [],
+      color: [],
     };
   },
   methods: {
+    checkIsProductIsInLocalstorage(id) {
+      const filterProducts = this.getLocalstorage('cartProducts').filter(
+        (cart) => cart.id === parseInt(id, 10),
+      );
+      if (filterProducts.length > 0) {
+        this.isCart = true;
+        return true;
+      }
+      console.log('false');
+      this.isCart = false;
+      return false;
+    },
+    addToCart(id) {
+      const products = [
+        ...this.getLocalstorage('cartProducts'),
+        this.product,
+      ];
+
+      this.setLocalstorage('cartProducts', products);
+
+      this.$store.commit('setCart', products);
+
+      Toast.success('Added!');
+
+      this.isCart = true;
+    },
+    removeFromCart(id) {
+      const products = this.getLocalstorage('cartProducts').filter(
+        (cart) => cart.id !== id,
+      );
+
+      this.setLocalstorage('cartProducts', products);
+
+      this.$store.commit('setCart', products);
+
+      Toast.success('Removed!');
+
+      this.isCart = false;
+    },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
+    },
+    getLocalstorage(name) {
+      return JSON.parse(localStorage.getItem(name));
+    },
     async fetchProduct() {
       try {
         const res = await axios.get(`products/${this.id}`);
@@ -249,6 +342,7 @@ export default {
   },
   mounted() {
     this.fetchProduct();
+    this.checkIsProductIsInLocalstorage(this.id);
   },
 };
 </script>
