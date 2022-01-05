@@ -37,22 +37,21 @@
                                         Products <span>Total</span>
                                     </div>
                                     <ul>
-                                        <li>
-                                            Vegetable’s Package
-                                            <span>$75.99</span>
-                                        </li>
-                                        <li>
-                                            Fresh Vegetable <span>$151.99</span>
-                                        </li>
-                                        <li>
-                                            Organic Bananas <span>$53.99</span>
+                                        <li
+                                            v-for="(order, index) in $store
+                                                .state.cart"
+                                            :key="index"
+                                        >
+                                            {{ order.name }}
+                                            <span>{{ order.price }} MMK</span>
                                         </li>
                                     </ul>
                                     <div class="checkout__order__subtotal">
-                                        Subtotal <span>$750.99</span>
+                                        Subtotal
+                                        <span>{{ getTotal() }} MMK</span>
                                     </div>
                                     <div class="checkout__order__total">
-                                        Total <span>$750.99</span>
+                                        Total <span>{{ getTotal() }} MMK</span>
                                     </div>
                                     <button type="submit" class="site-btn">
                                         PLACE ORDER
@@ -67,3 +66,16 @@
         <!-- Checkout Section End -->
     </div>
 </template>
+<script>
+export default {
+  methods: {
+    getTotal() {
+      let total = 0;
+      for (let i = 0; i < this.$store.state.cart.length; i += 1) {
+        total += parseInt(this.$store.state.cart[i].price, 10);
+      }
+      return total;
+    },
+  },
+};
+</script>
