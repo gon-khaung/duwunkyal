@@ -6,14 +6,43 @@ use App\Http\Resources\ProductResource;
 use Exception;
 use App\Traits\Base64;
 use App\Models\Product;
+use App\Traits\Query;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     use Base64;
+    use Query;
     public function __construct()
     {
         // $this->middleware("auth:api")->only("store", "update");
+    }
+
+    /**
+     *  GET api/products
+     *  to get all products
+     */
+    public function shopProducts(Request $request)
+    {
+        try {
+            request()->validate([
+                "page" => "required",
+                "limit" => "required",
+            ]);
+
+            $products = Product::orderBy('price', $request->type);
+
+            $offset = (intval($request->page) - 1) * intval($request->limit);
+
+            $products = $products->offset($offset)->limit($request->limit)->get();
+
+            return response()->json([
+                "success" => true,
+                "data" => $products,
+            ]);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -25,6 +54,8 @@ class ProductController extends Controller
         try {
             if ($request->category_id) {
                 $products = Product::where('category_id', $request->category_id)->limit(5)->get();
+            } elseif ($request->latest) {
+                $products = Product::limit(6)->orderBy('created_at', 'desc')->get();
             } else {
                 $products = Product::all();
             }

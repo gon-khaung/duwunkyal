@@ -27,9 +27,10 @@
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li @click="$router.push('/')">
+                    <li>
                         <a
-                            href=""
+                            href="#"
+                            @click.prevent="$router.push('/')"
                             :class="
                                 !linkIsActive('/shop') &&
                                 !linkIsActive('/contact') &&
@@ -42,16 +43,18 @@
                             >Home</a
                         >
                     </li>
-                    <li @click="$router.push('')">
+                    <li>
                         <a
-                            href=""
+                            href="#"
+                            @click.prevent="$router.push('/shop')"
                             :class="linkIsActive('/shop') ? 'active' : ''"
                             >Shop</a
                         >
                     </li>
-                    <li @click.prevent="$router.push('contact')" class="active">
+                    <li class="active">
                         <a
-                            href=""
+                            href="#"
+                            @click.prevent="$router.push('/contact')"
                             :class="linkIsActive('/contact') ? 'active' : ''"
                             >Contact</a
                         >

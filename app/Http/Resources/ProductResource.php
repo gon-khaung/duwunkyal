@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Models\DynamicName;
-use App\Models\Subproduct;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource

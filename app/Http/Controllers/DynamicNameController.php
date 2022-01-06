@@ -20,7 +20,10 @@ class DynamicNameController extends Controller
     public function index(Request $request)
     {
         try {
-            $data = DynamicName::where('type', $request->name)->get();
+            if ($request->name)
+                $data = DynamicName::where('type', $request->name)->get();
+            else
+                $data = DynamicName::all();
             return response()->json([
                 "success" => true,
                 "data" => $data,

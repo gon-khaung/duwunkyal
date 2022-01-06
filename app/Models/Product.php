@@ -15,9 +15,4 @@ class Product extends Model
         'colors' => 'array',
         'sizes' => 'array',
     ];
-
-    public function subproducts()
-    {
-        return $this->hasMany(Subproduct::class)->orderBy("created_at", "desc");
-    }
 }
