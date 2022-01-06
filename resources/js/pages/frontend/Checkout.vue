@@ -11,17 +11,27 @@
                             <div class="col-lg-8 col-md-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text" />
+                                    <input type="text" v-model="phone" />
+                                    <p class="text-danger" v-if="errors.phone">
+                                        {{ errors.phone }}
+                                    </p>
                                 </div>
                                 <div class="checkout__input">
                                     <p>Address<span>*</span></p>
-                                    <input type="text" />
+                                    <input type="text" v-model="address" />
+                                    <p
+                                        class="text-danger"
+                                        v-if="errors.address"
+                                    >
+                                        {{ errors.address }}
+                                    </p>
                                 </div>
                                 <div class="checkout__input">
-                                    <p>Order notes<span>*</span></p>
+                                    <p>Order notes<span> (Optional)</span></p>
                                     <input
                                         type="text"
                                         placeholder="Notes about your order, e.g. special notes for delivery."
+                                        v-model="note"
                                     />
                                 </div>
                                 <p>
@@ -53,7 +63,11 @@
                                     <div class="checkout__order__total">
                                         Total <span>{{ getTotal() }} MMK</span>
                                     </div>
-                                    <button type="submit" class="site-btn">
+                                    <button
+                                        type="button"
+                                        @click="finalOrder"
+                                        class="site-btn"
+                                    >
                                         PLACE ORDER
                                     </button>
                                 </div>
@@ -68,6 +82,17 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      phone: null,
+      address: null,
+      note: null,
+      errors: {
+        phone: null,
+        address: null,
+      },
+    };
+  },
   methods: {
     getTotal() {
       let total = 0;
@@ -75,6 +100,33 @@ export default {
         total += parseInt(this.$store.state.cart[i].price, 10);
       }
       return total;
+    },
+    async finalOrder() {
+      if (!this.phone) {
+        this.errors.phone = 'Phone Number is required!';
+        return false;
+      }
+      if (!this.address) {
+        this.errors.phone = null;
+        this.errors.address = 'Address is required!';
+        return false;
+      }
+      try {
+        const res = await axios.post('orders', {
+          phone: this.phone,
+          address: this.address,
+          note: this.note,
+          total: this.getTotal(),
+          products: this.$store.state.cart,
+        });
+        this.phone = null;
+        this.address = null;
+        this.note = null;
+        this.$store.commit('setCart', []);
+      } catch (error) {
+        console.log(error);
+      }
+      return true;
     },
   },
 };

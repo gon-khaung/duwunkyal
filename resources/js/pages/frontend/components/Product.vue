@@ -7,7 +7,12 @@
             >
                 <ul class="featured__item__pic__hover">
                     <li>
-                        <a href="#" @click="$router.push(`/product/${data.id}`)"
+                        <a
+                            href="#"
+                            @click="
+                                $router.push(`/product/${data.id}`),
+                                    sendRequest(data.id)
+                            "
                             ><i class="fas fa-eye"></i
                         ></a>
                     </li>
@@ -25,5 +30,10 @@
 <script>
 export default {
   props: ['data'],
+  methods: {
+    sendRequest(id) {
+      this.$emit('test', id);
+    },
+  },
 };
 </script>

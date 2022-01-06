@@ -273,11 +273,7 @@ export default {
       else this.type = 'asc';
       this.fetchProducts();
     },
-    textCapitalize(text) {
-      let newText = text;
-      newText = newText.charAt(0).toUpperCase() + newText.slice(1);
-      return newText;
-    },
+
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');
