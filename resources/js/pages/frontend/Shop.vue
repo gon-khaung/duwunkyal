@@ -15,10 +15,21 @@
                                 <h4>Department</h4>
                                 <ul>
                                     <li
-                                        v-for="(category, index) in categories"
+                                        v-for="(cat, index) in categories"
                                         :key="index"
                                     >
-                                        <a href="#">{{ category.name }}</a>
+                                        <a
+                                            href="#"
+                                            @click.prevent="
+                                                changeCategory(cat.id)
+                                            "
+                                            :class="
+                                                category === cat.id
+                                                    ? 'category-active'
+                                                    : ''
+                                            "
+                                            >{{ cat.name }}</a
+                                        >
                                     </li>
                                 </ul>
                             </div>
@@ -112,6 +123,7 @@
                                             trigger="click"
                                             :actions="actions"
                                             @select="onSelect"
+                                            style="cursor: pointer"
                                         >
                                             <template #reference>
                                                 <span
@@ -135,6 +147,18 @@
                                         </h6>
                                     </div>
                                 </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="filter__found">
+                                        <h6
+                                            style="cursor: pointer"
+                                            @click="allProducts"
+                                        >
+                                            <span style="color: #7fad39"
+                                                ><u> All Products </u></span
+                                            >
+                                        </h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -149,25 +173,17 @@
                                         :data-setbg="product.image"
                                     >
                                         <ul class="product__item__pic__hover">
-                                            <ul
-                                                class="
-                                                    featured__item__pic__hover
-                                                "
-                                            >
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        @click="
-                                                            $router.push(
-                                                                `/product/${product.id}`
-                                                            )
-                                                        "
-                                                        ><i
-                                                            class="fas fa-eye"
-                                                        ></i
-                                                    ></a>
-                                                </li>
-                                            </ul>
+                                            <li>
+                                                <a
+                                                    href="#"
+                                                    @click="
+                                                        $router.push(
+                                                            `/product/${product.id}`
+                                                        )
+                                                    "
+                                                    ><i class="fas fa-eye"></i
+                                                ></a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -231,9 +247,15 @@ export default {
     page() {
       this.fetchProducts();
     },
+    category() {
+      this.fetchProducts();
+    },
   },
   components: { Breadcrumb },
   methods: {
+    allProducts() {
+      this.category = null;
+    },
     incPage() {
       this.page += 1;
     },
@@ -242,6 +264,9 @@ export default {
     },
     paginate(no) {
       this.page = no;
+    },
+    changeCategory(id) {
+      this.category = id;
     },
     onSelect(action) {
       if (action.text === 'Desc') this.type = 'desc';
@@ -304,5 +329,15 @@ export default {
     background: #7fad39;
     color: white;
     border: none;
+}
+.category-active {
+    color: #7fad39;
+}
+.custom-button {
+    color: white;
+    background: #7fad39;
+    border-radius: 5px;
+    padding: 0px 20px;
+    border: 1px solid #7fad39;
 }
 </style>

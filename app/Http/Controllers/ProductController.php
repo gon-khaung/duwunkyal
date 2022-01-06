@@ -30,9 +30,17 @@ class ProductController extends Controller
                 "limit" => "required",
             ]);
 
-            $products = Product::orderBy('price', $request->type);
+            if (!$request->category_id) {
 
-            $total = count(Product::all());
+                $products = Product::orderBy('price', $request->type);
+
+                $total = count(Product::all());
+            } else {
+
+                $products = Product::where('category_id', $request->category_id)->orderBy('price', $request->type);
+
+                $total = count(Product::where('category_id', $request->category_id)->get());
+            }
 
             $offset = (intval($request->page) - 1) * intval($request->limit);
 
