@@ -130,7 +130,7 @@
                                 <div class="col-lg-4 col-md-4">
                                     <div class="filter__found">
                                         <h6>
-                                            <span>{{ products.length }}</span>
+                                            <span>{{ totalProducts }}</span>
                                             Products found
                                         </h6>
                                     </div>
@@ -180,10 +180,24 @@
                             </div>
                         </div>
                         <div class="product__pagination">
-                            <a href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#"
+                            <a
+                                href="#"
+                                v-if="page !== 1"
+                                @click.prevent="decPage()"
+                                ><i class="fa fa-long-arrow-left"></i
+                            ></a>
+                            <a
+                                href="#"
+                                v-for="(pagi, index) in total"
+                                :key="index"
+                                @click.prevent="paginate(pagi)"
+                                :class="pagi === page ? 'pagi-active' : ''"
+                                >{{ pagi }}</a
+                            >
+                            <a
+                                href="#"
+                                v-if="page < total"
+                                @click.prevent="incPage()"
                                 ><i class="fa fa-long-arrow-right"></i
                             ></a>
                         </div>
@@ -198,20 +212,37 @@
 import Breadcrumb from './components/Breadcrumb.vue';
 
 export default {
+  props: ['id'],
   data() {
     return {
       categories: [],
       products: [],
       latestProducts: [],
-      category: null,
+      category: this.id ? this.id : null,
       showPopover: false,
       actions: [{ text: 'Desc' }, { text: 'Asc' }],
       page: 1,
+      total: null,
       type: 'asc',
+      totalProducts: null,
     };
+  },
+  watch: {
+    page() {
+      this.fetchProducts();
+    },
   },
   components: { Breadcrumb },
   methods: {
+    incPage() {
+      this.page += 1;
+    },
+    decPage() {
+      this.page -= 1;
+    },
+    paginate(no) {
+      this.page = no;
+    },
     onSelect(action) {
       if (action.text === 'Desc') this.type = 'desc';
       else this.type = 'asc';
@@ -253,6 +284,9 @@ export default {
           },
         });
         this.products = res.data.data;
+        this.total = Math.ceil(res.data.total / 9);
+        this.totalProducts = res.data.total;
+        console.log(this.total);
       } catch (error) {
         console.log(error);
       }
@@ -265,3 +299,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.pagi-active {
+    background: #7fad39;
+    color: white;
+    border: none;
+}
+</style>

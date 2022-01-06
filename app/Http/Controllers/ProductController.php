@@ -32,6 +32,8 @@ class ProductController extends Controller
 
             $products = Product::orderBy('price', $request->type);
 
+            $total = count(Product::all());
+
             $offset = (intval($request->page) - 1) * intval($request->limit);
 
             $products = $products->offset($offset)->limit($request->limit)->get();
@@ -39,6 +41,7 @@ class ProductController extends Controller
             return response()->json([
                 "success" => true,
                 "data" => $products,
+                "total" => $total,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
