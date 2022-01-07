@@ -318,11 +318,27 @@ export default {
         console.log(error);
       }
     },
+    async searchProducts(search) {
+      try {
+        const res = await axios.get('/products', {
+          params: {
+            search,
+          },
+        });
+        this.products = res.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
     this.fetchCategories();
     this.fetchLatestProducts();
-    this.fetchProducts();
+    if (this.$route.query.search) {
+      this.searchProducts(this.$route.query.search);
+    } else {
+      this.fetchProducts();
+    }
   },
 };
 </script>

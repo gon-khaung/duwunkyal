@@ -67,6 +67,8 @@ class ProductController extends Controller
                 $products = Product::where('category_id', $request->category_id)->limit(5)->get();
             } elseif ($request->latest) {
                 $products = Product::limit(6)->orderBy('created_at', 'desc')->get();
+            } elseif ($request->search) {
+                $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
             } else {
                 $products = Product::all();
             }

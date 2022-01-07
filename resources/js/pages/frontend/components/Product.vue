@@ -1,10 +1,7 @@
 <template>
     <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
         <div class="featured__item">
-            <div
-                class="featured__item__pic set-bg"
-                :style="`background-image: url(https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg)`"
-            >
+            <div class="featured__item__pic set-bg" :style="data.image">
                 <ul class="featured__item__pic__hover">
                     <li>
                         <a
@@ -22,7 +19,7 @@
                 <h6>
                     <a href="#">{{ data.name }}</a>
                 </h6>
-                <h5>${{ data.price }}</h5>
+                <h5>{{ data.price }} MMK</h5>
             </div>
         </div>
     </div>

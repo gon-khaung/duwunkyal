@@ -265,8 +265,12 @@
                                     <input
                                         type="text"
                                         placeholder="What do yo u need?"
+                                        v-model="search"
                                     />
-                                    <button type="submit" class="site-btn">
+                                    <button
+                                        @click.prevent="searchProducts"
+                                        class="site-btn"
+                                    >
                                         SEARCH
                                     </button>
                                 </form>
@@ -330,9 +334,20 @@ export default {
   data() {
     return {
       categories: [],
+      search: null,
     };
   },
   methods: {
+    searchProducts() {
+      try {
+        this.$router.push({
+          path: '/shop',
+          query: { search: this.search },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     /* example link = '/settings' */
     linkIsActive(link) {
       const paths = Array.isArray(link) ? link : [link];
