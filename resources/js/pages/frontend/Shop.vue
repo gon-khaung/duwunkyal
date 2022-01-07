@@ -24,7 +24,8 @@
                                                 changeCategory(cat.id)
                                             "
                                             :class="
-                                                category === cat.id
+                                                parseInt(category, 10) ===
+                                                cat.id
                                                     ? 'category-active'
                                                     : ''
                                             "

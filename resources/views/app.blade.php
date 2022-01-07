@@ -61,14 +61,6 @@ for (let radioIndex = $radiobuttons.length - 1; radioIndex >= 0; radioIndex--) {
   const $radio = $radiobuttons[radioIndex];
   // ...
 }
-setTimeout(() => { /* TODO: prevent this timeout */
-  const $preloadElements = document.getElementsByClassName('preload');
-  for (let preloadIndex = $preloadElements.length - 1; preloadIndex >= 0; preloadIndex--) {
-    const $preload = $preloadElements[preloadIndex];
-    $preload.classList.remove('preload');
-  }
-}, 500);
-
     </script>
 </body>
 

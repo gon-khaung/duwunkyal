@@ -7,11 +7,12 @@
                 <a href="#"><img src="img/logo.png" alt="" /></a>
             </div>
             <div class="humberger__menu__widget">
-                <div class="header__top__right__auth">
+                <div class="header__top__right__auth login_auth">
                     <a
                         href=""
                         @click.prevent="$router.push('/auth/login')"
                         v-if="!$auth.check()"
+                        class="mr-2"
                         ><i class="fa fa-user"></i> Login
                     </a>
                     <a
@@ -64,9 +65,9 @@
             <div id="mobile-menu-wrap"></div>
             <div class="header__top__right__social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#"><i class="fab fa-viber"></i></a>
             </div>
             <div class="humberger__menu__contact">
                 <ul>
@@ -100,15 +101,11 @@
                                     <a href="#"
                                         ><i class="fa fa-facebook"></i
                                     ></a>
+                                    <a href="#"><i class="fas fa-phone"></i></a>
                                     <a href="#"
-                                        ><i class="fa fa-twitter"></i
+                                        ><i class="fab fa-telegram-plane"></i
                                     ></a>
-                                    <a href="#"
-                                        ><i class="fa fa-linkedin"></i
-                                    ></a>
-                                    <a href="#"
-                                        ><i class="fa fa-pinterest-p"></i
-                                    ></a>
+                                    <a href="#"><i class="fab fa-viber"></i></a>
                                 </div>
                                 <div
                                     class="header__top__right__auth"
@@ -176,9 +173,7 @@
                                             : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('/')"
+                                    <a href="" @click="$router.push('/')"
                                         >Home</a
                                     >
                                 </li>
@@ -187,9 +182,7 @@
                                         linkIsActive('/shop') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('/shop')"
+                                    <a href="" @click="$router.push('/shop')"
                                         >Shop</a
                                     >
                                 </li>
@@ -198,11 +191,7 @@
                                         linkIsActive('/contact') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="
-                                            $router.push('/contact')
-                                        "
+                                    <a href="" @click="$router.push('/contact')"
                                         >Contact</a
                                     >
                                 </li>
@@ -251,10 +240,16 @@
                                 <i class="fa fa-bars"></i>
                                 <span>All departments</span>
                             </div>
-                            <ul :class="isNone ? 'd-none' : ''">
+                            <ul :style="isNone ? 'display: none' : ''">
                                 <li>
                                     <a
-                                        href="#"
+                                        href=""
+                                        @click="
+                                            $router.push(
+                                                `/shop/category/${category.id}`
+                                            ),
+                                                makeVisible
+                                        "
                                         v-for="(category, index) in categories"
                                         :key="index"
                                         >{{ category.name }}</a
@@ -295,7 +290,12 @@
                                 <span>FRUIT FRESH</span>
                                 <h2>Vegetable <br />100% Organic</h2>
                                 <p>Free Pickup and Delivery Available</p>
-                                <a href="#" class="primary-btn">SHOP NOW</a>
+                                <a
+                                    href=""
+                                    class="primary-btn"
+                                    @click="$router.push('/shop')"
+                                    >SHOP NOW</a
+                                >
                             </div>
                         </div>
                     </div>
@@ -372,3 +372,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.header__top__right__auth {
+    margin-left: 5px;
+    margin-right: 10px;
+}
+</style>
