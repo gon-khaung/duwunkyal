@@ -53,7 +53,10 @@
                                             :key="index"
                                         >
                                             {{ order.name }}
-                                            <span>{{ order.price }} MMK</span>
+                                            <span
+                                                >{{ order.quantity }} x
+                                                {{ order.price }} MMK
+                                            </span>
                                         </li>
                                     </ul>
                                     <div class="checkout__order__subtotal">
@@ -97,7 +100,9 @@ export default {
     getTotal() {
       let total = 0;
       for (let i = 0; i < this.$store.state.cart.length; i += 1) {
-        total += parseInt(this.$store.state.cart[i].price, 10);
+        total
+                    += parseInt(this.$store.state.cart[i].price, 10)
+                    * this.$store.state.cart[i].quantity;
       }
       return total;
     },
