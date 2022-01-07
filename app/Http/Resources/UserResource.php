@@ -16,14 +16,9 @@ class UserResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "amount" => $this->amount,
             "name" => $this->name,
-            "phone" => $this->phone,
+            "email" => $this->email,
             "roles" => $this->roles,
-            "2d_comission" => $this["2d_comission"],
-            "3d_comission" => $this["3d_comission"],
-            "2d_odds" => $this["2d_odds"],
-            "3d_odds" => $this["3d_odds"],
             "isEdit" => false,
         ];
     }

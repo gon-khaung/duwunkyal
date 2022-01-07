@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DynamicNameController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SitecontactController;
+use App\Http\Controllers\UserController;
 
 // use App\Http\Controllers\UserController;
 
@@ -41,3 +42,7 @@ Route::resource("orders", OrderController::class);
 Route::resource("products", ProductController::class);
 
 Route::get("shop_products", [ProductController::class, "shopProducts"]);
+
+Route::post("users", [UserController::class, "index"]);
+Route::put("users/{user}", [UserController::class, "update"]);
+Route::delete("users/{user}", [UserController::class, "destroy"]);

@@ -29,6 +29,14 @@
     <link rel="stylesheet" href="/build/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/build/assets/css/login.css" type="text/css">
 
+    {{-- === for admin dashboard === --}}
+    <!-- Icons -->
+    <link rel="stylesheet" href="/build/dashboard/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="/build/dashboard/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="/build/dashboard/css/argon.css?v=1.2.0" type="text/css">
+
     <script>
         window.baseUrl = "{{ url('/') }}";
     </script>
@@ -47,10 +55,17 @@
     <script src="/build/assets/js/owl.carousel.min.js"></script>
     <script src="/build/assets/js/main.js"></script>
 
-    <script>
-        // See https://github.com/tamino-martinius/ui-snippets-radiobuttons for Source Files build with webpack
-// See https://github.com/tamino-martinius/ui-snippets-template for Snippet Template
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="/build/dashboard/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/build/dashboard/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/build/dashboard/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/build/dashboard/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/build/dashboard/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Argon JS -->
+    <script src="/build/dashboard/js/argon.js?v=1.2.0"></script>
 
+    <script>
 const $inputs = document.getElementsByClassName('input');
 for (let inputIndex = $inputs.length - 1; inputIndex >= 0; inputIndex--) {
   const $input = $inputs[inputIndex];
