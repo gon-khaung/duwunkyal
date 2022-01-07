@@ -53,6 +53,11 @@
                                                     product, index
                                                 ) in latestProducts.slice(0, 3)"
                                                 :key="index"
+                                                @click="
+                                                    $router.push(
+                                                        `/product/${product.id}`
+                                                    )
+                                                "
                                             >
                                                 <div
                                                     class="
