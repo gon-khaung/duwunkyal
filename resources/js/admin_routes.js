@@ -13,8 +13,8 @@ export default [
         component: render("admin-dashboard/UserManagement"),
     },
     {
-        path: "twod-management",
-        component: render("admin-dashboard/TwodManagement"),
+        path: "orders",
+        component: render("admin-dashboard/Orders"),
     },
     {
         path: "threed-management",

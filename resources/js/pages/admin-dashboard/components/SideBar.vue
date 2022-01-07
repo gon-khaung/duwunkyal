@@ -33,92 +33,12 @@
               :class="isMobile ? 'sidenav-toggler' : ''"
             >
               <router-link
-                to="/admin/twod-threed"
-                :class="linkIsActive('/admin/twod-threed') ? 'active' : ''"
-                class="nav-link"
-              >
-                <i class="ni ni-atom"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en" ? "2D 3D" : "နှစ်လုံး သုံးလုံး"
-                }}</b>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              data-action="sidenav-pin"
-              data-target="#sidenav-main"
-              :class="isMobile ? 'sidenav-toggler' : ''"
-            >
-              <router-link
-                to="/admin/betslip-history"
-                :class="linkIsActive('/admin/betslip-history') ? 'active' : ''"
-                class="nav-link"
-              >
-                <i class="ni ni-single-copy-04"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en"
-                    ? "Betslip History"
-                    : "ဘောက်ချာများ"
-                }}</b>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              data-action="sidenav-pin"
-              data-target="#sidenav-main"
-              :class="isMobile ? 'sidenav-toggler' : ''"
-            >
-              <router-link
-                to="/admin/withdraw"
-                :class="
-                  (linkIsActive('/admin/withdraw') ? 'active' : '',
-                  isWithdraws ? 'text-danger' : '')
-                "
-                class="nav-link"
-              >
-                <i class="ni ni-money-coins"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en" ? "Withdraw" : "ငွေထုတ်"
-                }}</b>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              data-action="sidenav-pin"
-              data-target="#sidenav-main"
-              :class="isMobile ? 'sidenav-toggler' : ''"
-            >
-              <router-link
-                to="/admin/deposit"
-                :class="
-                  (linkIsActive('/admin/deposit') ? 'active' : '',
-                  isDeposits ? 'text-danger' : '')
-                "
-                class="nav-link"
-              >
-                <i class="ni ni-credit-card"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en" ? "Deposit" : "ငွေသွင်း"
-                }}</b>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              data-action="sidenav-pin"
-              data-target="#sidenav-main"
-              :class="isMobile ? 'sidenav-toggler' : ''"
-            >
-              <router-link
                 to="/admin/users-management"
                 :class="linkIsActive('/admin/users-management') ? 'active' : ''"
                 class="nav-link"
               >
                 <i class="ni ni-single-02"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en"
-                    ? "User Management"
-                    : "အသုံးပြုသူ ထိန်းချုပ်မှု"
-                }}</b>
+                <b class="nav-link-text">User Management</b>
               </router-link>
             </li>
             <li
@@ -128,16 +48,12 @@
               :class="isMobile ? 'sidenav-toggler' : ''"
             >
               <router-link
-                to="/admin/twod-management"
-                :class="linkIsActive('/admin/twod-management') ? 'active' : ''"
+                to="/admin/orders"
+                :class="linkIsActive('/admin/orders') ? 'active' : ''"
                 class="nav-link"
               >
                 <i class="ni ni-settings-gear-65"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en"
-                    ? "2D Management"
-                    : "နှစ်လုံး ထိန်းချုပ်မှု"
-                }}</b>
+                <b class="nav-link-text">Orders</b>
               </router-link>
             </li>
             <li
@@ -177,24 +93,6 @@
                   $store.state.language === "en"
                     ? "Payment Accounts"
                     : "ငွေပေးချေမှု အကောင့်များ"
-                }}</b>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              data-action="sidenav-pin"
-              data-target="#sidenav-main"
-              :class="isMobile ? 'sidenav-toggler' : ''"
-            >
-              <router-link
-                to="/admin/ledger"
-                :class="linkIsActive('/admin/ledger') ? 'active' : ''"
-                class="nav-link"
-                @click="closeNavCollapse"
-              >
-                <i class="ni ni-tv-2"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en" ? "Ledger" : "လက်ဂျာ"
                 }}</b>
               </router-link>
             </li>

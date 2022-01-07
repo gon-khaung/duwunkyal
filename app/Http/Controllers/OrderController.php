@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use Exception;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -21,10 +22,18 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         try {
-            $categories = Order::all();
+            $orders = Order::orderBy('created_at', 'desc');
+
+            $total = count(Order::all());
+
+            $offset = (intval($request->page) - 1) * intval($request->limit);
+
+            $orders = $orders->offset($offset)->limit($request->limit)->get();
+
             return response()->json([
                 "success" => true,
-                "data" => $categories,
+                "data" => OrderResource::collection($orders),
+                "total" => $total
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -43,8 +52,7 @@ class OrderController extends Controller
             $order->address = $request->address;
             $order->total = $request->total;
             $order->note = $request->note;
-            // $order->user_id = Auth::user()->id;
-            $order->user_id = 1;
+            $order->user_id = Auth::user()->id;
             $order->save();
             foreach ($request->products as $product) {
                 $newOrder = Order::find($order->id);
@@ -56,6 +64,24 @@ class OrderController extends Controller
                     "quantity" => $product['quantity'],
                 ]);
             }
+            return response()->json([
+                "success" => true,
+                "data" => $order,
+            ]);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+    }
+    /**
+     *  PUT api/orders/{order}
+     *  to create a new order
+     */
+    public function update(Order $order, Request $request)
+    {
+        try {
+            $order->status = $request->status;
+            $order->save();
+
             return response()->json([
                 "success" => true,
                 "data" => $order,

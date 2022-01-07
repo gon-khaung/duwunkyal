@@ -28,7 +28,8 @@ class UserController extends Controller
 
             return response()->json([
                 "success" => true,
-                "data" => UserResource::collection($users)
+                "data" => UserResource::collection($users),
+                "total" => $total
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);

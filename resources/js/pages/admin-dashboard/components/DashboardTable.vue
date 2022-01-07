@@ -34,19 +34,19 @@
               <span class="mb-0 text-md">
                 <span
                   class="badge badge-info"
-                  v-if="data[content] === 'pending'"
+                  v-if="data[content] === 'Pending'"
                 >
                   {{ data[content] }}
                 </span>
                 <span
                   class="badge badge-success"
-                  v-if="data[content] === 'confirm'"
+                  v-if="data[content] === 'Delivered'"
                 >
                   {{ data[content] }}
                 </span>
                 <span
                   class="badge badge-danger"
-                  v-if="data[content] === 'fail'"
+                  v-if="data[content] === 'Rejected'"
                 >
                   {{ data[content] }}
                 </span>
@@ -82,7 +82,7 @@
             </div>
           </th>
           <th scope="row" class="action-row">
-            <div class="d-flex justify-content-end p-0">
+            <div class="d-flex justify-content-end p-0" v-if="type !== 'order'">
               <button
                 type="button"
                 class="btn btn-info"
@@ -105,6 +105,25 @@
                 @click="typedData(data, index, 'delete')"
               >
                 Delete
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-end p-0" v-else>
+              <button
+                type="button"
+                class="btn btn-success"
+                @click="typedData(data, index, 'deliver')"
+                v-if="data['status'] !== 'Delivered'"
+              >
+                Deliver
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="typedData(data, index, 'reject')"
+                v-if="data['status'] !== 'Delivered'"
+              >
+                Reject
               </button>
             </div>
           </th>
