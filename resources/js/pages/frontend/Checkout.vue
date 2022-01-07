@@ -35,9 +35,9 @@
                                     />
                                 </div>
                                 <p>
-                                    Create an account by entering the
-                                    information below. If you are a returning
-                                    customer please login at the top of the page
+                                    After you have ordered, our admin will
+                                    contact email or phone number you provided!
+                                    Thank for your ordering.
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6">
@@ -84,6 +84,8 @@
     </div>
 </template>
 <script>
+import { Toast } from 'vant';
+
 export default {
   data() {
     return {
@@ -116,6 +118,9 @@ export default {
         this.errors.address = 'Address is required!';
         return false;
       }
+      if (!this.$auth.check()) {
+        return this.$router.push('/auth/login');
+      }
       try {
         const res = await axios.post('orders', {
           phone: this.phone,
@@ -128,10 +133,15 @@ export default {
         this.address = null;
         this.note = null;
         this.$store.commit('setCart', []);
+        this.setLocalstorage('cartProducts', []);
+        Toast.success('Ordered!');
       } catch (error) {
         console.log(error);
       }
       return true;
+    },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
     },
   },
 };
