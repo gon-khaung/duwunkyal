@@ -11,7 +11,7 @@ class Image implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        $path = "https://star2d3d.com/storage/images/";
+        $path = "https://duwunkyal.org/storage/images/";
         if ($value) {
             return $path . $value;
         }

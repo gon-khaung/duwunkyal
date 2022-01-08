@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use Exception;
 use App\Traits\Base64;
 use App\Models\Product;
+use App\Traits\Query;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     use Base64;
+    use Query;
     public function __construct()
     {
         // $this->middleware("auth:api")->only("store", "update");
@@ -19,10 +22,57 @@ class ProductController extends Controller
      *  GET api/products
      *  to get all products
      */
-    public function index()
+    public function shopProducts(Request $request)
     {
         try {
-            $products = Product::all();
+            request()->validate([
+                "page" => "required",
+                "limit" => "required",
+            ]);
+
+            if (!$request->category_id) {
+
+                $products = Product::orderBy('price', $request->type);
+
+                $total = count(Product::all());
+            } else {
+
+                $products = Product::where('category_id', $request->category_id)->orderBy('price', $request->type);
+
+                $total = count(Product::where('category_id', $request->category_id)->get());
+            }
+
+            $offset = (intval($request->page) - 1) * intval($request->limit);
+
+            $products = $products->offset($offset)->limit($request->limit)->get();
+
+            return response()->json([
+                "success" => true,
+                "data" => $products,
+                "total" => $total,
+            ]);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+    }
+
+    /**
+     *  GET api/products
+     *  to get all products
+     */
+    public function index(Request $request)
+    {
+        try {
+            if ($request->category_id) {
+                $products = Product::where('category_id', $request->category_id)->limit(5)->get();
+            } elseif ($request->latest) {
+                $products = Product::limit(6)->orderBy('created_at', 'desc')->get();
+            } elseif ($request->search) {
+                $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
+            } else {
+                $products = Product::all();
+            }
+
             return response()->json([
                 "success" => true,
                 "data" => $products,
@@ -38,7 +88,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // return gettype($request->size_id);
         try {
+
             // $image = $this->uploadBase64($request->image, "add", null);
 
             $product = new Product();
@@ -47,6 +99,8 @@ class ProductController extends Controller
             $product->price = $request->price;
             // $product->image = $image;
             $product->category_id = $request->category_id;
+            $product->sizes = json_encode(json_decode($request->sizes, true));
+            $product->colors = json_encode(json_decode($request->colors, true));
             $product->save();
             return response()->json([
                 "success" => true,
@@ -66,7 +120,7 @@ class ProductController extends Controller
         try {
             return response()->json([
                 "success" => true,
-                "data" => $product,
+                "data" => new ProductResource($product),
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -80,17 +134,23 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         try {
-            $exitedImage = Product::findOrFail($request->id)->image;
-            if ($exitedImage) {
-                $image = $this->uploadBase64(
-                    $request->image,
-                    "update",
-                    $exitedImage
-                );
-                $product->image = $image;
-            }
-
+            // $exitedImage = Product::findOrFail($request->id)->image;
+            // if ($exitedImage) {
+            //     $image = $this->uploadBase64(
+            //         $request->image,
+            //         "update",
+            //         $exitedImage
+            //     );
+            //     $product->image = $image;
+            // }
             $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->is_instock = $request->is_instock;
+            $product->category_id = $request->category_id;
+            $product->sizes = $request->sizes;
+            $product->colors = $request->colors;
+            // $product->image = $image;
             $product->update();
             return response()->json([
                 "success" => true,

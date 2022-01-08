@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 trait Query
@@ -72,8 +73,8 @@ trait Query
         foreach ($inputColumns as $key => $column) {
             $columns .=
                 $key == 0
-                    ? sprintf(" IFNULL(%s, '' )", $column)
-                    : sprintf(", IFNULL(%s, '' ) ", $column);
+                ? sprintf(" IFNULL(%s, '' )", $column)
+                : sprintf(", IFNULL(%s, '' ) ", $column);
         }
         return "REPLACE( concat( $columns ) , ' ', '') ";
     }

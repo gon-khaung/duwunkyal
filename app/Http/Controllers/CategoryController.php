@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use Exception;
 use App\Traits\Base64;
 use App\Models\Category;
@@ -30,7 +31,7 @@ class CategoryController extends Controller
                         ->get()
                 );
             } else {
-                $categories = Category::all();
+                $categories = CategoryResource::collection(Category::all());
             }
             return response()->json([
                 "success" => true,
@@ -48,11 +49,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
-            // $image = $this->uploadBase64($request->image, "add", null);
+            $image = $this->uploadBase64($request->image, "add", null);
 
             $category = new Category();
             $category->name = $request->name;
-            // $category->image = $image;
+            $category->image = $image;
             $category->save();
             return response()->json([
                 "success" => true,

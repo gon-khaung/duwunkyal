@@ -36,6 +36,11 @@ export const routes = [
         component: render('frontend/Shop'),
       },
       {
+        path: 'shop/category/:id',
+        props: true,
+        component: render('frontend/Shop'),
+      },
+      {
         path: 'auth/login',
         component: render('frontend/auth/Login'),
       },

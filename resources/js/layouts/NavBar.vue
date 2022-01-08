@@ -7,52 +7,67 @@
                 <a href="#"><img src="img/logo.png" alt="" /></a>
             </div>
             <div class="humberger__menu__widget">
-                <div class="header__top__right__auth">
+                <div class="header__top__right__auth login_auth">
                     <a
                         href=""
-                        @click="$router.push('/auth/login')"
+                        @click.prevent="$router.push('/auth/login')"
                         v-if="!$auth.check()"
+                        class="mr-2"
                         ><i class="fa fa-user"></i> Login
                     </a>
                     <a
                         href=""
-                        @click="$router.push('/auth/register')"
+                        @click.prevent="$router.push('/auth/register')"
                         v-if="!$auth.check()"
                         ><i class="fa fa-user"></i> Register
                     </a>
-                    <a href="" @click="logout()" v-if="$auth.check()"
+                    <a href="" @click.prevent="logout()" v-if="$auth.check()"
                         ><i class="fa fa-user"></i> Log Out
                     </a>
                 </div>
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li
-                        @click="$router.push('/')"
-                        :class="linkIsActive('') ? 'active' : ''"
-                    >
-                        <a href="">Home</a>
+                    <li>
+                        <a
+                            href="#"
+                            @click.prevent="$router.push('/')"
+                            :class="
+                                !linkIsActive('/shop') &&
+                                !linkIsActive('/contact') &&
+                                !linkIsActive('/product') &&
+                                !linkIsActive('/checkout') &&
+                                !linkIsActive('/contact')
+                                    ? 'active'
+                                    : ''
+                            "
+                            >Home</a
+                        >
                     </li>
-                    <li
-                        @click="$router.push('shop')"
-                        :class="linkIsActive('/shop') ? 'active' : ''"
-                    >
-                        <a href="">Shop</a>
+                    <li>
+                        <a
+                            href="#"
+                            @click.prevent="$router.push('/shop')"
+                            :class="linkIsActive('/shop') ? 'active' : ''"
+                            >Shop</a
+                        >
                     </li>
-                    <li
-                        @click="$router.push('contact')"
-                        :class="linkIsActive('/contact') ? 'active' : ''"
-                    >
-                        <a href="">Contact</a>
+                    <li class="active">
+                        <a
+                            href="#"
+                            @click.prevent="$router.push('/contact')"
+                            :class="linkIsActive('/contact') ? 'active' : ''"
+                            >Contact</a
+                        >
                     </li>
                 </ul>
             </nav>
             <div id="mobile-menu-wrap"></div>
             <div class="header__top__right__social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                <a href="#"><i class="fas fa-phone"></i></a>
+                <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                <a href="#"><i class="fab fa-viber"></i></a>
             </div>
             <div class="humberger__menu__contact">
                 <ul>
@@ -86,15 +101,11 @@
                                     <a href="#"
                                         ><i class="fa fa-facebook"></i
                                     ></a>
+                                    <a href="#"><i class="fas fa-phone"></i></a>
                                     <a href="#"
-                                        ><i class="fa fa-twitter"></i
+                                        ><i class="fab fa-telegram-plane"></i
                                     ></a>
-                                    <a href="#"
-                                        ><i class="fa fa-linkedin"></i
-                                    ></a>
-                                    <a href="#"
-                                        ><i class="fa fa-pinterest-p"></i
-                                    ></a>
+                                    <a href="#"><i class="fab fa-viber"></i></a>
                                 </div>
                                 <div
                                     class="header__top__right__auth"
@@ -102,8 +113,10 @@
                                 >
                                     <a
                                         href=""
-                                        @click="$router.push('/auth/login')"
-                                        ><i class="fa fa-user"></i>Login
+                                        @click.prevent="
+                                            $router.push('/auth/login')
+                                        "
+                                        ><i class="fa fa-user"></i> Login
                                     </a>
                                 </div>
 
@@ -113,9 +126,10 @@
                                 >
                                     <a
                                         href=""
-                                        @click="$router.push('/auth/register')"
-                                        ><i class="fas fa-sign-in-alt"></i
-                                        >Register
+                                        @click.prevent="
+                                            $router.push('/auth/register')
+                                        "
+                                        ><i class="fa fa-user"></i> Register
                                     </a>
                                 </div>
                                 <div
@@ -154,14 +168,13 @@
                                     :class="
                                         !linkIsActive('/shop') &&
                                         !linkIsActive('/contact') &&
+                                        !linkIsActive('/product') &&
                                         !linkIsActive('/checkout')
                                             ? 'active'
                                             : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('/')"
+                                    <a href="" @click="$router.push('/')"
                                         >Home</a
                                     >
                                 </li>
@@ -170,9 +183,7 @@
                                         linkIsActive('/shop') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('shop')"
+                                    <a href="" @click="$router.push('/shop')"
                                         >Shop</a
                                     >
                                 </li>
@@ -181,9 +192,7 @@
                                         linkIsActive('/contact') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('contact')"
+                                    <a href="" @click="$router.push('/contact')"
                                         >Contact</a
                                     >
                                 </li>
@@ -197,7 +206,7 @@
                                     <a
                                         href="#"
                                         @click.prevent="
-                                            $router.push('checkout')
+                                            $router.push('/checkout')
                                         "
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
@@ -221,22 +230,27 @@
             v-if="
                 !$route.path.includes('login') &&
                 !$route.path.includes('register') &&
-                !$route.path.includes('cart') &&
                 !$route.path.includes('checkout')
             "
         >
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" v-if="isDep">
                         <div class="hero__categories">
                             <div class="hero__categories__all">
                                 <i class="fa fa-bars"></i>
                                 <span>All departments</span>
                             </div>
-                            <ul>
+                            <ul :style="isNone ? 'display: none' : ''">
                                 <li>
                                     <a
-                                        href="#"
+                                        href=""
+                                        @click="
+                                            $router.push(
+                                                `/shop/category/${category.id}`
+                                            ),
+                                                makeVisible
+                                        "
                                         v-for="(category, index) in categories"
                                         :key="index"
                                         >{{ category.name }}</a
@@ -246,14 +260,18 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="hero__search">
+                        <div class="hero__search" v-if="isSearch">
                             <div class="hero__search__form">
                                 <form action="#">
                                     <input
                                         type="text"
                                         placeholder="What do yo u need?"
+                                        v-model="search"
                                     />
-                                    <button type="submit" class="site-btn">
+                                    <button
+                                        @click.prevent="searchProducts"
+                                        class="site-btn"
+                                    >
                                         SEARCH
                                     </button>
                                 </form>
@@ -270,13 +288,19 @@
                         </div>
                         <div
                             class="hero__item set-bg"
-                            data-setbg="img/hero/banner.jpg"
+                            data-setbg="https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg"
+                            v-if="isSecondHead"
                         >
                             <div class="hero__text">
                                 <span>FRUIT FRESH</span>
                                 <h2>Vegetable <br />100% Organic</h2>
                                 <p>Free Pickup and Delivery Available</p>
-                                <a href="#" class="primary-btn">SHOP NOW</a>
+                                <a
+                                    href=""
+                                    class="primary-btn"
+                                    @click="$router.push('/shop')"
+                                    >SHOP NOW</a
+                                >
                             </div>
                         </div>
                     </div>
@@ -290,12 +314,42 @@
 import { Toast, Dialog } from 'vant';
 
 export default {
+  props: {
+    isSearch: {
+      type: Boolean,
+      default: true,
+    },
+    isSecondHead: {
+      type: Boolean,
+      default: true,
+    },
+    isDep: {
+      type: Boolean,
+      default: true,
+    },
+    isNone: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       categories: [],
+      search: null,
     };
   },
   methods: {
+    searchProducts() {
+      try {
+        this.$router.push({
+          path: '/shop',
+          query: { search: this.search },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /* example link = '/settings' */
     linkIsActive(link) {
       const paths = Array.isArray(link) ? link : [link];
       const res = paths.some(
@@ -334,3 +388,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.header__top__right__auth {
+    margin-left: 5px;
+    margin-right: 10px;
+}
+</style>

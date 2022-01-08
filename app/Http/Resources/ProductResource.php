@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Subproduct;
+use App\Models\DynamicName;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -15,12 +15,25 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $colors = DynamicName::wherein(
+            "id",
+            json_decode($this->colors, true)
+        )->pluck("name");
+        $sizes = DynamicName::wherein(
+            "id",
+            json_decode($this->sizes, true)
+        )->pluck("name");
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "description" => $this->description,
+            "is_instock" => $this->is_instock,
+            "is_featured" => $this->is_featured,
             "price" => $this->price,
-            "image" => Subproduct::find($this->id)->first()->image,
-            "quantity" => 1,
+            "image" => $this->image,
+            "colors" => $colors,
+            "sizes" => $sizes,
+            "category_id" => $this->category_id,
         ];
     }
 }

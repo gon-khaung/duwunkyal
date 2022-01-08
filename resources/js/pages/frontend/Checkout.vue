@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NavBar />
         <!-- Checkout Section Begin -->
         <section class="checkout spad">
             <div class="container">
@@ -10,23 +11,33 @@
                             <div class="col-lg-8 col-md-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text" />
+                                    <input type="text" v-model="phone" />
+                                    <p class="text-danger" v-if="errors.phone">
+                                        {{ errors.phone }}
+                                    </p>
                                 </div>
                                 <div class="checkout__input">
                                     <p>Address<span>*</span></p>
-                                    <input type="text" />
+                                    <input type="text" v-model="address" />
+                                    <p
+                                        class="text-danger"
+                                        v-if="errors.address"
+                                    >
+                                        {{ errors.address }}
+                                    </p>
                                 </div>
                                 <div class="checkout__input">
-                                    <p>Order notes<span>*</span></p>
+                                    <p>Order notes<span> (Optional)</span></p>
                                     <input
                                         type="text"
                                         placeholder="Notes about your order, e.g. special notes for delivery."
+                                        v-model="note"
                                     />
                                 </div>
                                 <p>
-                                    Create an account by entering the
-                                    information below. If you are a returning
-                                    customer please login at the top of the page
+                                    After you have ordered, our admin will
+                                    contact email or phone number you provided!
+                                    Thank for your ordering.
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6">
@@ -37,32 +48,29 @@
                                     </div>
                                     <ul>
                                         <li
-                                            v-for="(product, index) in $store
+                                            v-for="(order, index) in $store
                                                 .state.cart"
                                             :key="index"
                                         >
-                                            {{ product.name }}
+                                            {{ order.name }}
                                             <span
-                                                >{{
-                                                    product.price *
-                                                    product.quantity
-                                                }}
-                                                MMK</span
-                                            >
+                                                >{{ order.quantity }} x
+                                                {{ order.price }} MMK
+                                            </span>
                                         </li>
                                     </ul>
-                                    <div class="checkout__order__total">
-                                        Total
-                                        <span
-                                            >{{
-                                                calculateTotal(
-                                                    $store.state.cart
-                                                )
-                                            }}
-                                            MMK</span
-                                        >
+                                    <div class="checkout__order__subtotal">
+                                        Subtotal
+                                        <span>{{ getTotal() }} MMK</span>
                                     </div>
-                                    <button type="submit" class="site-btn">
+                                    <div class="checkout__order__total">
+                                        Total <span>{{ getTotal() }} MMK</span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        @click="finalOrder"
+                                        class="site-btn"
+                                    >
                                         PLACE ORDER
                                     </button>
                                 </div>
@@ -76,14 +84,64 @@
     </div>
 </template>
 <script>
+import { Toast } from 'vant';
+
 export default {
+  data() {
+    return {
+      phone: null,
+      address: null,
+      note: null,
+      errors: {
+        phone: null,
+        address: null,
+      },
+    };
+  },
   methods: {
-    calculateTotal(data) {
+    getTotal() {
       let total = 0;
-      for (let i = 0; i < data.length; i += 1) {
-        total += parseInt(data[i].price, 10);
+      for (let i = 0; i < this.$store.state.cart.length; i += 1) {
+        total
+                    += parseInt(this.$store.state.cart[i].price, 10)
+                    * this.$store.state.cart[i].quantity;
       }
       return total;
+    },
+    async finalOrder() {
+      if (!this.phone) {
+        this.errors.phone = 'Phone Number is required!';
+        return false;
+      }
+      if (!this.address) {
+        this.errors.phone = null;
+        this.errors.address = 'Address is required!';
+        return false;
+      }
+      if (!this.$auth.check()) {
+        return this.$router.push('/auth/login');
+      }
+      try {
+        const res = await axios.post('orders', {
+          phone: this.phone,
+          address: this.address,
+          note: this.note,
+          total: this.getTotal(),
+          products: this.$store.state.cart,
+        });
+        this.phone = null;
+        this.address = null;
+        this.note = null;
+        this.$store.commit('setCart', []);
+        this.setLocalstorage('cartProducts', []);
+        Toast.success('Ordered!');
+      } catch (error) {
+        console.log(error);
+      }
+      return true;
+    },
+    setLocalstorage(name, data) {
+      localStorage.setItem(name, JSON.stringify(data));
     },
   },
 };

@@ -35,9 +35,9 @@
                             <p>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy; All rights reserved | This
-                                template is made
+                                website is developed
                                 <a href="https://colorlib.com" target="_blank"
-                                    >Gon</a
+                                    >Nebwin</a
                                 >
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>

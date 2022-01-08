@@ -18,11 +18,15 @@ class CreateProductsTable extends Migration
             $table->string("name")->nullable();
             $table->text("description")->nullable();
             $table->boolean("is_featured")->default(false);
-            $table->decimal("price", 30, 0);
+            $table->string("image")->nullable();
+            $table->boolean("is_instock")->default(true);
+            $table->decimal("price", 30, 0)->nullable();
             $table
                 ->foreignId("category_id")
                 ->constrained("categories")
                 ->onDelete("cascade");
+            $table->json("colors");
+            $table->json("sizes");
             $table->timestamps();
         });
     }
