@@ -47,11 +47,11 @@ export default {
       })
         .then(() => {
           if (value.type === 'deliver') {
-            var newData = value.data;
+            const newData = value.data;
             newData.status = 'Delivered';
             this.orderUpdate(newData, value.id);
           } else {
-            var newData = value.data;
+            const newData = value.data;
             newData.status = 'Rejected';
             this.orderUpdate(newData, value.id);
           }

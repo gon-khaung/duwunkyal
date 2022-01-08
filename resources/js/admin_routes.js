@@ -17,12 +17,12 @@ export default [
         component: render("admin-dashboard/Orders"),
     },
     {
-        path: "threed-management",
-        component: render("admin-dashboard/ThreedManagement"),
+        path: "categories",
+        component: render("admin-dashboard/CategoryManagement"),
     },
     {
-        path: "payment-accounts",
-        component: render("admin-dashboard/PaymentAccounts"),
+        path: "sitecontacts",
+        component: render("admin-dashboard/Sitecontact"),
     },
 ];
 

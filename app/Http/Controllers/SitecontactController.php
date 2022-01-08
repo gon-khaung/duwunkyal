@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SitecontactResource;
 use Exception;
 use App\Models\Sitecontact;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class SitecontactController extends Controller
             $sitecontacts = Sitecontact::all();
             return response()->json([
                 "success" => true,
-                "data" => $sitecontacts,
+                "data" => SitecontactResource::collection($sitecontacts),
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);

@@ -70,11 +70,7 @@
                 class="nav-link"
               >
                 <i class="ni ni-settings"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en"
-                    ? "3D Management"
-                    : "သုံးလုံး ထိန်းချုပ်မှု"
-                }}</b>
+                <b class="nav-link-text">Category</b>
               </router-link>
             </li>
             <li
@@ -84,16 +80,12 @@
               :class="isMobile ? 'sidenav-toggler' : ''"
             >
               <router-link
-                to="/admin/payment-accounts"
-                :class="linkIsActive('/admin/payment-accounts') ? 'active' : ''"
+                to="/admin/sitecontacts"
+                :class="linkIsActive('/admin/sitecontacts') ? 'active' : ''"
                 class="nav-link"
               >
                 <i class="ni ni-paper-diploma"></i>
-                <b class="nav-link-text">{{
-                  $store.state.language === "en"
-                    ? "Payment Accounts"
-                    : "ငွေပေးချေမှု အကောင့်များ"
-                }}</b>
+                <b class="nav-link-text">Site Contacts</b>
               </router-link>
             </li>
           </ul>
@@ -104,9 +96,7 @@
             <li class="nav-item">
               <div class="nav-link" @click="logout()">
                 <i class="ni ni-lock-circle-open text-danger mr-3"></i>
-                <b class="nav-link-text text-danger">{{
-                  $store.state.language === "en" ? "Log Out" : "ထွက်မည်"
-                }}</b>
+                <b class="nav-link-text text-danger">Log Out</b>
               </div>
             </li>
           </ul>

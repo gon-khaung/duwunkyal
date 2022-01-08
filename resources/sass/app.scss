@@ -394,4 +394,31 @@
     height: 32px;
     fill: #1da1f2;
   }
-  
+    //vant
+  .van-uploader__upload-icon {
+    color: white;
+    font-size: 30px;
+  }
+  .van-uploader__preview-delete {
+    background-color: black;
+  }
+  .van-uploader__preview-delete-icon {
+    color: white;
+  }
+  .van-uploader__preview-image,
+  .van-uploader__file {
+    margin: 0px;
+    border-radius: 5px;
+    width: 150px;
+    height: 150px;
+    border: 2px solid grey;
+  }
+  .van-uploader__preview {
+    margin: 0px;
+  }
+  .van-uploader__upload {
+    border-radius: 5px;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(229, 226, 226);
+  }
