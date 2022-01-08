@@ -63,10 +63,8 @@
               :class="isMobile ? 'sidenav-toggler' : ''"
             >
               <router-link
-                to="/admin/threed-management"
-                :class="
-                  linkIsActive('/admin/threed-management') ? 'active' : ''
-                "
+                to="/admin/categories"
+                :class="linkIsActive('/admin/categories') ? 'active' : ''"
                 class="nav-link"
               >
                 <i class="ni ni-settings"></i>

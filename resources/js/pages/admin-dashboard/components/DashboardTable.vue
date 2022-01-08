@@ -82,7 +82,49 @@
             </div>
           </th>
           <th scope="row" class="action-row">
-            <div class="d-flex justify-content-end p-0" v-if="type !== 'order'">
+            <div class="d-flex justify-content-end p-0" v-if="type === 'order'">
+              <button
+                type="button"
+                class="btn btn-success"
+                @click="typedData(data, index, 'deliver')"
+                v-if="data['status'] !== 'Delivered'"
+              >
+                Deliver
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="typedData(data, index, 'reject')"
+                v-if="data['status'] !== 'Delivered'"
+              >
+                Reject
+              </button>
+            </div>
+
+            <div
+              class="d-flex justify-content-end p-0"
+              v-if="type === 'category'"
+            >
+              <button
+                type="button"
+                class="btn btn-info"
+                @click="showModal(data)"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="typedData(data, index, 'delete')"
+              >
+                Delete
+              </button>
+            </div>
+
+            <div
+              class="d-flex justify-content-end p-0"
+              v-if="(type !== 'order') & (type !== 'category')"
+            >
               <button
                 type="button"
                 class="btn btn-info"
@@ -107,25 +149,6 @@
                 Delete
               </button>
             </div>
-
-            <div class="d-flex justify-content-end p-0" v-else>
-              <button
-                type="button"
-                class="btn btn-success"
-                @click="typedData(data, index, 'deliver')"
-                v-if="data['status'] !== 'Delivered'"
-              >
-                Deliver
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                @click="typedData(data, index, 'reject')"
-                v-if="data['status'] !== 'Delivered'"
-              >
-                Reject
-              </button>
-            </div>
           </th>
         </tr>
       </tbody>
@@ -146,6 +169,9 @@ export default {
   methods: {
     openModal(modalName) {
       $(`#${modalName}`).modal('show');
+    },
+    showModal(data) {
+      this.$emit('show', data);
     },
     toEdit(id) {
       this.tableData.datas[id].isEdit = !this.tableData.datas[id].isEdit;

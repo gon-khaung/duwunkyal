@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,5 +15,6 @@ class Product extends Model
     protected $casts = [
         'colors' => 'array',
         'sizes' => 'array',
+        "image" => Image::class,
     ];
 }

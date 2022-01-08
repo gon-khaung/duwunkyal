@@ -19,7 +19,8 @@
         <DashboardTable
           :tableData="tableData"
           @data="getUserData"
-          type="payment"
+          @show="showModal"
+          type="category"
         />
       </div>
     </div>
@@ -91,6 +92,7 @@ export default {
       errors: {},
       imageUploader: [],
       account: {},
+      isUpdate: false,
       tableData: {
         headings: ['ID', 'Name'],
         datas: [],
@@ -105,10 +107,19 @@ export default {
           this.errors.name = 'Please enter category';
           return false;
         }
-        if (this.imageUploader[0]) {
+        if (this.imageUploader[0].content) {
           this.account.image = this.imageUploader[0].content;
         }
-        const res = await axios.post('/categories', this.account);
+        if (this.isUpdate) {
+          const res = await axios.put(
+            `/categories/${this.account.id}`,
+            this.account,
+          );
+          this.isUpdate = false;
+        } else {
+          const res = await axios.post('/categories', this.account);
+        }
+
         this.account = {};
         this.imageUploader = [];
         this.fetchAccounts();
@@ -118,6 +129,14 @@ export default {
         Toast.fail('Fail');
       }
       return true;
+    },
+    showModal(value) {
+      this.isUpdate = true;
+      this.account = value;
+      const uploader = { url: '' };
+      uploader.url = value.image;
+      this.imageUploader[0] = uploader;
+      $('#new-account').modal('show');
     },
     getUserData(value) {
       Dialog.confirm({
