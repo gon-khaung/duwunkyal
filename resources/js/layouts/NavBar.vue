@@ -27,16 +27,22 @@
             </div>
             <nav class="humberger__menu__nav mobile-menu">
                 <ul>
-                    <li @click="$router.push('/')">
+                    <li
+                        @click="$router.push('/')"
+                        :class="linkIsActive('') ? 'active' : ''"
+                    >
                         <a href="">Home</a>
                     </li>
-                    <li @click="$router.push('')">
+                    <li
+                        @click="$router.push('shop')"
+                        :class="linkIsActive('/shop') ? 'active' : ''"
+                    >
                         <a href="">Shop</a>
                     </li>
-                    <li @click="$router.push('checkout')" class="active">
-                        <a href="">Cart</a>
-                    </li>
-                    <li @click="$router.push('contact')" class="active">
+                    <li
+                        @click="$router.push('contact')"
+                        :class="linkIsActive('/contact') ? 'active' : ''"
+                    >
                         <a href="">Contact</a>
                     </li>
                 </ul>
@@ -144,21 +150,37 @@
                     <div class="col-lg-6">
                         <nav class="header__menu">
                             <ul class="text-center">
-                                <li>
+                                <li
+                                    :class="
+                                        !linkIsActive('/shop') &&
+                                        !linkIsActive('/contact') &&
+                                        !linkIsActive('/checkout')
+                                            ? 'active'
+                                            : ''
+                                    "
+                                >
                                     <a
                                         href=""
                                         @click.prevent="$router.push('/')"
                                         >Home</a
                                     >
                                 </li>
-                                <li>
+                                <li
+                                    :class="
+                                        linkIsActive('/shop') ? 'active' : ''
+                                    "
+                                >
                                     <a
                                         href=""
                                         @click.prevent="$router.push('shop')"
                                         >Shop</a
                                     >
                                 </li>
-                                <li class="active">
+                                <li
+                                    :class="
+                                        linkIsActive('/contact') ? 'active' : ''
+                                    "
+                                >
                                     <a
                                         href=""
                                         @click.prevent="$router.push('contact')"
@@ -274,6 +296,16 @@ export default {
     };
   },
   methods: {
+    linkIsActive(link) {
+      const paths = Array.isArray(link) ? link : [link];
+      const res = paths.some(
+        (path) => this.$route.path.indexOf(path) === 0,
+      );
+      if (res) {
+        return true;
+      }
+      return false;
+    },
     async fetchCategories() {
       try {
         const res = await axios.get('/categories');
