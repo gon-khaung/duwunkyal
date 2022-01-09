@@ -34,7 +34,7 @@
                                         style="margin-right: 20px"
                                         v-for="(
                                             radioColor, index
-                                        ) in product.colors"
+                                        ) in product.color_names"
                                         :key="index"
                                     >
                                         <label>
@@ -61,7 +61,7 @@
                                         style="margin-right: 20px"
                                         v-for="(
                                             radioSize, index
-                                        ) in product.sizes"
+                                        ) in product.size_names"
                                         :key="index"
                                     >
                                         <label>
@@ -156,7 +156,7 @@ export default {
   components: { Product },
   data() {
     return {
-      product: [],
+      product: {},
       isCart: false,
       size: null,
       color: null,
@@ -236,8 +236,9 @@ export default {
       try {
         const res = await axios.get(`products/${id}`);
         this.product = res.data.data;
-        this.color = this.product.colors[0];
-        this.size = this.product.sizes[0];
+        console.log(this.product);
+        this.color = this.product.color_names[0];
+        this.size = this.product.size_names[0];
         this.fetchRelatedProducts(this.product.category_id);
       } catch (error) {
         console.log(error);

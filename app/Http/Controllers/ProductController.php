@@ -87,7 +87,7 @@ class ProductController extends Controller
             } else {
                 $products = Product::latest();
 
-                $total = count(Product::all());
+                $total = count(Product::latest());
 
                 $offset =
                     (intval($request->page) - 1) * intval($request->limit);
@@ -96,12 +96,16 @@ class ProductController extends Controller
                     ->offset($offset)
                     ->limit($request->limit)
                     ->get();
+                return response()->json([
+                    "success" => true,
+                    "data" => ProductResource::collection($products),
+                    "total" => $total,
+                ]);
             }
 
             return response()->json([
                 "success" => true,
                 "data" => ProductResource::collection($products),
-                "total" => $total ? $total : null,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
