@@ -4,7 +4,7 @@
         <!-- Categories Section Begin -->
         <section class="categories">
             <div class="container">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="categories__slider owl-carousel">
                         <div
                             class="col-lg-3"
@@ -21,7 +21,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <Slider :categories="categories" />
             </div>
         </section>
         <!-- Categories Section End -->
@@ -82,9 +83,10 @@
 </template>
 <script>
 import Product from './components/Product.vue';
+import Slider from './components/Slider.vue';
 
 export default {
-  components: { Product },
+  components: { Product, Slider },
   data() {
     return {
       products: [],
