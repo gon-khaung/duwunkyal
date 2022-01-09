@@ -8,18 +8,10 @@
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
                             <h1 class="text-white">
-                                {{
-                                    $store.state.language === "en"
-                                        ? "Welcome!"
-                                        : "ကြိုဆိုပါသည်။"
-                                }}
+                                {{ "Welcome!" }}
                             </h1>
                             <p class="text-lead text-white">
-                                {{
-                                    $store.state.language === "en"
-                                        ? "You can go to Star 2d 3d admin panel."
-                                        : "Star 2d 3d ရဲ့ dashboard ကို အကောင့်ဝင်နိုင်ပါပြီ။"
-                                }}
+                                {{ "You can go to Duwunkyal admin panel." }}
                             </p>
                         </div>
                     </div>
@@ -49,18 +41,10 @@
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-5">
                                 <h4>
-                                    {{
-                                        $store.state.language === "en"
-                                            ? "Log in to Admin Panel"
-                                            : "Admin Panel သို့ အကောင့်ဝင်ခြင်း"
-                                    }}
+                                    {{ "Log in to Admin Panel" }}
                                 </h4>
                                 <div class="error" v-if="error">
-                                    {{
-                                        $store.state.language === "en"
-                                            ? "Fail to Login! Please Try Again"
-                                            : "အကောင့်ဝင်ခြင်း ကျဆုံးပါသည်။ တဖန်ပြန်လည် ကြိုးစားကြည့်ပါ။"
-                                    }}
+                                    {{ "Fail to Login! Please Try Again" }}
                                 </div>
                             </div>
                             <form role="form">
@@ -77,13 +61,13 @@
                                     >
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"
-                                                ><i class="fas fa-phone"></i
+                                                ><i class="fas fa-email"></i
                                             ></span>
                                         </div>
                                         <input
                                             class="form-control pl-2"
-                                            placeholder="Phone"
-                                            v-model="phone"
+                                            placeholder="Email"
+                                            v-model="email"
                                             @keyup.enter="
                                                 focusOnPasswordInputBox
                                             "
@@ -151,9 +135,7 @@
                                         for=" customCheckLogin"
                                     >
                                         <b class="text-muted">{{
-                                            $store.state.language === "en"
-                                                ? "Remember me"
-                                                : "ဒီအကောင့်ကို မှတ်ထားပေးပါ။"
+                                            "Remember me"
                                         }}</b>
                                     </label>
                                 </div>
@@ -164,11 +146,7 @@
                                         @click="loginWithPhone"
                                     >
                                         <div v-if="!isLogin">
-                                            {{
-                                                $store.state.language === "en"
-                                                    ? "Sign in"
-                                                    : "အကောင့် ဝင်မည်။"
-                                            }}
+                                            {{ "Sign in" }}
                                         </div>
                                         <Loading
                                             color="#ffffff"
@@ -186,7 +164,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import { Loading } from 'vant';
 
@@ -194,7 +171,7 @@ export default {
   components: { Loading },
   data() {
     return {
-      phone: null,
+      email: null,
       password: null,
       error: false,
       errors: {},
@@ -220,35 +197,27 @@ export default {
     async loginWithPhone() {
       this.isLogin = true;
       this.errors = {};
-      if (!this.phone) {
-        this.errors.phone = this.$store.state.language === 'en'
-          ? 'Required Phone'
-          : 'Phone လိုအပ်ပါသည်။';
+      if (!this.email) {
+        this.errors.email = 'Required Phone';
         this.isLogin = false;
         return false;
       }
       if (!this.password) {
-        this.errors.password = this.$store.state.language === 'en'
-          ? 'Required Password'
-          : 'Password လိုအပ်ပါသည်။';
+        this.errors.password = 'Required Password';
         this.isLogin = false;
         return false;
       }
       try {
         await this.$auth.login({
           data: {
-            phone: this.phone,
+            email: this.email,
             password: this.password,
           },
-          redirect: '/admin/twod-threed',
+          redirect: '/admin/products',
           staySignedIn: true,
           autoLogin: true,
         });
-        Toast.success(
-          this.$store.state.language === 'en'
-            ? 'Logged In!'
-            : 'အကောင့်ဝင်ပြီးပါပြီ။',
-        );
+        Toast.success('Logged In!');
       } catch (err) {
         this.error = true;
       }
