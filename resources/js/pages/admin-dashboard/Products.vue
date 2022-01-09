@@ -12,7 +12,7 @@
                         data-target="#new-account"
                         @click="makeNewProduct()"
                     >
-                        Add New Category
+                        Add New Product
                     </button>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DynamicResource;
 use App\Models\DynamicName;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,13 +21,14 @@ class DynamicNameController extends Controller
     public function index(Request $request)
     {
         try {
-            if ($request->name)
-                $data = DynamicName::where('type', $request->name)->get();
-            else
+            if ($request->name) {
+                $data = DynamicName::where("type", $request->name)->get();
+            } else {
                 $data = DynamicName::all();
+            }
             return response()->json([
                 "success" => true,
-                "data" => $data,
+                "data" => DynamicResource::collection($data),
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -78,7 +80,6 @@ class DynamicNameController extends Controller
     public function update(Request $request, Dynamicname $dynamicname)
     {
         try {
-
             $dynamicname->name = $request->name;
             $dynamicname->type = $request->type;
             $dynamicname->update();

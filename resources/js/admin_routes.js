@@ -20,6 +20,10 @@ export default [
         path: "sitecontacts",
         component: render("admin-dashboard/Sitecontact"),
     },
+    {
+        path: "dynamic-names",
+        component: render("admin-dashboard/Dynamic"),
+    },
 ];
 
 function render(template) {
