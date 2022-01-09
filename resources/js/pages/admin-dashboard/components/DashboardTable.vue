@@ -80,6 +80,17 @@
                                 @click.prevent="changeFeatured(data)"
                             />
                         </div>
+                        <div
+                            class="media d-flex"
+                            v-else-if="content === 'is_instock'"
+                        >
+                            <input
+                                type="checkbox"
+                                name=""
+                                v-model="data[content]"
+                                @click.prevent="changeInstock(data)"
+                            />
+                        </div>
                         <div class="media align-items-center" v-else>
                             <span
                                 class="name mb-0 text-md"
@@ -146,7 +157,31 @@
 
                         <div
                             class="d-flex justify-content-end p-0"
-                            v-if="(type !== 'order') & (type !== 'categories')"
+                            v-if="type === 'products'"
+                        >
+                            <button
+                                type="button"
+                                class="btn btn-info"
+                                @click="showModal(data)"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                @click="typedData(data, index, 'delete')"
+                            >
+                                Delete
+                            </button>
+                        </div>
+
+                        <div
+                            class="d-flex justify-content-end p-0"
+                            v-if="
+                                type !== 'order' &&
+                                type !== 'categories' &&
+                                type !== 'products'
+                            "
                         >
                             <button
                                 type="button"
@@ -205,6 +240,20 @@ export default {
         })
         .catch(() => {});
     },
+    changeInstock(data) {
+      Dialog.confirm({
+        title:
+                    data.is_featured === false
+                      ? 'Make this in stock?'
+                      : 'Removed this out of stock?',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Sure',
+      })
+        .then(() => {
+          this.addOrRemoveNewData(data, 'is_instock');
+        })
+        .catch(() => {});
+    },
     async addOrRemoveNewData(data, type) {
       try {
         const newData = data;
@@ -213,7 +262,13 @@ export default {
           `/${this.type}/${newData.id}`,
           newData,
         );
-        Toast.success(newData[type] === true ? 'Added!' : 'Removed!');
+        if (type === 'is_instock') {
+          Toast.success(
+            newData[type] === true ? 'Added!' : 'Removed!',
+          );
+        } else {
+          Toast.success(newData[type] === true ? 'Success' : 'Fail!');
+        }
       } catch (error) {
         Toast.fail('Something wrong!');
       }

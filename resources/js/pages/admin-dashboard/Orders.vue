@@ -1,27 +1,27 @@
 <template>
-  <div class="d-flex">
-    <div class="col-lg-12 col-md-12 col-12 p-0">
-      <!-- Card header -->
-      <div class="card-header border-0 d-flex justify-content-between">
-        <h3 class="mb-0 pl-3">Orders Management</h3>
-      </div>
-      <div class="table betslip-table pb-3 table-responsive">
-        <DashboardTable
-          :tableData="tableData"
-          type="order"
-          @data="getOrderData"
-        />
-        <!-- pagination  -->
-        <b-pagination
-          v-model="currentPage"
-          pills
-          :total-rows="rows"
-          size="sm"
-          align="center"
-        ></b-pagination>
-      </div>
+    <div class="d-flex">
+        <div class="col-lg-12 col-md-12 col-12 p-0">
+            <!-- Card header -->
+            <div class="card-header border-0 d-flex justify-content-between">
+                <h3 class="mb-0 pl-3">Orders Management</h3>
+            </div>
+            <div class="table betslip-table pb-3 table-responsive">
+                <DashboardTable
+                    :tableData="tableData"
+                    type="order"
+                    @data="getOrderData"
+                />
+                <!-- pagination  -->
+                <b-pagination
+                    v-model="currentPage"
+                    pills
+                    :total-rows="rows"
+                    size="sm"
+                    align="center"
+                ></b-pagination>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 <script>
 import { Toast, Dialog } from 'vant';
@@ -93,6 +93,7 @@ export default {
           },
         });
         this.tableData.datas = res.data.data;
+        this.rows = Math.ceil(res.data.total / 20);
       } catch (error) {
         console.log(error);
       }
@@ -110,6 +111,6 @@ export default {
 </script>
 <style scoped>
 .betslip-table {
-  background: white;
+    background: white;
 }
 </style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminProductResource;
 use App\Http\Resources\ProductResource;
 use Exception;
 use App\Traits\Base64;
@@ -31,20 +32,26 @@ class ProductController extends Controller
             ]);
 
             if (!$request->category_id) {
-
-                $products = Product::orderBy('price', $request->type);
+                $products = Product::orderBy("price", $request->type);
 
                 $total = count(Product::all());
             } else {
+                $products = Product::where(
+                    "category_id",
+                    $request->category_id
+                )->orderBy("price", $request->type);
 
-                $products = Product::where('category_id', $request->category_id)->orderBy('price', $request->type);
-
-                $total = count(Product::where('category_id', $request->category_id)->get());
+                $total = count(
+                    Product::where("category_id", $request->category_id)->get()
+                );
             }
 
             $offset = (intval($request->page) - 1) * intval($request->limit);
 
-            $products = $products->offset($offset)->limit($request->limit)->get();
+            $products = $products
+                ->offset($offset)
+                ->limit($request->limit)
+                ->get();
 
             return response()->json([
                 "success" => true,
@@ -64,18 +71,37 @@ class ProductController extends Controller
     {
         try {
             if ($request->category_id) {
-                $products = Product::where('category_id', $request->category_id)->limit(5)->get();
+                $products = Product::where("category_id", $request->category_id)
+                    ->limit(5)
+                    ->get();
             } elseif ($request->latest) {
-                $products = Product::limit(6)->orderBy('created_at', 'desc')->get();
+                $products = Product::limit(6)
+                    ->orderBy("created_at", "desc")
+                    ->get();
             } elseif ($request->search) {
-                $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
+                $products = Product::where(
+                    "name",
+                    "like",
+                    "%" . $request->search . "%"
+                )->get();
             } else {
-                $products = Product::all();
+                $products = Product::latest();
+
+                $total = count(Product::all());
+
+                $offset =
+                    (intval($request->page) - 1) * intval($request->limit);
+
+                $products = $products
+                    ->offset($offset)
+                    ->limit($request->limit)
+                    ->get();
             }
 
             return response()->json([
                 "success" => true,
-                "data" => $products,
+                "data" => ProductResource::collection($products),
+                "total" => $total ? $total : null,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -90,7 +116,6 @@ class ProductController extends Controller
     {
         // return gettype($request->size_id);
         try {
-
             // $image = $this->uploadBase64($request->image, "add", null);
 
             $product = new Product();
@@ -99,8 +124,10 @@ class ProductController extends Controller
             $product->price = $request->price;
             // $product->image = $image;
             $product->category_id = $request->category_id;
-            $product->sizes = json_encode(json_decode($request->sizes, true));
-            $product->colors = json_encode(json_decode($request->colors, true));
+            $product->is_instock = $request->is_instock;
+            $product->is_featured = $request->is_featured;
+            $product->sizes = $request->sizes;
+            $product->colors = $request->colors;
             $product->save();
             return response()->json([
                 "success" => true,
@@ -147,6 +174,7 @@ class ProductController extends Controller
             $product->description = $request->description;
             $product->price = $request->price;
             $product->is_instock = $request->is_instock;
+            $product->is_featured = $request->is_featured;
             $product->category_id = $request->category_id;
             $product->sizes = $request->sizes;
             $product->colors = $request->colors;

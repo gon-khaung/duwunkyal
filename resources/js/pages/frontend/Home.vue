@@ -90,6 +90,16 @@ export default {
       products: [],
       categories: [],
       featuredCategories: [],
+      test: `<div class="col-lg-3">
+                            <div
+                                class="categories__item set-bg"
+                                :style=""
+                            >
+                                <h5>
+                                    <a href="#">Hello</a>
+                                </h5>
+                            </div>
+                        </div>`,
     };
   },
   methods: {

@@ -1,12 +1,8 @@
 /* eslint-disable */
 export default [
     {
-        path: "deposit",
-        component: render("admin-dashboard/Deposit"),
-    },
-    {
-        path: "withdraw",
-        component: render("admin-dashboard/Withdraw"),
+        path: "products",
+        component: render("admin-dashboard/Products"),
     },
     {
         path: "users-management",
