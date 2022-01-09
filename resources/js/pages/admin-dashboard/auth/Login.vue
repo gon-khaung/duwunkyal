@@ -216,6 +216,7 @@ export default {
           redirect: '/admin/products',
           staySignedIn: true,
           autoLogin: true,
+          rememberMe: true,
         });
         Toast.success('Logged In!');
       } catch (err) {
