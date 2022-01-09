@@ -122,7 +122,6 @@
                                                 :reduce="(data) => data.id"
                                                 label="name"
                                             />
-                                            {{ account.colors }}
                                             <span class="text-danger">{{
                                                 errors.colors
                                             }}</span>
@@ -163,7 +162,6 @@
                                             }}</span>
                                         </div>
                                     </div>
-                                    {{ account.colors }}
                                     <div
                                         class="form-group d-flex"
                                         style="z-index: 1000"

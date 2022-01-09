@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ContactResource;
 use Exception;
 use App\Models\Contact;
 use Illuminate\Http\Request;
@@ -13,13 +14,22 @@ class ContactController extends Controller
      *  GET api/contacts
      *  to get all contacts
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $contacts = Contact::all();
+            $contacts = Contact::latest();
+
+            $total = count(Contact::latest()->get());
+
+            $offset = (intval($request->page) - 1) * intval($request->limit);
+
+            $contacts = $contacts
+                ->offset($offset)
+                ->limit($request->limit)
+                ->get();
             return response()->json([
                 "success" => true,
-                "data" => $contacts,
+                "data" => ContactResource::collection($contacts),
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -37,22 +47,6 @@ class ContactController extends Controller
             $contact->user_id = Auth::user()->id;
             $contact->message = $request->message;
             $contact->save();
-            return response()->json([
-                "success" => true,
-                "data" => $contact,
-            ]);
-        } catch (Exception $e) {
-            return response($e->getMessage(), 500);
-        }
-    }
-
-    /**
-     *  GET api/contacts/{contact}
-     *  to show a contact
-     */
-    public function show(Contact $contact, Request $request)
-    {
-        try {
             return response()->json([
                 "success" => true,
                 "data" => $contact,

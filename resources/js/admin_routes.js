@@ -24,6 +24,10 @@ export default [
         path: "dynamic-names",
         component: render("admin-dashboard/Dynamic"),
     },
+    {
+        path: "contacts",
+        component: render("admin-dashboard/Contacts"),
+    },
 ];
 
 function render(template) {

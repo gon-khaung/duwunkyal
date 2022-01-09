@@ -87,7 +87,7 @@ class ProductController extends Controller
             } else {
                 $products = Product::latest();
 
-                $total = count(Product::latest());
+                $total = count(Product::latest()->get());
 
                 $offset =
                     (intval($request->page) - 1) * intval($request->limit);

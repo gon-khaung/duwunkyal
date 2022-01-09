@@ -15,7 +15,7 @@
                             {{ heading }}
                         </div>
                     </th>
-                    <th>
+                    <th v-if="type !== 'contacts'">
                         <div class="d-flex">
                             <div class="mx-auto">Action</div>
                         </div>
@@ -112,7 +112,11 @@
                             </span>
                         </div>
                     </th>
-                    <th scope="row" class="action-row">
+                    <th
+                        scope="row"
+                        class="action-row"
+                        v-if="type !== 'contacts'"
+                    >
                         <div
                             class="d-flex justify-content-end p-0"
                             v-if="type === 'order'"

@@ -144,6 +144,25 @@
                                 <b class="nav-link-text">Dynamic Names</b>
                             </router-link>
                         </li>
+                        <li
+                            class="nav-item"
+                            data-action="sidenav-pin"
+                            data-target="#sidenav-main"
+                            :class="isMobile ? 'sidenav-toggler' : ''"
+                        >
+                            <router-link
+                                to="/admin/contacts"
+                                :class="
+                                    linkIsActive('/admin/contacts')
+                                        ? 'active'
+                                        : ''
+                                "
+                                class="nav-link"
+                            >
+                                <i class="ni ni-paper-diploma"></i>
+                                <b class="nav-link-text">Contacts</b>
+                            </router-link>
+                        </li>
                     </ul>
                     <!-- Divider -->
                     <hr class="my-3" />
