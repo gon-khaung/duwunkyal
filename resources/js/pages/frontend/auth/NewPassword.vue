@@ -124,6 +124,10 @@ export default {
         return false;
       }
       try {
+        const res = await axios.post('auth/passwordChange', {
+          password: this.password,
+          id: this.$route.query.userId,
+        });
       } catch (err) {
         this.error = true;
         console.log(err);

@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware("auth:api", [
-            "except" => ["register", "login", 'passwordReset', 'checkResetTokenAndId'],
+            "except" => ["register", "login", 'passwordReset', 'checkResetTokenAndId', 'passwordChange'],
         ]);
     }
 
@@ -164,12 +164,12 @@ class AuthController extends Controller
     public function passwordChange(Request $request)
     {
         request()->validate([
-            "newpassword" => "required",
-            "user_id" => "required",
+            "password" => "required",
+            "id" => "required",
         ]);
         try {
-            $user = User::findOrFail($request->user_id);
-            $user->password = bcrypt($request->newpassword);
+            $user = User::findOrFail($request->id);
+            $user->password = bcrypt($request->password);
             $user->update();
         } catch (Exception $e) {
             return response()->json(["error" => $e->getMessage()], 401);
