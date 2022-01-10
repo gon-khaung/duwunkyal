@@ -130,6 +130,7 @@
       <div
         class="container"
         v-if="
+          !$route.path.includes('new-password') &&
           !$route.path.includes('forget-password') &&
           !$route.path.includes('login') &&
           !$route.path.includes('register')
@@ -191,6 +192,7 @@
         !$route.path.includes('login') &&
         !$route.path.includes('register') &&
         !$route.path.includes('checkout') &&
+        !$route.path.includes('new-password') &&
         !$route.path.includes('forget-password')
       "
     >

@@ -131,9 +131,6 @@ class AuthController extends Controller
         ]);
         try {
             $email = $request->email;
-            // if ($password !== $confirm_password) {
-            //     throw new Exception("Password not match", 1);
-            // }
             $user = User::where('email', $email)->first();
             if ($user) {
 
@@ -150,6 +147,8 @@ class AuthController extends Controller
                 Mail::to($request->email)->send(
                     new PasswordReset($dbToken, $user->id)
                 );
+                return response()
+                    ->json(["status" => "success"], 200);
             }
             throw new Exception("User Not Match with given email!");
         } catch (Exception $e) {

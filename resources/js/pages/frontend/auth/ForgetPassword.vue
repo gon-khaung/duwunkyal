@@ -10,6 +10,15 @@
                 <div class="d-flex">
                   <div class="w-100">
                     <h3 class="mb-4">Find your account by Email</h3>
+                    <div>
+                      <span class="text-danger" v-if="error"
+                        >Invalid Email</span
+                      >
+                      <small class="text-info" v-if="success"
+                        >We have sent password reset link! Please your
+                        gmail!</small
+                      >
+                    </div>
                   </div>
                 </div>
                 <div class="form-group mt-3">
@@ -22,6 +31,7 @@
                   <label class="form-control-placeholder" for="username"
                     >Email</label
                   >
+                  <small class="text-danger">{{ errors.email }}</small>
                 </div>
                 <div class="form-group">
                   <button
@@ -48,6 +58,7 @@ export default {
   data() {
     return {
       email: null,
+      success: null,
       error: false,
       errors: {},
     };
@@ -64,24 +75,10 @@ export default {
         return false;
       }
       try {
-        // await this.$auth
-        //   .login({
-        //     data: {
-        //       email: this.email,
-        //       password: this.password,
-        //     },
-        //     staySignedIn: true,
-        //     autoLogin: true,
-        //     rememberMe: true,
-        //     redirect: 'af',
-        //   })
-        //   .then((res) => {
-        //     Toast.success('Logged In!');
-        //     this.$router.go(-2);
-        //   });
         const res = await axios.post('auth/password-reset', {
           email: this.email,
         });
+        this.success = true;
       } catch (err) {
         this.error = true;
       }

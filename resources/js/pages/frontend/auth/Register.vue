@@ -1,121 +1,94 @@
 <template>
-    <div>
-        <NavBar />
-        <section class="ftco-section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-7 col-lg-5">
-                        <div class="wrap">
-                            <div class="login-wrap p-4 p-md-5">
-                                <div class="d-flex">
-                                    <div class="w-100">
-                                        <h3 class="mb-4">Register</h3>
-                                    </div>
-                                </div>
-
-                                <div class="form-group mt-3">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        required
-                                        v-model="name"
-                                    />
-                                    <label
-                                        class="form-control-placeholder"
-                                        for="username"
-                                        >Username</label
-                                    >
-                                    <small class="text-danger">{{
-                                        errors.name
-                                    }}</small>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        required
-                                        v-model="email"
-                                    />
-                                    <label
-                                        class="form-control-placeholder"
-                                        for="username"
-                                        >Email</label
-                                    >
-                                    <small class="text-danger">{{
-                                        errors.email
-                                    }}</small>
-                                </div>
-                                <div class="form-group">
-                                    <input
-                                        id="password-field"
-                                        type="password"
-                                        class="form-control"
-                                        required
-                                        v-model="password"
-                                    />
-                                    <label
-                                        class="form-control-placeholder"
-                                        for="password"
-                                        >Password</label
-                                    >
-                                    <span
-                                        toggle="#password-field"
-                                        class="
-                                            fa fa-fw fa-eye
-                                            field-icon
-                                            toggle-password
-                                        "
-                                    ></span>
-                                    <small class="text-danger">{{
-                                        errors.password
-                                    }}</small>
-                                </div>
-                                <div class="form-group">
-                                    <input
-                                        id="password-field"
-                                        type="password"
-                                        class="form-control"
-                                        required
-                                        v-model="confirm_password"
-                                    />
-                                    <label
-                                        class="form-control-placeholder"
-                                        for="password"
-                                        >Confirm Password</label
-                                    >
-                                    <span
-                                        toggle="#password-field"
-                                        class="
-                                            fa fa-fw fa-eye
-                                            field-icon
-                                            toggle-password
-                                        "
-                                    ></span>
-                                    <small class="text-danger">{{
-                                        errors.confirm_password
-                                    }}</small>
-                                </div>
-                                <div class="form-group">
-                                    <button
-                                        type="button"
-                                        class="
-                                            form-control
-                                            btn btn-primary
-                                            rounded
-                                            px-3
-                                        "
-                                        @click="registerWithEmail()"
-                                    >
-                                        Sign In
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div>
+    <NavBar />
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 col-lg-5">
+            <div class="wrap">
+              <div class="login-wrap p-4 p-md-5">
+                <div class="d-flex">
+                  <div class="w-100">
+                    <h3 class="mb-4">Register</h3>
+                  </div>
                 </div>
+
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    required
+                    v-model="name"
+                  />
+                  <label class="form-control-placeholder" for="username"
+                    >Username</label
+                  >
+                  <small class="text-danger">{{ errors.name }}</small>
+                </div>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    required
+                    v-model="email"
+                  />
+                  <label class="form-control-placeholder" for="username"
+                    >Email</label
+                  >
+                  <small class="text-danger">{{ errors.email }}</small>
+                </div>
+                <div class="form-group">
+                  <input
+                    id="password-field"
+                    type="password"
+                    class="form-control"
+                    required
+                    v-model="password"
+                  />
+                  <label class="form-control-placeholder" for="password"
+                    >Password</label
+                  >
+                  <span
+                    toggle="#password-field"
+                    class="fa fa-fw fa-eye field-icon toggle-password"
+                  ></span>
+                  <small class="text-danger">{{ errors.password }}</small>
+                </div>
+                <div class="form-group">
+                  <input
+                    id="password-field"
+                    type="password"
+                    class="form-control"
+                    required
+                    v-model="confirm_password"
+                  />
+                  <label class="form-control-placeholder" for="password"
+                    >Confirm Password</label
+                  >
+                  <span
+                    toggle="#password-field"
+                    class="fa fa-fw fa-eye field-icon toggle-password"
+                  ></span>
+                  <small class="text-danger">{{
+                    errors.confirm_password
+                  }}</small>
+                </div>
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="form-control btn btn-primary rounded px-3"
+                    @click="registerWithEmail()"
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </div>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -162,8 +135,8 @@ export default {
       this.$refs.phone.focus();
     },
     /**
-         * register with
-         */
+     * register with
+     */
     async registerWithEmail() {
       this.isSignUp = true;
       this.errors = {};
@@ -225,15 +198,15 @@ export default {
 </script>
 <style scoped>
 .error {
-    margin-bottom: 13px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    color: red;
-    border: 1px solid red;
-    border-radius: 8px;
-    padding: 0px 15px;
-    background: #ff000014;
-    font-weight: bold;
+  margin-bottom: 13px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  color: red;
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 0px 15px;
+  background: #ff000014;
+  font-weight: bold;
 }
 </style>

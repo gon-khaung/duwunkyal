@@ -128,9 +128,12 @@ export default {
           password: this.password,
           id: this.$route.query.userId,
         });
+        Toast.success('Success!');
+        this.$router.push('/auth/login');
       } catch (err) {
         this.error = true;
         console.log(err);
+        Toast.success('Fail!');
       }
       this.isSignUp = false;
       return true;
@@ -148,6 +151,7 @@ export default {
   },
   mounted() {
     this.checkToken();
+    if (this.$auth.check()) this.$router.push('/');
   },
 };
 </script>
