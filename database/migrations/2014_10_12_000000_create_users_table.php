@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
                 ->nullable();
             $table->enum("roles", ["admin", "user"])->default("user");
             $table->string("password")->nullable();
+            $table->text("rememberToken")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

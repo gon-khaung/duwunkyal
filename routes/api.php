@@ -16,10 +16,13 @@ Route::prefix("auth")->group(function () {
     Route::post("register", [AuthController::class, "register"]);
     Route::post("passwordChange", [AuthController::class, "passwordChange"]);
     Route::post("login", [AuthController::class, "login"]);
-    Route::get("refresh", [AuthController::class, "refresh"]);
-    Route::get("user", [AuthController::class, "user"]);
+    Route::post("password-reset", [AuthController::class, "passwordReset"]);
+    Route::post("check-reset-token", [AuthController::class, "checkResetTokenAndId"]);
+
     Route::middleware("auth:api")->group(function () {
         Route::post("logout", [AuthController::class, "logout"]);
+        Route::get("user", [AuthController::class, "user"]);
+        Route::get("refresh", [AuthController::class, "refresh"]);
     });
 });
 

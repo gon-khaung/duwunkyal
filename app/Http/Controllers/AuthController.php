@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Mail\PasswordReset;
 use Exception;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Hashing\Hasher;
 
 class AuthController extends Controller
 {
@@ -16,7 +20,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware("auth:api", [
-            "except" => ["register", "login"],
+            "except" => ["register", "login", 'passwordReset', 'checkResetTokenAndId'],
         ]);
     }
 
@@ -98,6 +102,56 @@ class AuthController extends Controller
                     ->json(["status" => "success", "data" => $user], 200)
                     ->header("Authorization", $token);
             }
+        } catch (Exception $e) {
+            return response()->json(["error" => $e->getMessage()], 401);
+        }
+    }
+    public function checkResetTokenAndId(Request $request)
+    {
+        try {
+            $user = User::find($request->id)->first();
+            if ($user->rememberToken == $request->token) {
+                return response()
+                    ->json(["status" => "success"], 200);
+            }
+            return response()
+                ->json(["status" => "Invalid Token"], 400);
+        } catch (Exception $e) {
+            return response()->json(["error" => $e->getMessage()], 401);
+        }
+    }
+    /**
+     * @param Request $request
+     * register
+     */
+    public function passwordReset(Request $request)
+    {
+        request()->validate([
+            "email" => "required",
+        ]);
+        try {
+            $email = $request->email;
+            // if ($password !== $confirm_password) {
+            //     throw new Exception("Password not match", 1);
+            // }
+            $user = User::where('email', $email)->first();
+            if ($user) {
+
+                // === generate token ===
+                $key = config('app.key');
+                if (Str::startsWith($key, 'base64:')) {
+                    $key = base64_decode(substr($key, 7));
+                }
+                $token = hash_hmac('sha256', Str::random(40), $key);
+                $dbToken = app(Hasher::class)->make($token);
+                $user->rememberToken = $dbToken;
+                $user->update();
+
+                Mail::to($request->email)->send(
+                    new PasswordReset($dbToken, $user->id)
+                );
+            }
+            throw new Exception("User Not Match with given email!");
         } catch (Exception $e) {
             return response()->json(["error" => $e->getMessage()], 401);
         }

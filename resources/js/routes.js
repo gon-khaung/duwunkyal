@@ -48,6 +48,14 @@ export const routes = [
         path: 'auth/register',
         component: render('frontend/auth/Register'),
       },
+      {
+        path: 'auth/forget-password',
+        component: render('frontend/auth/ForgetPassword'),
+      },
+      {
+        path: 'auth/new-password',
+        component: render('frontend/auth/NewPassword'),
+      },
     ],
   },
 ];
