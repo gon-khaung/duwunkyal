@@ -14,7 +14,7 @@ class CategoryController extends Controller
     use Base64;
     public function __construct()
     {
-        // $this->middleware("auth:api")->only("store", "update");
+        $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
