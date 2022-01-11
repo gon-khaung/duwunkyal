@@ -28,37 +28,24 @@
       </div>
       <nav class="humberger__menu__nav mobile-menu">
         <ul>
-          <li>
-            <a
-              href="#"
-              @click.prevent="$router.push('/')"
-              :class="
-                !linkIsActive('/shop') &&
-                !linkIsActive('/contact') &&
-                !linkIsActive('/product') &&
-                !linkIsActive('/checkout') &&
-                !linkIsActive('/contact')
-                  ? 'active'
-                  : ''
-              "
-              >Home</a
-            >
+          <li
+            :class="
+              !linkIsActive('/shop') &&
+              !linkIsActive('/contact') &&
+              !linkIsActive('/product') &&
+              !linkIsActive('/checkout') &&
+              !linkIsActive('/contact')
+                ? 'active'
+                : ''
+            "
+          >
+            <a href="/">Home</a>
           </li>
-          <li>
-            <a
-              href="#"
-              @click.prevent="$router.push('/shop')"
-              :class="linkIsActive('/shop') ? 'active' : ''"
-              >Shop</a
-            >
+          <li :class="linkIsActive('/shop') ? 'active' : ''">
+            <a href="/shop">Shop</a>
           </li>
-          <li class="active">
-            <a
-              href="#"
-              @click.prevent="$router.push('/contact')"
-              :class="linkIsActive('/contact') ? 'active' : ''"
-              >Contact</a
-            >
+          <li :class="linkIsActive('/contact') ? 'active' : ''">
+            <a href="/contact">Contact</a>
           </li>
         </ul>
       </nav>
