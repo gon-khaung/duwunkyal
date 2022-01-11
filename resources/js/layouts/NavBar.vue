@@ -10,14 +10,14 @@
         <div class="header__top__right__auth login_auth">
           <a
             href=""
-            @click.prevent="$router.push('/auth/login')"
+            @click="$router.push('/auth/login')"
             v-if="!$auth.check()"
             class="mr-2"
             ><i class="fa fa-user"></i> Login
           </a>
           <a
             href=""
-            @click.prevent="$router.push('/auth/register')"
+            @click="$router.push('/auth/register')"
             v-if="!$auth.check()"
             ><i class="fa fa-user"></i> Register
           </a>
@@ -91,7 +91,7 @@
                   <a href="#"><i class="fab fa-viber"></i></a>
                 </div>
                 <div class="header__top__right__auth" v-if="!$auth.check()">
-                  <a href="" @click.prevent="$router.push('/auth/login')"
+                  <a href="" @click="$router.push('/auth/login')"
                     ><i class="fa fa-user"></i> Login
                   </a>
                 </div>
@@ -100,7 +100,7 @@
                   class="header__top__right__auth ml-2"
                   v-if="!$auth.check()"
                 >
-                  <a href="" @click.prevent="$router.push('/auth/register')"
+                  <a href="" @click="$router.push('/auth/register')"
                     ><i class="fa fa-user"></i> Register
                   </a>
                 </div>
@@ -114,16 +114,16 @@
           </div>
         </div>
       </div>
-      <div
-        class="container"
-        v-if="
-          !$route.path.includes('new-password') &&
-          !$route.path.includes('forget-password') &&
-          !$route.path.includes('login') &&
-          !$route.path.includes('register')
-        "
-      >
-        <div class="row">
+      <div class="container">
+        <div
+          class="row"
+          v-if="
+            !$route.path.includes('new-password') &&
+            !$route.path.includes('forget-password') &&
+            !$route.path.includes('login') &&
+            !$route.path.includes('register')
+          "
+        >
           <div class="col-lg-3">
             <div class="header__logo">
               <a href="./index.html"><img src="img/logo.png" alt="" /></a>
@@ -332,4 +332,7 @@ export default {
   margin-left: 5px;
   margin-right: 10px;
 }
+/* .header__top {
+  background: rgb(216, 210, 210);
+} */
 </style>

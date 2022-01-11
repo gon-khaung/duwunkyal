@@ -50,16 +50,19 @@
                     Sign In
                   </button>
                 </div>
-                <div class="form-group d-md-flex">
-                  <div class="w-50 text-left">
+                <div class="form-group d-flex justify-content-between">
+                  <div class="text-left">
                     <label class="checkbox-wrap checkbox-primary mb-0"
                       >Remember Me
                       <input type="checkbox" checked />
                       <span class="checkmark"></span>
                     </label>
                   </div>
-                  <div class="w-50 text-md-right">
-                    <a href="#" @click="$router.push('/auth/forget-password')"
+                  <div class="text-right">
+                    <a
+                      href="#"
+                      @click="$router.push('/auth/forget-password')"
+                      class="text-danger"
                       >Forgot Password</a
                     >
                   </div>
