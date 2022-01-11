@@ -109,7 +109,7 @@ class AuthController extends Controller
     public function checkResetTokenAndId(Request $request)
     {
         try {
-            $user = User::find($request->id)->first();
+            $user = User::find($request->id);
             if ($user->rememberToken == $request->token) {
                 return response()
                     ->json(["status" => "success"], 200);
@@ -145,7 +145,7 @@ class AuthController extends Controller
                 $user->update();
 
                 Mail::to($request->email)->send(
-                    new PasswordReset($dbToken, $user->id)
+                    new PasswordReset($user->rememberToken, $user->id)
                 );
                 return response()
                     ->json(["status" => "success"], 200);
