@@ -161,7 +161,7 @@ export default {
   width: 170px;
   height: 170px;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  background: transparent;
   position: absolute;
   top: 0;
 }
