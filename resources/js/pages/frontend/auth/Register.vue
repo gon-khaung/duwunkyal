@@ -44,6 +44,7 @@
                     class="form-control"
                     required
                     v-model="password"
+                    ref="password"
                   />
                   <label class="form-control-placeholder" for="password"
                     >Password</label
@@ -51,6 +52,7 @@
                   <span
                     toggle="#password-field"
                     class="fa fa-fw fa-eye field-icon toggle-password"
+                    @click="showablePassword"
                   ></span>
                   <small class="text-danger">{{ errors.password }}</small>
                 </div>
@@ -61,6 +63,7 @@
                     class="form-control"
                     required
                     v-model="confirm_password"
+                    ref="confirm_password"
                   />
                   <label class="form-control-placeholder" for="password"
                     >Confirm Password</label
@@ -68,6 +71,7 @@
                   <span
                     toggle="#password-field"
                     class="fa fa-fw fa-eye field-icon toggle-password"
+                    @click="showableConfirmPassword"
                   ></span>
                   <small class="text-danger">{{
                     errors.confirm_password
@@ -208,5 +212,8 @@ export default {
   padding: 0px 15px;
   background: #ff000014;
   font-weight: bold;
+}
+.toggle-password {
+  cursor: pointer;
 }
 </style>

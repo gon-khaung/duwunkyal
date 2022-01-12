@@ -12,6 +12,9 @@
                     <h3 class="mb-4">Log In</h3>
                   </div>
                 </div>
+                <div class="error" v-if="error">
+                  {{ "Fail to Login! Please Try Again" }}
+                </div>
                 <div class="form-group mt-3">
                   <input
                     type="text"
@@ -31,12 +34,13 @@
                     class="form-control"
                     required
                     v-model="password"
+                    ref="password"
                   />
                   <label class="form-control-placeholder" for="password"
                     >Password</label
                   >
                   <span
-                    toggle="#password-field"
+                    @click="showablePassword"
                     class="fa fa-fw fa-eye field-icon toggle-password"
                   ></span>
                   <small class="text-danger">{{ errors.password }}</small>
@@ -108,6 +112,14 @@ export default {
       }
       this.isShow = !this.isShow;
     },
+    showablePassword() {
+      if (this.isShow) {
+        this.$refs.password.type = 'password';
+      } else {
+        this.$refs.password.type = 'text';
+      }
+      this.isShow = !this.isShow;
+    },
     focusOnPasswordInputBox() {
       this.$refs.password.focus();
     },
@@ -167,5 +179,8 @@ export default {
   padding: 0px 15px;
   background: #ff000014;
   font-weight: bold;
+}
+.toggle-password {
+  cursor: pointer;
 }
 </style>
