@@ -332,7 +332,7 @@ export default {
   margin-left: 5px;
   margin-right: 10px;
 }
-/* .header__top {
-  background: rgb(216, 210, 210);
-} */
+.header__top {
+  background: #e8f0fe;
+}
 </style>
