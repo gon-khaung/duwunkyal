@@ -189,7 +189,7 @@
             <div class="hero__categories">
               <div class="hero__categories__all">
                 <i class="fa fa-bars"></i>
-                <span>All departments</span>
+                <span>All categories</span>
               </div>
               <ul :style="isNone ? 'display: none' : ''">
                 <li>
