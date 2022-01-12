@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware("auth:api")->only("store", "update");
+        $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
