@@ -112,14 +112,7 @@ export default {
       }
       this.isShow = !this.isShow;
     },
-    showablePassword() {
-      if (this.isShow) {
-        this.$refs.password.type = 'password';
-      } else {
-        this.$refs.password.type = 'text';
-      }
-      this.isShow = !this.isShow;
-    },
+
     focusOnPasswordInputBox() {
       this.$refs.password.focus();
     },
