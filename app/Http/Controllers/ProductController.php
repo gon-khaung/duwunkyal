@@ -72,6 +72,7 @@ class ProductController extends Controller
         try {
             if ($request->category_id) {
                 $products = Product::where("category_id", $request->category_id)
+                    ->where("id", "!=", $request->current_product_id)
                     ->limit(5)
                     ->get();
             } elseif ($request->latest) {

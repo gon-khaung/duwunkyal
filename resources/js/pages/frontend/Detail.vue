@@ -257,6 +257,7 @@ export default {
         const res = await axios.get('products', {
           params: {
             category_id: id,
+            current_product_id: this.id,
           },
         });
         this.relatedProducts = res.data.data;
