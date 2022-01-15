@@ -20,7 +20,7 @@
             <div class="featured__controls">
               <ul>
                 <li
-                  :class="index == 0 ? 'active' : ''"
+                  :class="index == categoryActive ? 'active' : ''"
                   data-filter="*"
                   v-for="(cat, index) in featuredCategories"
                   :key="index"
@@ -71,6 +71,7 @@ export default {
   components: { Product, Slider },
   data() {
     return {
+      categoryActive: 0,
       products: [],
       categories: [],
       featuredCategories: [],
@@ -100,6 +101,7 @@ export default {
     },
     changeCategoryProducts(id) {
       this.products = this.featuredCategories[id].products;
+      this.categoryActive = id;
     },
   },
   mounted() {
