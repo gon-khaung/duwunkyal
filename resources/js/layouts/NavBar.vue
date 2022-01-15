@@ -14,7 +14,7 @@
             <div class="humberger__menu__widget">
                 <div class="header__top__right__auth login_auth">
                     <a href="/auth/login" v-if="!$auth.check()" class="mr-2"
-                        ><i class="fa fa-user"></i> Login
+                        ><i class="fa fa-sign-in-alt"></i> Login
                     </a>
                     <a href="/auth/register" v-if="!$auth.check()"
                         ><i class="fa fa-user"></i> Register
@@ -105,7 +105,7 @@
                                         @click.prevent="
                                             $router.push('/auth/login')
                                         "
-                                        ><i class="fa fa-user"></i> Login
+                                        ><i class="fa fa-sign-in-alt"></i> Login
                                     </a>
                                 </div>
 
