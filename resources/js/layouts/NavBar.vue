@@ -4,24 +4,22 @@
         <div class="humberger__menu__overlay"></div>
         <div class="humberger__menu__wrapper">
             <div class="humberger__menu__logo">
-                <a href="#"><img src="img/logo.png" alt="" /></a>
+                <a href="#"
+                    ><img
+                        src="build/assets/img/logo.jpg"
+                        alt=""
+                        style="width: 60px; height: 60px"
+                /></a>
             </div>
             <div class="humberger__menu__widget">
                 <div class="header__top__right__auth login_auth">
-                    <a
-                        href="#"
-                        @click.prevent="$router.push('/auth/login')"
-                        v-if="!$auth.check()"
-                        class="mr-2"
+                    <a href="/auth/login" v-if="!$auth.check()" class="mr-2"
                         ><i class="fa fa-user"></i> Login
                     </a>
-                    <a
-                        href="#"
-                        @click.prevent="$router.push('/auth/register')"
-                        v-if="!$auth.check()"
+                    <a href="/auth/register" v-if="!$auth.check()"
                         ><i class="fa fa-user"></i> Register
                     </a>
-                    <a href="#" @click.prevent="logout()" v-if="$auth.check()"
+                    <a href="" @click.prevent="logout()" v-if="$auth.check()"
                         ><i class="fa fa-user"></i> Log Out
                     </a>
                 </div>
@@ -39,17 +37,13 @@
                                 : ''
                         "
                     >
-                        <a href="#" @click.prevent="$router.push('/')">Home</a>
+                        <a href="/">Home</a>
                     </li>
                     <li :class="linkIsActive('/shop') ? 'active' : ''">
-                        <a href="#" @click.prevent="$router.push('/shop')"
-                            >Shop</a
-                        >
+                        <a href="/shop">Shop</a>
                     </li>
                     <li :class="linkIsActive('/contact') ? 'active' : ''">
-                        <a href="#" @click.prevent="$router.push('/contact')"
-                            >Contact</a
-                        >
+                        <a href="/contact">Contact</a>
                     </li>
                 </ul>
             </nav>
@@ -79,9 +73,13 @@
                         <div class="col-lg-6">
                             <div class="header__top__left">
                                 <ul>
-                                    <li>
-                                        <i class="fa fa-envelope"></i>
-                                        {{ $store.state.contact.email }}
+                                    <li class="d-flex">
+                                        <img
+                                            src="/build/assets/img/logo.jpg"
+                                            alt=""
+                                            style="width: 50px; height: 50px"
+                                        />
+                                        <h3 class="my-auto ml-3">Duwunkyal</h3>
                                     </li>
                                 </ul>
                             </div>
@@ -149,9 +147,7 @@
                 >
                     <div class="col-lg-3">
                         <div class="header__logo">
-                            <a href="./index.html"
-                                ><img src="img/logo.png" alt=""
-                            /></a>
+                            <a href="/"><img alt="" /></a>
                         </div>
                     </div>
                     <div class="col-lg-6">

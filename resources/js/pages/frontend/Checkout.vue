@@ -8,7 +8,7 @@
                     <h4>Billing Details</h4>
                     <form action="#">
                         <div class="row">
-                            <div class="col-lg-8 col-md-6">
+                            <div class="col-lg-7 col-md-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
                                     <input type="text" v-model="phone" />
@@ -40,7 +40,7 @@
                                     Thank for your ordering.
                                 </p>
                             </div>
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-5 col-md-6">
                                 <div class="checkout__order">
                                     <h4>Your Order</h4>
                                     <div class="checkout__order__products">
