@@ -113,8 +113,6 @@ export default {
       try {
         if (this.$auth.check()) {
           const res = await axios.post('/contacts', this.contact);
-          Toast.success('Sent!');
-          this.contact = {};
         } else {
           this.$router.push('/auth/login');
         }

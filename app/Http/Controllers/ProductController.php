@@ -129,6 +129,8 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->is_instock = $request->is_instock;
             $product->is_featured = $request->is_featured;
+            $product->wholesale_quantity = $request->wholesale_quantity;
+            $product->wholesale_price = $request->wholesale_price;
             $product->sizes = $request->sizes;
             $product->colors = $request->colors;
             $product->save();
@@ -181,6 +183,8 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->sizes = $request->sizes;
             $product->colors = $request->colors;
+            $product->wholesale_quantity = $request->wholesale_quantity;
+            $product->wholesale_price = $request->wholesale_price;
             $product->image = $image;
             $product->update();
             return response()->json([

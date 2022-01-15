@@ -32,6 +32,8 @@ class ProductResource extends JsonResource
             "sizes" => $this->sizes,
             "category_id" => $this->category_id,
             "category" => Category::find($this->category_id)->name,
+            "wholesale_price" => $this->wholesale_price,
+            "wholesale_quantity" => $this->wholesale_quantity,
         ];
     }
 }

@@ -10,7 +10,7 @@
                             <div class="product__details__pic__item">
                                 <img
                                     class="product__details__pic__item--large"
-                                    src="https://thetkhine.com/wp-content/uploads/2021/07/Sunset1-768x512.jpeg"
+                                    :src="product.image"
                                     alt=""
                                 />
                             </div>
@@ -20,7 +20,12 @@
                         <div class="product__details__text">
                             <h3>{{ product.name }}</h3>
                             <div class="product__details__price">
-                                {{ product.price }} MMK
+                                {{
+                                    quantity >= product.wholesale_quantity
+                                        ? product.wholesale_price
+                                        : product.price
+                                }}
+                                MMK
                             </div>
                             <p class="mb-3">
                                 {{ product.description }}
@@ -198,7 +203,10 @@ export default {
         quantity: this.quantity,
         size: this.size,
         color: this.color,
-        price: this.product.price,
+        price:
+                    this.quantity >= this.product.wholesale_quantity
+                      ? this.product.wholesale_price
+                      : this.product.price,
       };
       const products = [
         ...this.getLocalstorage('cartProducts'),

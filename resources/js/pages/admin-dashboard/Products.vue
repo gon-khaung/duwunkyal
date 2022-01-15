@@ -107,6 +107,32 @@
                                             errors.price
                                         }}</span>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label"
+                                            >Wholesale Price</label
+                                        >
+                                        <input
+                                            class="form-control"
+                                            v-model="account.wholesale_price"
+                                            type="number"
+                                        />
+                                        <span class="text-danger">{{
+                                            errors.price
+                                        }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label"
+                                            >Wholesale Quantity</label
+                                        >
+                                        <input
+                                            class="form-control"
+                                            v-model="account.wholesale_quantity"
+                                            type="number"
+                                        />
+                                        <span class="text-danger">{{
+                                            errors.price
+                                        }}</span>
+                                    </div>
                                     <div
                                         class="form-group d-flex p-0"
                                         style="z-index: 1000"
@@ -145,7 +171,7 @@
                                     </div>
                                     <div
                                         class="form-group d-flex p-0"
-                                        style="z-index: 800"
+                                        style="z-index: 950"
                                     >
                                         <div class="col-12 p-0">
                                             <label class="form-control-label"
@@ -164,7 +190,7 @@
                                     </div>
                                     <div
                                         class="form-group d-flex"
-                                        style="z-index: 1000"
+                                        style="z-index: 900"
                                     >
                                         <div class="col-6">
                                             <label class="form-control-label"
@@ -225,7 +251,10 @@ export default {
       currentPage: 1,
       categories: [],
       imageUploader: [],
-      account: {},
+      account: {
+        is_featured: false,
+        is_instock: false,
+      },
       dynamicnames: {
         colors: [],
         sizes: [],
@@ -241,6 +270,8 @@ export default {
           'Colors',
           'Sizes',
           'Category',
+          'Wholesale Quantity',
+          'Wholesale Price',
         ],
         datas: [],
       },
@@ -248,12 +279,15 @@ export default {
   },
   watch: {
     currentPage() {
+      this.account = {
+        is_featured: false,
+        is_instock: false,
+      };
       this.fetchAccounts();
     },
   },
   methods: {
     makeNewProduct() {
-      this.account = {};
       this.imageUploader = [];
     },
     async sendNewAccount() {
@@ -335,6 +369,8 @@ export default {
           'color_names',
           'size_names',
           'category',
+          'wholesale_price',
+          'wholesale_quantity',
         ];
         const res = await axios.get('/products', {
           params: {

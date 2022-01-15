@@ -9,33 +9,8 @@
               <div class="login-wrap p-4 p-md-5">
                 <div class="d-flex">
                   <div class="w-100">
-                    <h3 class="mb-4">Register</h3>
+                    <h3 class="mb-4">Change New Password</h3>
                   </div>
-                </div>
-
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    required
-                    v-model="name"
-                  />
-                  <label class="form-control-placeholder" for="username"
-                    >Username</label
-                  >
-                  <small class="text-danger">{{ errors.name }}</small>
-                </div>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    required
-                    v-model="email"
-                  />
-                  <label class="form-control-placeholder" for="username"
-                    >Email</label
-                  >
-                  <small class="text-danger">{{ errors.email }}</small>
                 </div>
                 <div class="form-group">
                   <input
@@ -44,7 +19,6 @@
                     class="form-control"
                     required
                     v-model="password"
-                    ref="password"
                   />
                   <label class="form-control-placeholder" for="password"
                     >Password</label
@@ -52,7 +26,6 @@
                   <span
                     toggle="#password-field"
                     class="fa fa-fw fa-eye field-icon toggle-password"
-                    @click="showablePassword"
                   ></span>
                   <small class="text-danger">{{ errors.password }}</small>
                 </div>
@@ -63,7 +36,6 @@
                     class="form-control"
                     required
                     v-model="confirm_password"
-                    ref="confirm_password"
                   />
                   <label class="form-control-placeholder" for="password"
                     >Confirm Password</label
@@ -71,7 +43,6 @@
                   <span
                     toggle="#password-field"
                     class="fa fa-fw fa-eye field-icon toggle-password"
-                    @click="showableConfirmPassword"
                   ></span>
                   <small class="text-danger">{{
                     errors.confirm_password
@@ -83,7 +54,7 @@
                     class="form-control btn btn-primary rounded px-3"
                     @click="registerWithEmail()"
                   >
-                    Sign In
+                    Confirm
                   </button>
                 </div>
               </div>
@@ -101,10 +72,7 @@ import { Toast } from 'vant';
 export default {
   data() {
     return {
-      isSignUp: false,
       errors: {},
-      name: null,
-      email: null,
       error: false,
       password: null,
       confirm_password: null,
@@ -135,25 +103,11 @@ export default {
     focusOnPasswordInputBox() {
       this.$refs.password.focus();
     },
-    focusOnPhoneInputBox() {
-      this.$refs.phone.focus();
-    },
     /**
      * register with
      */
     async registerWithEmail() {
-      this.isSignUp = true;
       this.errors = {};
-      if (!this.name) {
-        this.errors.name = 'Required Name';
-        this.isSignUp = false;
-        return false;
-      }
-      if (!this.email) {
-        this.errors.email = 'Required Email';
-        this.isSignUp = false;
-        return false;
-      }
       if (!this.password) {
         this.errors.password = 'Required Password';
         this.isSignUp = false;
@@ -170,32 +124,33 @@ export default {
         return false;
       }
       try {
-        await this.$auth
-          .register({
-            data: {
-              email: this.email,
-              password: this.password,
-              name: this.name,
-              confirmPassword: this.confirm_password,
-            },
-            staySignedIn: true,
-            autoLogin: true,
-            rememberMe: true,
-            redirect: 'asdf',
-          })
-          .then((res) => {
-            Toast.success('Logged In!');
-            this.$router.go(-2);
-          });
+        const res = await axios.post('auth/passwordChange', {
+          password: this.password,
+          id: this.$route.query.userId,
+        });
+        Toast.success('Success!');
+        this.$router.push('/auth/login');
       } catch (err) {
         this.error = true;
         console.log(err);
+        Toast.success('Fail!');
       }
       this.isSignUp = false;
       return true;
     },
+    async checkToken() {
+      try {
+        const res = await axios.post('auth/check-reset-token', {
+          token: this.$route.query.token,
+          id: this.$route.query.userId,
+        });
+      } catch (error) {
+        this.$router.push('/');
+      }
+    },
   },
   mounted() {
+    this.checkToken();
     if (this.$auth.check()) this.$router.push('/');
   },
 };
@@ -212,8 +167,5 @@ export default {
   padding: 0px 15px;
   background: #ff000014;
   font-weight: bold;
-}
-.toggle-password {
-  cursor: pointer;
 }
 </style>

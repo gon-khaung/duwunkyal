@@ -24,12 +24,17 @@ class UserController extends Controller
                 $offset = (intval($request->page) - 1) * intval($request->limit);
 
                 $users = $users->offset($offset)->limit($request->limit)->get();
+
+                return response()->json([
+                    "success" => true,
+                    "data" => UserResource::collection($users),
+                    "total" => $total
+                ]);
             } else $users = User::where('name', 'like', '%' . $request->search . '%')->get();
 
             return response()->json([
                 "success" => true,
                 "data" => UserResource::collection($users),
-                "total" => $total
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
