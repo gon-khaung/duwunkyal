@@ -21,10 +21,7 @@ class CreateOrdersTable extends Migration
                 ->onDelete("cascade");
             $table->string("address")->nullable();
             $table->text("note")->nullable();
-            $table
-                ->string("phone")
-                ->nullable()
-                ->unique();
+            $table->string("phone")->nullable();
             $table->decimal("total", 30, 0)->nullable();
             $table
                 ->enum("status", ["Pending", "Delivered", "Rejected"])

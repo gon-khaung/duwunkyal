@@ -14,7 +14,7 @@ class CategoryController extends Controller
     use Base64;
     public function __construct()
     {
-        // $this->middleware("auth:api")->only("store", "update");
+        $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
@@ -49,11 +49,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
-            // $image = $this->uploadBase64($request->image, "add", null);
+            $image = $this->uploadBase64($request->image, "add", null);
 
             $category = new Category();
             $category->name = $request->name;
-            // $category->image = $image;
+            $category->image = $image;
             $category->save();
             return response()->json([
                 "success" => true,

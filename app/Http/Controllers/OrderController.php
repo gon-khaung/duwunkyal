@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware("auth:api")->only("store", "update");
+        $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
@@ -22,18 +22,21 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         try {
-            $orders = Order::orderBy('created_at', 'desc');
+            $orders = Order::orderBy("created_at", "desc");
 
             $total = count(Order::all());
 
             $offset = (intval($request->page) - 1) * intval($request->limit);
 
-            $orders = $orders->offset($offset)->limit($request->limit)->get();
+            $orders = $orders
+                ->offset($offset)
+                ->limit($request->limit)
+                ->get();
 
             return response()->json([
                 "success" => true,
                 "data" => OrderResource::collection($orders),
-                "total" => $total
+                "total" => $total,
             ]);
         } catch (Exception $e) {
             return response($e->getMessage(), 500);
@@ -56,12 +59,12 @@ class OrderController extends Controller
             $order->save();
             foreach ($request->products as $product) {
                 $newOrder = Order::find($order->id);
-                $newOrder->products()->attach($product['id'], [
-                    "total" => $request['total'],
-                    "solo_price" => $product['price'],
-                    "size" => $product['size'],
-                    "color" => $product['color'],
-                    "quantity" => $product['quantity'],
+                $newOrder->products()->attach($product["id"], [
+                    "total" => $request["total"],
+                    "solo_price" => $product["price"],
+                    "size" => $product["size"],
+                    "color" => $product["color"],
+                    "quantity" => $product["quantity"],
                 ]);
             }
             return response()->json([

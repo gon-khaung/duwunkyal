@@ -98,6 +98,7 @@
     </div>
 </template>
 <script>
+import { Toast } from 'vant';
 import Breadcrumb from './components/Breadcrumb.vue';
 
 export default {
@@ -110,7 +111,13 @@ export default {
   methods: {
     async sendContactData() {
       try {
-        const res = await axios.post('/contacts', this.contact);
+        if (this.$auth.check()) {
+          const res = await axios.post('/contacts', this.contact);
+          Toast.success('Sent!');
+          this.contact = {};
+        } else {
+          this.$router.push('/auth/login');
+        }
       } catch (error) {
         console.log(error);
       }

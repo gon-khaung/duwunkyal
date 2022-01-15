@@ -16,7 +16,7 @@ class ProductController extends Controller
     use Query;
     public function __construct()
     {
-        // $this->middleware("auth:api")->only("store", "update");
+        $this->middleware("auth:api")->only("store", "update");
     }
 
     /**
@@ -118,15 +118,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return gettype($request->size_id);
         try {
-            // $image = $this->uploadBase64($request->image, "add", null);
+            $image = $this->uploadBase64($request->image, "add", null);
 
             $product = new Product();
             $product->name = $request->name;
             $product->description = $request->description;
             $product->price = $request->price;
-            // $product->image = $image;
+            $product->image = $image;
             $product->category_id = $request->category_id;
             $product->is_instock = $request->is_instock;
             $product->is_featured = $request->is_featured;
@@ -165,15 +164,15 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         try {
-            // $exitedImage = Product::findOrFail($request->id)->image;
-            // if ($exitedImage) {
-            //     $image = $this->uploadBase64(
-            //         $request->image,
-            //         "update",
-            //         $exitedImage
-            //     );
-            //     $product->image = $image;
-            // }
+            $exitedImage = Product::findOrFail($request->id)->image;
+            if ($exitedImage) {
+                $image = $this->uploadBase64(
+                    $request->image,
+                    "update",
+                    $exitedImage
+                );
+                $product->image = $image;
+            }
             $product->name = $request->name;
             $product->description = $request->description;
             $product->price = $request->price;
@@ -182,7 +181,7 @@ class ProductController extends Controller
             $product->category_id = $request->category_id;
             $product->sizes = $request->sizes;
             $product->colors = $request->colors;
-            // $product->image = $image;
+            $product->image = $image;
             $product->update();
             return response()->json([
                 "success" => true,
