@@ -116,7 +116,7 @@
                 <div class="product__item">
                   <div
                     class="product__item__pic set-bg"
-                    :data-setbg="product.image"
+                    :style="`background-image: url(${product.image})`"
                   >
                     <ul class="product__item__pic__hover">
                       <li>
