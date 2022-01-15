@@ -27,7 +27,9 @@ class CategoryController extends Controller
             if ($request->is_featured) {
                 $categories = FeaturedCategoryResource::collection(
                     Category::where("is_featured", true)
-                        ->with("products")
+                        ->with(['products' => function ($query) {
+                            $query->where('is_featured', 1);
+                        }])
                         ->get()
                 );
             } else {
