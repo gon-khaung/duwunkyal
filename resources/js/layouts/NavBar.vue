@@ -9,19 +9,19 @@
       <div class="humberger__menu__widget">
         <div class="header__top__right__auth login_auth">
           <a
-            href=""
-            @click="$router.push('/auth/login')"
+            href="#"
+            @click.prevent="$router.push('/auth/login')"
             v-if="!$auth.check()"
             class="mr-2"
             ><i class="fa fa-user"></i> Login
           </a>
           <a
-            href=""
-            @click="$router.push('/auth/register')"
+            href="#"
+            @click.prevent="$router.push('/auth/register')"
             v-if="!$auth.check()"
             ><i class="fa fa-user"></i> Register
           </a>
-          <a href="" @click.prevent="logout()" v-if="$auth.check()"
+          <a href="#" @click.prevent="logout()" v-if="$auth.check()"
             ><i class="fa fa-user"></i> Log Out
           </a>
         </div>
@@ -39,13 +39,13 @@
                 : ''
             "
           >
-            <a href="/">Home</a>
+            <a href="#" @click.prevent="$router.push('/')">Home</a>
           </li>
           <li :class="linkIsActive('/shop') ? 'active' : ''">
-            <a href="/shop">Shop</a>
+            <a href="#" @click.prevent="$router.push('/shop')">Shop</a>
           </li>
           <li :class="linkIsActive('/contact') ? 'active' : ''">
-            <a href="/contact">Contact</a>
+            <a href="#" @click.prevent="$router.push('/contact')">Contact</a>
           </li>
         </ul>
       </nav>
@@ -91,7 +91,7 @@
                   <a href="#"><i class="fab fa-viber"></i></a>
                 </div>
                 <div class="header__top__right__auth" v-if="!$auth.check()">
-                  <a href="" @click="$router.push('/auth/login')"
+                  <a href="#" @click.prevent="$router.push('/auth/login')"
                     ><i class="fa fa-user"></i> Login
                   </a>
                 </div>
@@ -100,12 +100,12 @@
                   class="header__top__right__auth ml-2"
                   v-if="!$auth.check()"
                 >
-                  <a href="" @click="$router.push('/auth/register')"
+                  <a href="#" @click.prevent="$router.push('/auth/register')"
                     ><i class="fa fa-user"></i> Register
                   </a>
                 </div>
                 <div class="header__top__right__auth" v-if="$auth.check()">
-                  <a href="" @click.prevent="logout()"
+                  <a href="#" @click.prevent="logout()"
                     ><i class="fas fa-sign-out-alt"></i>Log Out
                   </a>
                 </div>
@@ -142,13 +142,15 @@
                       : ''
                   "
                 >
-                  <a href="" @click="$router.push('/')">Home</a>
+                  <a href="" @click.prevent="$router.push('/')">Home</a>
                 </li>
                 <li :class="linkIsActive('/shop') ? 'active' : ''">
-                  <a href="" @click="$router.push('/shop')">Shop</a>
+                  <a href="" @click.prevent="$router.push('/shop')">Shop</a>
                 </li>
                 <li :class="linkIsActive('/contact') ? 'active' : ''">
-                  <a href="" @click="$router.push('/contact')">Contact</a>
+                  <a href="#" @click.prevent="$router.push('/contact')"
+                    >Contact</a
+                  >
                 </li>
               </ul>
             </nav>
