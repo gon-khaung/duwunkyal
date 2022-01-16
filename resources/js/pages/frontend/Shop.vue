@@ -65,7 +65,7 @@
                                                     "
                                                 >
                                                     <img
-                                                        :src="product.image"
+                                                        src="https://duwunkyal.org/storage/images/164223434961e281ed2eb7b3511.webp"
                                                         alt=""
                                                     />
                                                 </div>
@@ -98,7 +98,7 @@
                                                     "
                                                 >
                                                     <img
-                                                        :src="product.image"
+                                                        src="https://duwunkyal.org/storage/images/164223440761e2822781ca89206.webp"
                                                         alt=""
                                                     />
                                                 </div>
