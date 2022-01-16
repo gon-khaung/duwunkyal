@@ -163,35 +163,21 @@
                                             : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('/')"
-                                        >Home</a
-                                    >
+                                    <a href="/">Home</a>
                                 </li>
                                 <li
                                     :class="
                                         linkIsActive('/shop') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href=""
-                                        @click.prevent="$router.push('/shop')"
-                                        >Shop</a
-                                    >
+                                    <a href="/shop">Shop</a>
                                 </li>
                                 <li
                                     :class="
                                         linkIsActive('/contact') ? 'active' : ''
                                     "
                                 >
-                                    <a
-                                        href="#"
-                                        @click.prevent="
-                                            $router.push('/contact')
-                                        "
-                                        >Contact</a
-                                    >
+                                    <a href="/contact">Contact</a>
                                 </li>
                             </ul>
                         </nav>
@@ -200,11 +186,7 @@
                         <div class="header__cart">
                             <ul>
                                 <li>
-                                    <a
-                                        href="#"
-                                        @click.prevent="
-                                            $router.push('/checkout')
-                                        "
+                                    <a href="/checkout"
                                         ><i class="fa fa-shopping-bag"></i>
                                         <span>{{
                                             $store.state.cart.length
