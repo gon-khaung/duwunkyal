@@ -993,11 +993,14 @@ ol {
 .latest-product__item__pic {
     float: left;
     margin-right: 26px;
+    height: 110px;
+    width: 110px;
+    border: 1px solid red;
 }
 
 .latest-product__item__pic img {
-    height: 110px;
-    width: 110px;
+    width: 100%;
+    height: 100%;
 }
 
 .latest-product__item__text {

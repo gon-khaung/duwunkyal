@@ -41,7 +41,7 @@
                         @click="$router.push(`/product/${product.id}`)"
                       >
                         <div class="latest-product__item__pic">
-                          <img src="img/latest-product/lp-1.jpg" alt="" />
+                          <img :src="product.image" alt="" />
                         </div>
                         <div class="latest-product__item__text">
                           <h6>{{ product.name }}</h6>
@@ -57,7 +57,7 @@
                         :key="index"
                       >
                         <div class="latest-product__item__pic">
-                          <img src="img/latest-product/lp-1.jpg" alt="" />
+                          <img :src="product.image" alt="" />
                         </div>
                         <div class="latest-product__item__text">
                           <h6>{{ product.name }}</h6>
