@@ -11,10 +11,10 @@
                   <div class="w-100">
                     <h3 class="mb-4">Find your account by Email</h3>
                     <div>
-                      <span class="text-danger" v-if="error"
+                      <span class="text-danger" v-if="error && !success"
                         >Invalid Email</span
                       >
-                      <small class="text-info" v-if="success"
+                      <small class="text-info" v-if="success && !error"
                         >We have sent password reset link! Please your
                         gmail!</small
                       >
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
+import { Toast } from "vant";
 
 export default {
   data() {
@@ -70,12 +70,12 @@ export default {
     async sendPasswordReset() {
       this.errors = {};
       if (!this.email) {
-        this.errors.email = 'Required Email';
+        this.errors.email = "Required Email";
         this.isSignin = false;
         return false;
       }
       try {
-        const res = await axios.post('auth/password-reset', {
+        const res = await axios.post("auth/password-reset", {
           email: this.email,
         });
         this.success = true;
@@ -87,7 +87,7 @@ export default {
     },
   },
   mounted() {
-    if (this.$auth.check()) this.$router.push('/');
+    if (this.$auth.check()) this.$router.push("/");
   },
 };
 </script>
