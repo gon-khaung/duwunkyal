@@ -993,6 +993,7 @@ ol {
 .latest-product__item__pic {
     float: left;
     margin-right: 26px;
+    position: relative;
     height: 100px;
     width: 100px;
 }
