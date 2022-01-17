@@ -1,130 +1,155 @@
 <template>
-  <div>
-    <NavBar :isSecondHead="false" :isNone="true" />
-    <!-- Product Details Section Begin -->
-    <section class="product-details spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6">
-            <div class="product__details__pic">
-              <div class="product__details__pic__item">
-                <img
-                  class="product__details__pic__item--large"
-                  :src="product.image"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="product__details__text">
-              <h3>{{ product.name }}</h3>
-              <div class="product__details__price">{{ product.price }} MMK</div>
-              <p class="mb-3">
-                {{ product.description }}
-              </p>
-              <div class="theme-light preload">
-                <div>
-                  <div
-                    class="input input--radio input--primary"
-                    style="margin-right: 20px"
-                    v-for="(radioColor, index) in product.color_names"
-                    :key="index"
-                  >
-                    <label>
-                      <input
-                        type="radio"
-                        name="radio--light-primary"
-                        v-model="color"
-                        :value="radioColor"
-                      />
-                      <span class="input__box"></span>
-                      <span>{{ textCapitalize(radioColor) }}</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="theme-light preload mt-2">
-                <div>
-                  <div
-                    class="input input--radio input--secondary"
-                    style="margin-right: 20px"
-                    v-for="(radioSize, index) in product.size_names"
-                    :key="index"
-                  >
-                    <label>
-                      <input
-                        type="radio"
-                        name="radio--light-secondary"
-                        v-model="size"
-                        :value="radioSize"
-                      />
-                      <span class="input__box"></span>
-                      <span>{{ radioSize }}</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex mt-3">
-                <div class="quantity mr-3">
-                  <div class="plus" @click="lossQty">-</div>
-                  <input type="text" value="1" v-model="quantity" />
-                  <div class="minus" @click="addQty">+</div>
-                </div>
-                <button
-                  @click.prevent="addToCart(product.id)"
-                  class="cart-btn"
-                  v-if="!isCart"
-                >
-                  ADD TO CART
-                </button>
-                <button
-                  @click.prevent="removeFromCart(product.id)"
-                  class="cart-btn"
-                  v-else
-                >
-                  REMOVE FROM CART
-                </button>
-              </div>
+    <div>
+        <NavBar :isSecondHead="false" :isNone="true" />
+        <!-- Product Details Section Begin -->
+        <section class="product-details spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="product__details__pic">
+                            <div class="product__details__pic__item">
+                                <img
+                                    class="product__details__pic__item--large"
+                                    :src="product.image"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="product__details__text">
+                            <h3>{{ product.name }}</h3>
+                            <div class="product__details__price">
+                                {{
+                                    quantity >= product.wholesale_quantity
+                                        ? product.wholesale_price
+                                        : product.price
+                                }}
+                                MMK
+                            </div>
+                            <p class="mb-3">
+                                {{ product.description }}
+                            </p>
+                            <div class="theme-light preload">
+                                <div>
+                                    <div
+                                        class="
+                                            input input--radio input--primary
+                                        "
+                                        style="margin-right: 20px"
+                                        v-for="(
+                                            radioColor, index
+                                        ) in product.color_names"
+                                        :key="index"
+                                    >
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="radio--light-primary"
+                                                v-model="color"
+                                                :value="radioColor"
+                                            />
+                                            <span class="input__box"></span>
+                                            <span>{{
+                                                textCapitalize(radioColor)
+                                            }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-light preload mt-2">
+                                <div>
+                                    <div
+                                        class="
+                                            input input--radio input--secondary
+                                        "
+                                        style="margin-right: 20px"
+                                        v-for="(
+                                            radioSize, index
+                                        ) in product.size_names"
+                                        :key="index"
+                                    >
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="radio--light-secondary"
+                                                v-model="size"
+                                                :value="radioSize"
+                                            />
+                                            <span class="input__box"></span>
+                                            <span>{{ radioSize }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3">
+                                <div class="quantity mr-3">
+                                    <div class="plus" @click="lossQty">-</div>
+                                    <input
+                                        type="text"
+                                        value="1"
+                                        v-model="quantity"
+                                    />
+                                    <div class="minus" @click="addQty">+</div>
+                                </div>
+                                <button
+                                    @click.prevent="addToCart(product.id)"
+                                    class="cart-btn"
+                                    v-if="!isCart"
+                                >
+                                    ADD TO CART
+                                </button>
+                                <button
+                                    @click.prevent="removeFromCart(product.id)"
+                                    class="cart-btn"
+                                    v-else
+                                >
+                                    REMOVE FROM CART
+                                </button>
+                            </div>
 
-              <ul>
-                <li>
-                  <b>Availability</b>
-                  <span v-if="product.is_instock" class="text-success"
-                    >In Stock</span
-                  >
-                  <span v-else class="text-danger">Out of Stock</span>
-                </li>
-              </ul>
+                            <ul>
+                                <li>
+                                    <b>Availability</b>
+                                    <span
+                                        v-if="product.is_instock"
+                                        class="text-success"
+                                        >In Stock</span
+                                    >
+                                    <span v-else class="text-danger"
+                                        >Out of Stock</span
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Product Details Section End -->
+        </section>
+        <!-- Product Details Section End -->
 
-    <!-- Related Product Section Begin -->
-    <section class="related-product">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="section-title related__product__title">
-              <h2>Related Product</h2>
+        <!-- Related Product Section Begin -->
+        <section class="related-product">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title related__product__title">
+                            <h2>Related Product</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <Product
+                        :data="product"
+                        v-for="(product, index) in relatedProducts"
+                        :key="index"
+                        @test="refreshPage"
+                    />
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <Product
-            :data="product"
-            v-for="(product, index) in relatedProducts"
-            :key="index"
-            @test="refreshPage"
-          />
-        </div>
-      </div>
-    </section>
-    <!-- Related Product Section End -->
-  </div>
+        </section>
+        <!-- Related Product Section End -->
+    </div>
 </template>
 
 <script>
@@ -178,9 +203,15 @@ export default {
         quantity: this.quantity,
         size: this.size,
         color: this.color,
-        price: this.product.price,
+        price:
+                    this.quantity >= this.product.wholesale_quantity
+                      ? this.product.wholesale_price
+                      : this.product.price,
       };
-      const products = [...this.getLocalstorage('cartProducts'), newProduct];
+      const products = [
+        ...this.getLocalstorage('cartProducts'),
+        newProduct,
+      ];
 
       this.setLocalstorage('cartProducts', products);
 
@@ -226,6 +257,7 @@ export default {
         const res = await axios.get('products', {
           params: {
             category_id: id,
+            current_product_id: this.id,
           },
         });
         this.relatedProducts = res.data.data;
@@ -242,50 +274,50 @@ export default {
 </script>
 <style scoped>
 .plus {
-  width: 35px;
-  height: 35px;
-  border: 1px solid #7fad39;
-  color: #7fad39;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 35px;
-  font-size: 30px;
-  cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #7fad39;
+    color: #7fad39;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 35px;
+    font-size: 30px;
+    cursor: pointer;
 }
 .minus {
-  width: 35px;
-  height: 35px;
-  border: 1px solid #7fad39;
-  color: #7fad39;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 35px;
-  font-size: 20px;
-  cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #7fad39;
+    color: #7fad39;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 35px;
+    font-size: 20px;
+    cursor: pointer;
 }
 .quantity input {
-  width: 60px;
-  height: 35px;
-  border-left: none;
-  border-right: none;
-  border: none;
-  background: transparent;
-  text-align: center;
+    width: 60px;
+    height: 35px;
+    border-left: none;
+    border-right: none;
+    border: none;
+    background: transparent;
+    text-align: center;
 }
 .quantity {
-  display: flex;
+    display: flex;
 }
 .cart-btn {
-  height: 35px;
-  line-height: 30px;
-  font-size: 15px;
-  color: white;
-  background: #7fad39;
-  border: none;
-  border-radius: 5px;
-  padding: 0px 20px;
+    height: 35px;
+    line-height: 30px;
+    font-size: 15px;
+    color: white;
+    background: #7fad39;
+    border: none;
+    border-radius: 5px;
+    padding: 0px 20px;
 }
 .cart-btn:active {
-  border: none;
+    border: none;
 }
 </style>

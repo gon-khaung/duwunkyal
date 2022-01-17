@@ -1,67 +1,69 @@
 <template>
-  <div>
-    <NavBar />
-    <!-- Categories Section Begin -->
-    <section class="categories">
-      <div class="container">
-        <Slider :categories="categories" />
-      </div>
-    </section>
-    <!-- Categories Section End -->
+    <div>
+        <NavBar />
+        <!-- Categories Section Begin -->
+        <section class="categories">
+            <div class="container">
+                <Slider :categories="categories" />
+            </div>
+        </section>
+        <!-- Categories Section End -->
 
-    <!-- Featured Section Begin -->
-    <section class="featured spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="section-title">
-              <h2>Featured Product</h2>
+        <!-- Featured Section Begin -->
+        <section class="featured spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h2>Featured Product</h2>
+                        </div>
+                        <div class="featured__controls">
+                            <ul>
+                                <li
+                                    :class="
+                                        index == categoryActive ? 'active' : ''
+                                    "
+                                    data-filter="*"
+                                    v-for="(cat, index) in featuredCategories"
+                                    :key="index"
+                                    @click="changeCategoryProducts(index)"
+                                >
+                                    {{ cat.name }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row featured__filter">
+                    <Product
+                        :data="product"
+                        v-for="(product, index) in products"
+                        :key="index"
+                    />
+                </div>
             </div>
-            <div class="featured__controls">
-              <ul>
-                <li
-                  :class="index == categoryActive ? 'active' : ''"
-                  data-filter="*"
-                  v-for="(cat, index) in featuredCategories"
-                  :key="index"
-                  @click="changeCategoryProducts(index)"
-                >
-                  {{ cat.name }}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row featured__filter">
-          <Product
-            :data="product"
-            v-for="(product, index) in products"
-            :key="index"
-          />
-        </div>
-      </div>
-    </section>
-    <!-- Featured Section End -->
+        </section>
+        <!-- Featured Section End -->
 
-    <!-- Banner Begin -->
-    <div class="banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="banner__pic">
-              <img src="assets/img/banner/banner-1.jpg" alt="" />
+        <!-- Banner Begin -->
+        <div class="banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="banner__pic">
+                            <img src="assets/img/banner/banner-1.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="banner__pic">
+                            <img src="assets/img/banner/banner-2.jpg" alt="" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            <div class="banner__pic">
-              <img src="assets/img/banner/banner-2.jpg" alt="" />
-            </div>
-          </div>
         </div>
-      </div>
+        <!-- Banner End -->
     </div>
-    <!-- Banner End -->
-  </div>
 </template>
 <script>
 import Product from './components/Product.vue';
