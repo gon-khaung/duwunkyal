@@ -2,7 +2,12 @@
   <!-- Breadcrumb Section Begin -->
   <section
     class="breadcrumb-section"
-    style="background: url('/build/assets/img/breadcum.jpeg')"
+    style="
+      background: url('/build/assets/img/breadcum.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+    "
   >
     <div class="container">
       <div class="row">
