@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Toast } from 'vant';
 
 export default {
   data() {
@@ -70,12 +70,12 @@ export default {
     async sendPasswordReset() {
       this.errors = {};
       if (!this.email) {
-        this.errors.email = "Required Email";
+        this.errors.email = 'Required Email';
         this.isSignin = false;
         return false;
       }
       try {
-        const res = await axios.post("auth/password-reset", {
+        const res = await axios.post('auth/password-reset', {
           email: this.email,
         });
         this.success = true;
@@ -87,7 +87,7 @@ export default {
     },
   },
   mounted() {
-    if (this.$auth.check()) this.$router.push("/");
+    if (this.$auth.check()) this.$router.push('/');
   },
 };
 </script>
